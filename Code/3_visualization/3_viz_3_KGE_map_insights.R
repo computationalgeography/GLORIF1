@@ -12,19 +12,38 @@ cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2",
 cbbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7") # with black
 
 # Create output directory
-outputDir <- '/home/bisik/Practical/viz/'
+#~ outputDir <- '/home/bisik/Practical/viz/'
+outputDir <- '/scratch-shared/edwin/glorif1_paper_finalizing/Practical/viz/'
 dir.create(outputDir, showWarnings = F, recursive = T)
 
 # Load station information
-stationInfoArea <- read.csv('/home/bisik/Practical/gsim_preprocess/gsim_area_excluded_5_12months.csv') %>% 
+#~ stationInfoArea <- read.csv('/home/bisik/Practical/gsim_preprocess/gsim_area_excluded_5_12months.csv') %>% 
+#~   select(gsim.no, area.meta, miss)
+stationInfoArea <- read.csv('/scratch-shared/edwin/glorif1/original/version_1.0/preprocess/preprocess_gsim/gsim_12months_missing_excluded.csv') %>% 
   select(gsim.no, area.meta, miss)
-stationInfo <- read.csv('/home/bisik/Practical/gsim_preprocess/station_to_pixel_mapping_gsim_areagrdcfiltered_12monhts.csv') %>% 
+#~ stationInfo <- read.csv('/home/bisik/Practical/gsim_preprocess/station_to_pixel_mapping_gsim_areagrdcfiltered_12monhts.csv') %>% 
+#~   select(gsim.no, lon, lat) %>% inner_join(., stationInfoArea, by = 'gsim.no')
+stationInfo <- read.csv('/scratch-shared/edwin/glorif1/original/version_1.0/preprocess/preprocess_gsim/station_pixel_mapping_gsim.csv') %>% 
   select(gsim.no, lon, lat) %>% inner_join(., stationInfoArea, by = 'gsim.no')
 
 # Load KGE data for uncalibrated setup
-rf.eval.uncalibrated <- read.csv('/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation/KGE_results_PCR_GSIM_validation.csv') %>%
+#~ rf.eval.uncalibrated <- read.csv('/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation/KGE_results_PCR_GSIM_validation.csv') %>%
+#~   select(gsim.no, KGE) %>%
+#~   mutate(setup = 'uncalibrated')
+rf.eval.uncalibrated <- read.csv('/scratch-shared/edwin/glorif1/original/version_1.0/output/kge_pcrglobwb_gsim.csv') %>%
   select(gsim.no, KGE) %>%
   mutate(setup = 'uncalibrated')
+
+#~ edwin@tcn1106.local.snellius.surf.nl:/scratch-shared/edwin/glorif1/original/version_1.0/output$ ls -lah
+#~ total 657M
+#~ drwxr-x---+ 2 edwin edwin  4.0K Jul  3 15:37 .
+#~ drwxr-x---+ 7 edwin edwin  4.0K Jul  3 15:38 ..
+#~ -rw-r-----. 1 edwin edwin 1013K Jul  3 15:37 glorif1_discharge_30min_average.map
+#~ -rw-r-----. 1 edwin edwin 1019K Jul  3 15:37 glorif1_discharge_30min_average.nc
+#~ -rw-r-----. 1 edwin edwin  487M Jul  3 15:37 glorif1_discharge_30min_monthly.nc
+#~ -rw-r-----. 1 edwin edwin  346K Jul  3 15:37 kge_glorif1_gsim.csv
+#~ -rw-r-----. 1 edwin edwin  345K Jul  3 15:37 kge_pcrglobwb_gsim.csv
+#~ -rw-r-----. 1 edwin edwin  168M Jul  3 15:37 reanalysis_discharge.zip
 
 
 # Merge KGE data with station info
