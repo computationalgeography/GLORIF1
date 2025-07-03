@@ -57,6 +57,9 @@ plotData_uncalibrated <- rf.eval.uncalibrated %>%
             area.meta = first(area.meta)) %>%
   mutate(setup = 'uncalibrated')
 
+# sorting based on KGE
+plotData_uncalibrated <- plotData_uncalibrated[order(plotData_uncalibrated$mean_test_KGE_uncalibrated),]
+
 #### Plot KGE Map ####
 wg <- map_data("world")
 
