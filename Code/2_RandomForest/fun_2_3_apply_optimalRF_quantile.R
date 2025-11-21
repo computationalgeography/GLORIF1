@@ -66,7 +66,7 @@ apply_optimalRF <- function(i, key){
       rm(pcr_reanalysis)
       pcr_reanalysis <- test_data %>% 
 
-        mutate(pcr_corrected = pcr_corrected_quantiles$predictions[, "quantile= 0.50"] ) %>%
+        mutate(pcr_corrected = pcr_corrected_quantiles$predictions[, "quantile= 0.5"] ) %>%
 
 #~         # if pcr_corrected < 0 -> pcr_corrected=0
 #~         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
