@@ -49,8 +49,9 @@ apply_optimalRF <- function(i, key){
 
         mutate(pcr_corrected_quantiles$predictions[, "quantile= 0.05"] ) %>%
 
-        # if pcr_corrected < 0 -> pcr_corrected=0
-        mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
+#~         # if pcr_corrected < 0 -> pcr_corrected=0
+#~         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
+
         # select datetime, pcr_corrected (pcr uncalib can be found in scratch/6574882/pcr_discharge)
         select(., c('datetime', 'pcr_corrected')) %>% 
         # format
@@ -66,8 +67,9 @@ apply_optimalRF <- function(i, key){
 
         mutate(pcr_corrected_quantiles$predictions[, "quantile= 0.50"] ) %>%
 
-        # if pcr_corrected < 0 -> pcr_corrected=0
-        mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
+#~         # if pcr_corrected < 0 -> pcr_corrected=0
+#~         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
+
         # select datetime, pcr_corrected (pcr uncalib can be found in scratch/6574882/pcr_discharge)
         select(., c('datetime', 'pcr_corrected')) %>% 
         # format
@@ -83,8 +85,9 @@ apply_optimalRF <- function(i, key){
 
         mutate(pcr_corrected_quantiles$predictions[, "quantile= 0.95"] ) %>%
 
-        # if pcr_corrected < 0 -> pcr_corrected=0
-        mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
+#~         # if pcr_corrected < 0 -> pcr_corrected=0
+#~         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
+
         # select datetime, pcr_corrected (pcr uncalib can be found in scratch/6574882/pcr_discharge)
         select(., c('datetime', 'pcr_corrected')) %>% 
         # format
