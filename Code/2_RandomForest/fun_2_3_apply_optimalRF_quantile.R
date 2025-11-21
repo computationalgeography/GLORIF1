@@ -38,8 +38,12 @@ apply_optimalRF <- function(i, key){
 
         # predict discharge with trained RF
         
+
       pcr_corrected_quantiles = predict(optimal_ranger, test_data, num.threads=NULL, type = "quantiles", quantiles = c(0.05, 0.5, 0.95))
         
+      print(pcr_corrected_quantiles)
+      print(pcr_corrected_quantiles[, "quantile= 0.05"])
+      
       # percentile 0.05
       pcr_reanalysis <- test_data %>% 
 
