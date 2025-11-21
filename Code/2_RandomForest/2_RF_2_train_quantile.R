@@ -1,6 +1,15 @@
 ####-------------------------------####
 #~ source('/home/bisik/Practical/R/fun_0_loadLibrary.R')
 #~ source('/home/bisik/Practical/R/fun_0_loadLibrary.R')
+
+print('loading packages...')
+library("tidyverse", "gridExtra", "naniar", "lubridate", "sjmisc", #data 
+               "RColorBrewer", "ggmap", "maps", "rcartocolor", "ggthemes",
+               "ggrepel", "ggpmisc", "patchwork", "ggcorrplot",# viz 
+               "ranger", "hydroGOF", # random forest, xbooost and KGE
+               "doParallel", "foreach", "parallel", #parallel
+               "vroom")
+
 ####-------------------------------####
 #~ source('/home/bisik/Practical/R/fun_2_2_trainRF.R')
 source('fun_2_2_trainRF_quantile.R')
