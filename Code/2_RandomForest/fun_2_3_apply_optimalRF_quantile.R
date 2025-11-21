@@ -10,7 +10,7 @@ apply_optimalRF <- function(i, key){
 #~     pcr_discharge <- read.csv(paste0('/scratch-shared/bisik/Data/predictors/pcr_flowdepth/pcr_discharge_',
 #~                                      station_no, '.csv')) %>% mutate(datetime=as.Date(datetime))
     
-    pcr_discharge <- read.csv(paste0('/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/predictors/predictors/pcr_discharge_',
+    pcr_discharge <- read.csv(paste0('/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/predictors/predictors/pcr_discharge/pcr_discharge_',
                                      station_no, '.csv')) %>% mutate(datetime=as.Date(datetime))
 
     if(sum(pcr_discharge$pcr==0)){
