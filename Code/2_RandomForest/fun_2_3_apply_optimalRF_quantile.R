@@ -41,17 +41,17 @@ apply_optimalRF <- function(i, key){
 
       pcr_corrected_quantiles = predict(optimal_ranger, test_data, num.threads=NULL, type = "quantiles", quantiles = c(0.05, 0.5, 0.95))
         
-      print(pcr_corrected_quantiles)
-      print(pcr_corrected_quantiles$predictions)
-      print(pcr_corrected_quantiles$predictions[, "quantile= 0.05"])
+#~       print(pcr_corrected_quantiles)
+#~       print(pcr_corrected_quantiles$predictions)
+#~       print(pcr_corrected_quantiles$predictions[, "quantile= 0.05"])
       
       # percentile 0.05
       pcr_reanalysis <- test_data %>% 
 
         mutate(pcr_corrected = pcr_corrected_quantiles$predictions[, "quantile= 0.05"] ) %>%
 
-#~         # if pcr_corrected < 0 -> pcr_corrected=0
-#~         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
+        # if pcr_corrected < 0 -> pcr_corrected=0
+        mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
 
         # select datetime, pcr_corrected (pcr uncalib can be found in scratch/6574882/pcr_discharge)
         select(., c('datetime', 'pcr_corrected')) %>% 
@@ -68,8 +68,8 @@ apply_optimalRF <- function(i, key){
 
         mutate(pcr_corrected = pcr_corrected_quantiles$predictions[, "quantile= 0.5"] ) %>%
 
-#~         # if pcr_corrected < 0 -> pcr_corrected=0
-#~         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
+        # if pcr_corrected < 0 -> pcr_corrected=0
+        mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
 
         # select datetime, pcr_corrected (pcr uncalib can be found in scratch/6574882/pcr_discharge)
         select(., c('datetime', 'pcr_corrected')) %>% 
@@ -86,8 +86,8 @@ apply_optimalRF <- function(i, key){
 
         mutate(pcr_corrected = pcr_corrected_quantiles$predictions[, "quantile= 0.95"] ) %>%
 
-#~         # if pcr_corrected < 0 -> pcr_corrected=0
-#~         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
+        # if pcr_corrected < 0 -> pcr_corrected=0
+        mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
 
         # select datetime, pcr_corrected (pcr uncalib can be found in scratch/6574882/pcr_discharge)
         select(., c('datetime', 'pcr_corrected')) %>% 
