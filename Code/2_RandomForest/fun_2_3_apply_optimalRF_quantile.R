@@ -7,22 +7,33 @@ apply_optimalRF <- function(i, key){
     station_no <- stationInfo$cell_no_land[i]
     print(station_no)
     
-    pcr_discharge <- read.csv(paste0('/scratch-shared/bisik/Data/predictors/pcr_flowdepth/pcr_discharge_',
-                                     station_no, '.csv')) %>% mutate(datetime=as.Date(datetime))
+#~     pcr_discharge <- read.csv(paste0('/scratch-shared/bisik/Data/predictors/pcr_flowdepth/pcr_discharge_',
+#~                                      station_no, '.csv')) %>% mutate(datetime=as.Date(datetime))
     
+    pcr_discharge <- read.csv(paste0('/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/predictors/predictors/pcr_discharge_',
+                                     station_no, '.csv')) %>% mutate(datetime=as.Date(datetime))
+
     if(sum(pcr_discharge$pcr==0)){
       
       pcr_reanalysis <- pcr_discharge %>% rename(pcr_corrected=pcr) %>%
                             mutate(datetime=as.Date(datetime))
-      write.csv(pcr_reanalysis, paste0(outputDirReanalysis, 'pcr_rf_reanalysis_monthly_30arcmin_',
+      write.csv(pcr_reanalysis, paste0(outputDirReanalysis, 'pcr_rf_reanalysis_monthly_30arcmin_0p05_',
                                        station_no, '.csv'), row.names=F)
       
+      write.csv(pcr_reanalysis, paste0(outputDirReanalysis, 'pcr_rf_reanalysis_monthly_30arcmin_0p50_',
+                                       station_no, '.csv'), row.names=F)
+
+      write.csv(pcr_reanalysis, paste0(outputDirReanalysis, 'pcr_rf_reanalysis_monthly_30arcmin_0p95_',
+                                       station_no, '.csv'), row.names=F)
+
     }
     else{
       
-      test_data <- read.csv(paste0('/scratch-shared/bisik/pcr_allpredictors/pcr_allpredictors_',
-                                   station_no, '.csv')) #%>% select (datetime,pcr,precipitation,temperature,referencePotET)
+#~       test_data <- read.csv(paste0('/scratch-shared/bisik/pcr_allpredictors/pcr_allpredictors_',
+#~                                    station_no, '.csv')) #%>% select (datetime,pcr,precipitation,temperature,referencePotET)
                                
+      test_data <- read.csv(paste0('/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/predictors/predictors/pcr_allpredictors/pcr_allpredictors_',
+                                   station_no, '.csv')) #%>% select (datetime,pcr,precipitation,temperature,referencePotET)
                                      
 
         # predict discharge with trained RF
