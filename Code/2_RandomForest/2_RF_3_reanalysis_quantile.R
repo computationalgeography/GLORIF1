@@ -1,7 +1,7 @@
 ####-------------------------------####
 source('/home/bisik/Practical/R/fun_0_loadLibrary.R')
 ####-------------------------------####
-source('/home/bisik/Practical/R/fun_2_3_apply_optimalRF_quantile.R')
+source('fun_2_3_apply_optimalRF_quantile.R')
 
 #~ stationInfo <- read.csv('/home/bisik/Practical/stationLatLon.csv')
 stationInfo <- read.csv('/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/stationLatLon_PCR.csv')
