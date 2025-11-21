@@ -42,6 +42,7 @@ apply_optimalRF <- function(i, key){
       pcr_corrected_quantiles = predict(optimal_ranger, test_data, num.threads=NULL, type = "quantiles", quantiles = c(0.05, 0.5, 0.95))
         
       print(pcr_corrected_quantiles)
+      print(pcr_corrected_quantiles$predictions)
       print(pcr_corrected_quantiles$predictions[, "quantile= 0.05"])
       
       # percentile 0.05
