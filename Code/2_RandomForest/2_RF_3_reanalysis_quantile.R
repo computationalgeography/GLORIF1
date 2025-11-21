@@ -22,4 +22,4 @@ print('allpredictors: reading trained RF...')
 optimal_ranger <- readRDS('/scratch-shared/edwin/Data/RF/train_quantile/trainedRF_quantiles.rds')
 print('calculation: initiated')
 
-mclapply(1:nrow(stationInfo), key='allpredictors',apply_optimalRF, mc.cores=1)
+mclapply(1:nrow(stationInfo), key='allpredictors',apply_optimalRF, mc.cores=32)
