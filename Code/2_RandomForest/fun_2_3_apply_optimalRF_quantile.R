@@ -32,7 +32,7 @@ apply_optimalRF <- function(i, key){
       # percentile 0.05
       pcr_reanalysis <- test_data %>% 
 
-        mutate(pcr_corrected_quantiles[, "quantile= 0.05"]) %>% predictions()) %>%
+        mutate(pcr_corrected_quantiles[, "quantile= 0.05"] %>% predictions()) %>%
 
         # if pcr_corrected < 0 -> pcr_corrected=0
         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
@@ -49,7 +49,7 @@ apply_optimalRF <- function(i, key){
       rm(pcr_reanalysis)
       pcr_reanalysis <- test_data %>% 
 
-        mutate(pcr_corrected_quantiles[, "quantile= 0.50"]) %>% predictions()) %>%
+        mutate(pcr_corrected_quantiles[, "quantile= 0.50"] %>% predictions()) %>%
 
         # if pcr_corrected < 0 -> pcr_corrected=0
         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
@@ -66,7 +66,7 @@ apply_optimalRF <- function(i, key){
       rm(pcr_reanalysis)
       pcr_reanalysis <- test_data %>% 
 
-        mutate(pcr_corrected_quantiles[, "quantile= 0.95"]) %>% predictions()) %>%
+        mutate(pcr_corrected_quantiles[, "quantile= 0.95"] %>% predictions()) %>%
 
         # if pcr_corrected < 0 -> pcr_corrected=0
         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
