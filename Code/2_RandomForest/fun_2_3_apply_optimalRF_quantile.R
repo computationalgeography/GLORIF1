@@ -47,7 +47,7 @@ apply_optimalRF <- function(i, key){
       # percentile 0.05
       pcr_reanalysis <- test_data %>% 
 
-        mutate(pcr_corrected_quantiles$predictions[, "quantile= 0.05"] ) %>%
+        mutate(pcr_corrected = pcr_corrected_quantiles$predictions[, "quantile= 0.05"] ) %>%
 
 #~         # if pcr_corrected < 0 -> pcr_corrected=0
 #~         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
@@ -65,7 +65,7 @@ apply_optimalRF <- function(i, key){
       rm(pcr_reanalysis)
       pcr_reanalysis <- test_data %>% 
 
-        mutate(pcr_corrected_quantiles$predictions[, "quantile= 0.50"] ) %>%
+        mutate(pcr_corrected = pcr_corrected_quantiles$predictions[, "quantile= 0.50"] ) %>%
 
 #~         # if pcr_corrected < 0 -> pcr_corrected=0
 #~         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
@@ -83,13 +83,14 @@ apply_optimalRF <- function(i, key){
       rm(pcr_reanalysis)
       pcr_reanalysis <- test_data %>% 
 
-        mutate(pcr_corrected_quantiles$predictions[, "quantile= 0.95"] ) %>%
+        mutate(pcr_corrected = pcr_corrected_quantiles$predictions[, "quantile= 0.95"] ) %>%
 
 #~         # if pcr_corrected < 0 -> pcr_corrected=0
 #~         mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected<0,0)) %>% 
 
         # select datetime, pcr_corrected (pcr uncalib can be found in scratch/6574882/pcr_discharge)
         select(., c('datetime', 'pcr_corrected')) %>% 
+
         # format
         mutate(datetime=as.Date(datetime))
       colnames(pcr_reanalysis) <- c('datetime','pcr_corrected')
