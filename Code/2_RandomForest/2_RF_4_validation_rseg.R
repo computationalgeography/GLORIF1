@@ -3,6 +3,7 @@
 ####-------------------------------####
 source('fun_2_2_trainRF.R')
 source('fun_2_3_apply_optimalRF_validation_rseg.R')
+source('fun_2_3_apply_optimalRF_validation_rseg_edwin.R')
 
 # additional library to read directly from a netcdf file
 library(ncdf4)
