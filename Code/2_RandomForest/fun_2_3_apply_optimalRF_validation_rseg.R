@@ -49,6 +49,9 @@ calculate_kge <- function(prediction_data, validation_data, grdc_no, cell_no_lan
 #~   prediction_data$datetime <- as.Date(prediction_data$datetime)
 #~   validation_data$datetime <- as.Date(validation_data$datetime)
 
+print(prediction_data)
+print(validation_data)
+
   rf.result <- prediction_data %>%
     # Merge on datetime
     inner_join(validation_data, by = "datetime") %>%
