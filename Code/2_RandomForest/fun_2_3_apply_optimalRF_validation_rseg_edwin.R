@@ -58,6 +58,7 @@ print(check_cor)
 
 pcr_corrected = prediction_data$pcr_corrected
 obs = validation_data$obs
+res = obs - pcr_corrected
 
       KGE = KGE(sim = pcr_corrected, obs = obs, s = c(1, 1, 1), na.rm = T, method = "2009")
       KGE_r = cor(obs, pcr_corrected, method = 'pearson', use = 'complete.obs')
