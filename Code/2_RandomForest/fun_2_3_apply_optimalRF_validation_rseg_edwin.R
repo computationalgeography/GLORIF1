@@ -56,5 +56,17 @@ calculate_kge <- function(prediction_data, validation_data, grdc_no, cell_no_lan
 check_cor = cor(prediction_data$pcr_corrected, validation_data$obs, use="pairwise.complete.obs")
 print(check_cor)
 
+
+      KGE = KGE(sim = pcr_corrected, obs = obs, s = c(1, 1, 1), na.rm = T, method = "2009"),
+      KGE_r = cor(obs, pcr_corrected, method = 'pearson', use = 'complete.obs'),
+      KGE_alpha = sd(pcr_corrected, na.rm = T) / sd(obs, na.rm = T),
+      KGE_beta = mean(pcr_corrected, na.rm = T) / mean(obs, na.rm = T),
+      NSE = NSE(sim = pcr_corrected, obs = obs, na.rm = T),
+      RMSE = sqrt(mean(res^2, na.rm = T)),
+      MAE = mean(abs(res), na.rm = T),
+      nRMSE = sqrt(mean(res^2, na.rm = T)) / mean(obs),
+      nMAE = mean(abs(res), na.rm = T) / mean(obs)
+
+
 return(check_cor) 
 }
