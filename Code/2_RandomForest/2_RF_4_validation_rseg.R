@@ -14,7 +14,7 @@ library(ncdf4)
 
 #validation_dir  <- '/home/bisik/Practical/gsim_preprocess/gsim_discharge_areafiltered_2_timefiltered/' # for validation based on gsim discharge
 #validation_file <- '/scratch-shared/bisik/predictors/grdc_discharge/' # for validation based on grdc discharge
- validation_file <- '/eejit/depfg/sutan101/glorif1_from_snellius/rseg_grdc/RSEG_V01.nc' # RSEG
+nc_rseg_file <- '/eejit/depfg/sutan101/glorif1_from_snellius/rseg_grdc/RSEG_V01.nc' # RSEG
 
 mapping_file <- '/eejit/depfg/sutan101/glorif1_from_snellius/Data/preprocess_rseg/station_pixel_mapping_rseg.csv'
 
@@ -23,8 +23,8 @@ station_to_pixel_mapping <- read.csv(mapping_file)
 
 # read the validation netcdf file
 nc_rseg        <- nc_open(nc_rseg_file)
-rseg_grdc_no   <- ncvar_get(nc_validation, "GRDC_Num")
-rseg_discharge <- ncvar_get(nc_validation, "Disch")
+rseg_grdc_no   <- ncvar_get(nc_rseg, "GRDC_Num")
+rseg_discharge <- ncvar_get(nc_rseg, "Disch")
 
 # Filter time range from 1979-01-01 to 2019-12-31
 rseg_time  <- as.Date(ncvar_get(nc_rseg, "Time"), origin = "1806-01-01")
