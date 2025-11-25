@@ -68,12 +68,12 @@ print(validation_data)
 #~     return(NULL)
 #~   }
 
-  # Check for sufficient complete cases for correlation calculation
-  complete_cases <- complete.cases(rf.result$obs, rf.result$pcr_corrected)
-  if (sum(complete_cases) < 2) {
-    print(paste("Not enough complete cases for correlation calculation for gsim.no:", gsim.no))
-    return(NULL)
-  }
+#~   # Check for sufficient complete cases for correlation calculation
+#~   complete_cases <- complete.cases(rf.result$obs, rf.result$pcr_corrected)
+#~   if (sum(complete_cases) < 2) {
+#~     print(paste("Not enough complete cases for correlation calculation for gsim.no:", gsim.no))
+#~     return(NULL)
+#~   }
 
   rf.eval <- rf.result %>%
     summarise(
