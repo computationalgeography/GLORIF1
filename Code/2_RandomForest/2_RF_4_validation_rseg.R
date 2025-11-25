@@ -16,7 +16,7 @@ library(ncdf4)
 #validation_file <- '/scratch-shared/bisik/predictors/grdc_discharge/' # for validation based on grdc discharge
  validation_file <- '/eejit/depfg/sutan101/glorif1_from_snellius/rseg_grdc/RSEG_V01.nc' # RSEG
 
-mapping_file <- '/eejit/depfg/sutan101/glorif1_from_snellius/Data/preprocess/station_pixel_mapping_rseg.csv'
+mapping_file <- '/eejit/depfg/sutan101/glorif1_from_snellius/Data/preprocess_rseg/station_pixel_mapping_rseg.csv'
 
 # Load the mapping file
 station_to_pixel_mapping <- read.csv(mapping_file)
