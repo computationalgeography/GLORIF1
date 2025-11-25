@@ -60,6 +60,8 @@ print(validation_data)
     mutate(pcr_corrected = replace(pcr_corrected, pcr_corrected < 0, 0)) %>%
     mutate(res = obs - pcr_corrected) %>%
     select(datetime, obs, pcr_corrected, res) %>%
+  
+  print(rf.result)  
 
 #~     drop_na()  # Remove rows with NA values
 
