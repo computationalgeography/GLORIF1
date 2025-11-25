@@ -1,5 +1,5 @@
 ####-------------------------------####
-source('fun_0_loadLibrary.R')
+source('../fun_0_loadLibrary.R')
 ####-------------------------------####
 source('fun_2_2_trainRF.R')
 source('fun_2_3_apply_optimalRF_validation_rseg.R')
