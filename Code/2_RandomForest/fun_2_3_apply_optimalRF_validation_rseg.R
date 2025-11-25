@@ -61,7 +61,7 @@ print(validation_data)
     mutate(res = obs - pcr_corrected) %>%
     select(datetime, obs, pcr_corrected, res) %>%
 
-    drop_na()  # Remove rows with NA values
+#~     drop_na()  # Remove rows with NA values
 
   if (nrow(rf.result) == 0) {
     print(paste("No matching data for grdc_no:", grdc_no))
