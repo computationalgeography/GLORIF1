@@ -30,7 +30,7 @@ rseg_discharge <- ncvar_get(nc_rseg, "Disch")
 rseg_time  <- as.Date(ncvar_get(nc_rseg, "Time"), origin = "1806-01-01")
 start_date <- as.Date("1979-01-01")
 end_date   <- as.Date("2019-12-31")
-time_idx   <- which(rseg_time >= start_date & nc_time <= end_date)
+time_idx   <- which(rseg_time >= start_date & rseg_time <= end_date)
 # - Discharge 1979-2019 only
 rseg_discharge_selected <- rseg_discharge[time_idx,]
 # - Set all negative to NaN
