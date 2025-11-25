@@ -53,6 +53,9 @@ calculate_kge <- function(prediction_data, validation_data, grdc_no, cell_no_lan
 print(prediction_data)
 print(validation_data)
 
+check_cor = cor(prediction_data[,2], validation_data[,2], na.rm = TRUE)
+print(check_cor)
+
   rf.result <- prediction_data %>%
     # Merge on datetime
     inner_join(validation_data, by = "datetime") %>%
