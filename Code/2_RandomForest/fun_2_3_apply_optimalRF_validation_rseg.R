@@ -63,10 +63,10 @@ print(validation_data)
 
 #~     drop_na()  # Remove rows with NA values
 
-  if (nrow(rf.result) == 0) {
-    print(paste("No matching data for grdc_no:", grdc_no))
-    return(NULL)
-  }
+#~   if (nrow(rf.result) == 0) {
+#~     print(paste("No matching data for grdc_no:", grdc_no))
+#~     return(NULL)
+#~   }
 
   # Check for sufficient complete cases for correlation calculation
   complete_cases <- complete.cases(rf.result$obs, rf.result$pcr_corrected)
