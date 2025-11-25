@@ -2,7 +2,7 @@ library(dplyr)
 library(hydroGOF)
 
 # Function to process each mapping entry
-process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no) {
+process_mapping <- function(mapping_entry, rseg_grdc_no) {
   cell_no_land <- gsub("\\.0$", "", as.character(mapping_entry$cell_no_land))
   grdc_no <- mapping_entry$grdc_no
 
