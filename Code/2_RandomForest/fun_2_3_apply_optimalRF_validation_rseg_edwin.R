@@ -56,7 +56,7 @@ print(validation_data)
 check_cor = cor(prediction_data$pcr_corrected, validation_data$obs, use="pairwise.complete.obs")
 print(check_cor)
 
-if (check_cor > -100.) {
+if (!is.na(check_cor)) {
 
 pcr_corrected = prediction_data$pcr_corrected
 obs = validation_data$obs
