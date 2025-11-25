@@ -33,6 +33,8 @@ end_date   <- as.Date("2019-12-31")
 time_idx   <- which(rseg_time >= start_date & nc_time <= end_date)
 # - Discharge 1979-2019 only
 rseg_discharge_selected <- rseg_discharge[time_idx,]
+# - Set all negative to NaN
+rseg_discharge_selected[which(rseg_discharge_selected < 0.0)] <- NaN
 
 # Process all mappings
 results <- lapply(1:nrow(station_to_pixel_mapping), function(i) {
