@@ -20,7 +20,9 @@ process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no
     print(paste("Processing cell_no_land:", cell_no_land, "grdc_no:", grdc_no))
     prediction_data <- read.csv(prediction_file)
 
-names(prediction_data)
+print(names(prediction_data))
+
+piet
 
     # read validation data
     # validation_data <- read.csv(validation_file)
