@@ -24,7 +24,7 @@ process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no
     # validation_data <- read.csv(validation_file)
 
 # get the GRDC idx
-grdc_idx = which(rseg_grdc_no = grdc_no)
+grdc_idx = which(rseg_grdc_no == grdc_no)
 
 # Extract the data for the specific coordinate and time range
 validation_date = rseg_discharge_selected[, grdc_idx]    
