@@ -53,7 +53,7 @@ calculate_kge <- function(prediction_data, validation_data, grdc_no, cell_no_lan
 print(prediction_data)
 print(validation_data)
 
-check_cor = cor(prediction_data$pcr_corrected, validation_data$obs, use="complete.obs")
+check_cor = cor(prediction_data$pcr_corrected, validation_data$obs, use="pairwise.complete.obs")
 print(check_cor)
 
 return(check_cor) 
