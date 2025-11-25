@@ -13,6 +13,7 @@ process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no
   
   #validation_file <- paste0('/scratch-shared/bisik/Data/validation_data/gsim_discharge/gsim_', gsim.no, '.csv')
   
+  print(grdc_no)
 
   if (file.exists(prediction_file)) {
     
