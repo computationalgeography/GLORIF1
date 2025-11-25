@@ -72,6 +72,8 @@ res = obs - pcr_corrected
       nRMSE = sqrt(mean(res^2, na.rm = T)) / mean(obs)
       nMAE = mean(abs(res), na.rm = T) / mean(obs)
 
+} else {
+	
 }
 
 return(check_cor) 
