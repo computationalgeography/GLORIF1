@@ -31,7 +31,8 @@ grdc_idx = which(rseg_grdc_no == grdc_no)
 
 # Extract the data for the specific coordinate and time range
 validation_data = data.frame(prediction_data$datetime, rseg_discharge_selected[, grdc_idx])    
-names(validation_data) <- "datetime"
+names(validation_data)[1] <- "datetime"
+names(validation_data)[2] <- "validation"
 
     kge_result <- calculate_kge(prediction_data, validation_data, grdc_no, cell_no_land)
 
@@ -45,9 +46,9 @@ names(validation_data) <- "datetime"
 # Function to calculate KGE
 calculate_kge <- function(prediction_data, validation_data, grdc_no, cell_no_land) {
 
-#~   # Ensure datetime columns are in the same format
-#~   prediction_data$datetime <- as.Date(prediction_data$datetime)
-#~   validation_data$datetime <- as.Date(validation_data$datetime)
+  # Ensure datetime columns are in the same format
+  prediction_data$datetime <- as.Date(prediction_data$datetime)
+  validation_data$datetime <- as.Date(validation_data$datetime)
 
 print(prediction_data)
 print(validation_data)
@@ -77,7 +78,7 @@ print(validation_data)
   rf.eval <- rf.result %>%
     summarise(
       cell_no_land = cell_no_land,
-      gsim.no = gsim.no,
+      grdc_no = grdc_no,
       KGE = KGE(sim = pcr_corrected, obs = obs, s = c(1, 1, 1), na.rm = T, method = "2009"),
       KGE_r = cor(obs, pcr_corrected, method = 'pearson', use = 'complete.obs'),
       KGE_alpha = sd(pcr_corrected, na.rm = T) / sd(obs, na.rm = T),
