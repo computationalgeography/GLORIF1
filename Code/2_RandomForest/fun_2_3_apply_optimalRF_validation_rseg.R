@@ -30,7 +30,7 @@ process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no
 grdc_idx = which(rseg_grdc_no == grdc_no)
 
 # Extract the data for the specific coordinate and time range
-validation_data = cbind(prediction_data$datetime, rseg_discharge_selected[, grdc_idx])    
+validation_data = data.frame(prediction_data$datetime, rseg_discharge_selected[, grdc_idx])    
 names(validation_data) <- "datetime"
 
     kge_result <- calculate_kge(prediction_data, validation_data, grdc_no, cell_no_land)
