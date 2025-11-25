@@ -56,6 +56,8 @@ calculate_kge <- function(prediction_data, validation_data, grdc_no, cell_no_lan
 check_cor = cor(prediction_data$pcr_corrected, validation_data$obs, use="pairwise.complete.obs")
 print(check_cor)
 
+pcr_corrected = prediction_data$pcr_corrected
+obs = validation_data$obs
 
       KGE = KGE(sim = pcr_corrected, obs = obs, s = c(1, 1, 1), na.rm = T, method = "2009")
       KGE_r = cor(obs, pcr_corrected, method = 'pearson', use = 'complete.obs')
