@@ -32,7 +32,9 @@ grdc_idx = which(rseg_grdc_no == grdc_no)
 validation_data = cbind(prediction_data, rseg_discharge_selected[, grdc_idx])    
 
 
-    kge_result <- calculate_kge(prediction_data, validation_data, grdc_no, cell_no_land)
+#~     kge_result <- calculate_kge(prediction_data, validation_data, grdc_no, cell_no_land)
+    kge_result <- 0
+
     return(kge_result)
   } else {
     print(paste("Files not found for cell_no_land:", cell_no_land, "or grdc_no:", grdc_no))
