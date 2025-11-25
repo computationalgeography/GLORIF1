@@ -44,9 +44,10 @@ names(validation_data) <- "datetime"
 
 # Function to calculate KGE
 calculate_kge <- function(prediction_data, validation_data, grdc_no, cell_no_land) {
-  # Ensure datetime columns are in the same format
-  prediction_data$datetime <- as.Date(prediction_data$datetime)
-  validation_data$datetime <- as.Date(validation_data$datetime)
+
+#~   # Ensure datetime columns are in the same format
+#~   prediction_data$datetime <- as.Date(prediction_data$datetime)
+#~   validation_data$datetime <- as.Date(validation_data$datetime)
 
   rf.result <- prediction_data %>%
     # Merge on datetime
