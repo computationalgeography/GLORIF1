@@ -32,7 +32,7 @@ grdc_idx = which(rseg_grdc_no == grdc_no)
 # Extract the data for the specific coordinate and time range
 validation_data = data.frame(prediction_data$datetime, rseg_discharge_selected[, grdc_idx])    
 names(validation_data)[1] <- "datetime"
-names(validation_data)[2] <- "validation"
+names(validation_data)[2] <- "obs"
 
     kge_result <- calculate_kge(prediction_data, validation_data, grdc_no, cell_no_land)
 
