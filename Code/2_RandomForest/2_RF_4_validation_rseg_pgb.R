@@ -12,8 +12,8 @@ library(ncdf4)
 #predictions_dir <- '/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/reanalysis_discharge/' # for predictors
 #predictions_dir <- '/scratch-shared/bisik/predictors/pcr_discharge/' # for pcr discharge
 #predictions_dir <- '/scratch/sutan101/glorif1_txt/reanalysis_discharge/' # glorif1
-#predictions_dir <- '/scratch/sutan101/glorif1_txt/reanalysis_discharge/pcr_rf_reanalysis_monthly_30arcmin_'
- predictions_dir <- '/eejit/depfg/sutan101/glorif1_from_snellius/glorif1/original/version_1.0/predictors/predictors/pcr_discharge/pcr_discharge_' # original pgb result
+ predictions_dir <- '/scratch/sutan101/glorif1_txt/reanalysis_discharge/pcr_rf_reanalysis_monthly_30arcmin_' # glorif1
+#predictions_dir <- '/eejit/depfg/sutan101/glorif1_from_snellius/glorif1/original/version_1.0/predictors/predictors/pcr_discharge/pcr_discharge_' # original pgb result
 
 #validation_dir  <- '/home/bisik/Practical/gsim_preprocess/gsim_discharge_areafiltered_2_timefiltered/' # for validation based on gsim discharge
 #validation_file <- '/scratch-shared/bisik/predictors/grdc_discharge/' # for validation based on grdc discharge
@@ -54,4 +54,4 @@ for (i in 1:nrow(station_to_pixel_mapping)) {
 # Save results
 outputDir  <- '/scratch/sutan101/glorif1_work/rseg_validation/'
 dir.create(outputDir, showWarnings = F, recursive = T)
-write.csv(results, paste0(outputDir, 'kge_results_pgb_rseg_validation.csv'), row.names = F)
+write.csv(results, paste0(outputDir, 'kge_results_glorif1_rseg_validation.csv'), row.names = F)

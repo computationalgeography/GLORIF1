@@ -54,8 +54,8 @@ calculate_kge <- function(prediction_data, validation_data, grdc_no, cell_no_lan
   prediction_data$datetime <- as.Date(prediction_data$datetime)
   validation_data$datetime <- as.Date(validation_data$datetime)
 
-print(prediction_data)
-print(validation_data)
+#~ print(prediction_data)
+#~ print(validation_data)
 
 # Count non-NA and non-NaN values in validation data
 valid_length <- sum(!is.na(validation_data$obs) & !is.nan(validation_data$obs))

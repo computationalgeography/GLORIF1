@@ -1,56 +1,105 @@
-####-------------------------------####
-#source('../fun_0_loadLibrary.R')
-####-------------------------------####
-source('fun_2_2_trainRF.R')
-source('fun_2_3_apply_optimalRF_validation_rseg.R')
-source('fun_2_3_apply_optimalRF_validation_rseg_edwin.R')
+library(dplyr)
+library(hydroGOF)
 
-# additional library to read directly from a netcdf file
-library(ncdf4)
+# Function to process each mapping entry
+process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no, predictions_dir) {
+  cell_no_land <- gsub("\\.0$", "", as.character(mapping_entry$cell_no_land))
+  grdc_no <- mapping_entry$grdc_no
 
-# Paths
-#predictions_dir <- '/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/reanalysis_discharge/' # for predictors
-#predictions_dir <- '/scratch-shared/bisik/predictors/pcr_discharge/' # for pcr discharge
- predictions_dir <- '/scratch/sutan101/glorif1_txt/reanalysis_discharge/' # glorif1
+  #prediction_file <- paste0('/scratch-shared/bisik/predictors/pcr_discharge/pcr_discharge_', cell_no_land, '.csv')
+  #prediction_file <- paste0('/scratch-shared/bisik/Data/output/reanalysis_discharge/pcr_rf_reanalysis_monthly_30arcmin_', cell_no_land, '.csv')
+   
+#~ prediction_file <- paste0('/scratch/sutan101/glorif1_txt/reanalysis_discharge/pcr_rf_reanalysis_monthly_30arcmin_', cell_no_land, '.csv')
+   prediction_file <- paste0(predictions_dir, cell_no_land, '.csv')
+  
+  #validation_file <- paste0('/scratch-shared/bisik/Data/validation_data/gsim_discharge/gsim_', gsim.no, '.csv')
+  
+  print(grdc_no)
 
-#validation_dir  <- '/home/bisik/Practical/gsim_preprocess/gsim_discharge_areafiltered_2_timefiltered/' # for validation based on gsim discharge
-#validation_file <- '/scratch-shared/bisik/predictors/grdc_discharge/' # for validation based on grdc discharge
-nc_rseg_file <- '/eejit/depfg/sutan101/glorif1_from_snellius/rseg_grdc/RSEG_V01.nc' # RSEG
+  if (file.exists(prediction_file)) {
+    
+    print(paste("Processing cell_no_land:", cell_no_land, "grdc_no:", grdc_no))
+    prediction_data <- read.csv(prediction_file)
 
-mapping_file <- '/eejit/depfg/sutan101/glorif1_from_snellius/Data/preprocess_rseg/station_pixel_mapping_rseg.csv'
+# set the name of prediction value
+names(prediction_data)[2] <- "simulation"
 
-# Load the mapping file
-station_to_pixel_mapping <- read.csv(mapping_file)
+#~ print(names(prediction_data))
+#~ piet
 
-# read the validation netcdf file
-nc_rseg        <- nc_open(nc_rseg_file)
-rseg_grdc_no   <- ncvar_get(nc_rseg, "GRDC_Num")
-rseg_discharge <- ncvar_get(nc_rseg, "Disch")
+    # read validation data
+    # validation_data <- read.csv(validation_file)
 
-# Filter time range from 1979-01-01 to 2019-12-31
-rseg_time  <- as.Date(ncvar_get(nc_rseg, "Time"), origin = "1806-01-01")
-start_date <- as.Date("1979-01-01")
-end_date   <- as.Date("2019-12-31")
-time_idx   <- which(rseg_time >= start_date & rseg_time <= end_date)
-# - Discharge 1979-2019 only
-rseg_discharge_selected <- rseg_discharge[time_idx,]
-# - Set all negative to NaN
-rseg_discharge_selected[which(rseg_discharge_selected < 0.0)] <- NaN
+# get the GRDC idx
+grdc_idx = which(rseg_grdc_no == grdc_no)
 
-# dataframe to store the results
-column_names = c("cell_no_land","grdc_no","KGE","KGE_r","KGE_alpha","KGE_beta","NSE","RMSE","MAE","nRMSE","nMAE","valid_length", "mean_obs", "mean_sim")
-results <- data.frame(matrix(ncol = length(column_names), nrow = 0))
+# Extract the data for the specific coordinate and time range
+validation_data = data.frame(prediction_data$datetime, rseg_discharge_selected[, grdc_idx])    
+names(validation_data)[1] <- "datetime"
+names(validation_data)[2] <- "obs"
 
-# Process all mappings
-for (i in 1:nrow(station_to_pixel_mapping)) {
-  result_per_station = process_mapping(station_to_pixel_mapping[i, ], rseg_discharge_selected, rseg_grdc_no, results)
-  print(result_per_station)
-  results = rbind(results, result_per_station)
+    kge_result <- calculate_kge(prediction_data, validation_data, grdc_no, cell_no_land)
+
+    return(kge_result)
+  } else {
+    print(paste("Files not found for cell_no_land:", cell_no_land, "or grdc_no:", grdc_no))
+    return(NULL)
+  }
 }
 
+# Function to calculate KGE
+calculate_kge <- function(prediction_data, validation_data, grdc_no, cell_no_land) {
 
-# Save results
-#outputDir <- '/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation_NEW_Areafiltered/'
-outputDir  <- '/scratch/sutan101/glorif1_work/rseg_validation/glorif1/'
-dir.create(outputDir, showWarnings = F, recursive = T)
-write.csv(results, paste0(outputDir, 'kge_results_glorif_rseg_validation.csv'), row.names = F)
+  # Ensure datetime columns are in the same format
+  prediction_data$datetime <- as.Date(prediction_data$datetime)
+  validation_data$datetime <- as.Date(validation_data$datetime)
+
+#~ print(prediction_data)
+#~ print(validation_data)
+
+# Count non-NA and non-NaN values in validation data
+valid_length <- sum(!is.na(validation_data$obs) & !is.nan(validation_data$obs))
+# Print the result
+print(valid_length)
+
+check_cor = cor(validation_data$obs, prediction_data$simulation, use="pairwise.complete.obs")
+print(check_cor)
+
+if (is.na(check_cor) | is.na(check_cor)) {
+
+KGE = NA 
+KGE_r = NA
+KGE_alpha = NA
+KGE_beta = NA
+NSE = NA
+RMSE = NA
+MAE = NA
+nRMSE = NA
+nMAE = NA
+mean_obs = NA
+mean_sim = NA
+
+} else {
+
+simulation = prediction_data$simulation
+obs = validation_data$obs
+res = obs - simulation
+
+      KGE = KGE(sim = simulation, obs = obs, s = c(1, 1, 1), na.rm = T, method = "2009")
+      KGE_r = cor(obs, simulation, method = 'pearson', use = 'complete.obs')
+      KGE_alpha = sd(simulation, na.rm = T) / sd(obs, na.rm = T)
+      KGE_beta = mean(simulation, na.rm = T) / mean(obs, na.rm = T)
+      NSE = NSE(sim = simulation, obs = obs, na.rm = T)
+      RMSE = sqrt(mean(res^2, na.rm = T))
+      MAE = mean(abs(res), na.rm = T)
+      nRMSE = sqrt(mean(res^2, na.rm = T)) / mean(obs, na.rm = T)
+      nMAE = mean(abs(res), na.rm = T) / mean(obs, na.rm = T)
+      mean_obs = mean(obs, na.rm = T)
+      mean_sim = mean(simulation, na.rm = T)
+
+}
+
+return(data.frame(cell_no_land,grdc_no,KGE,KGE_r,KGE_alpha,KGE_beta,NSE,RMSE,MAE,nRMSE,nMAE,valid_length,mean_obs,mean_sim))
+
+}
+
