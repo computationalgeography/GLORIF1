@@ -91,7 +91,7 @@ res = obs - pcr_corrected
 
 }
 
-return(c(cell_no_land,grdc_no,KGE,KGE_r,KGE_alpha,KGE_beta,NSE,RMSE,MAE,nRMSE,nMAE,valid_length))
+return(data.frame(cell_no_land,grdc_no,KGE,KGE_r,KGE_alpha,KGE_beta,NSE,RMSE,MAE,nRMSE,nMAE,valid_length))
 
 }
 
