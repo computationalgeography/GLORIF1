@@ -86,8 +86,8 @@ res = obs - pcr_corrected
       NSE = NSE(sim = pcr_corrected, obs = obs, na.rm = T)
       RMSE = sqrt(mean(res^2, na.rm = T))
       MAE = mean(abs(res), na.rm = T)
-      nRMSE = sqrt(mean(res^2, na.rm = T)) / mean(obs)
-      nMAE = mean(abs(res), na.rm = T) / mean(obs)
+      nRMSE = sqrt(mean(res^2, na.rm = T)) / mean(obs, na.rm = T)
+      nMAE = mean(abs(res), na.rm = T) / mean(obs, na.rm = T)
 
 }
 
