@@ -88,10 +88,12 @@ res = obs - pcr_corrected
       MAE = mean(abs(res), na.rm = T)
       nRMSE = sqrt(mean(res^2, na.rm = T)) / mean(obs, na.rm = T)
       nMAE = mean(abs(res), na.rm = T) / mean(obs, na.rm = T)
+      mean_obs = mean(obs, na.rm = T)
+      mean_sim = mean(pcr_corrected, na.rm = T)
 
 }
 
-return(data.frame(cell_no_land,grdc_no,KGE,KGE_r,KGE_alpha,KGE_beta,NSE,RMSE,MAE,nRMSE,nMAE,valid_length))
+return(data.frame(cell_no_land,grdc_no,KGE,KGE_r,KGE_alpha,KGE_beta,NSE,RMSE,MAE,nRMSE,nMAE,valid_length,mean_obs,mean_sim))
 
 }
 
