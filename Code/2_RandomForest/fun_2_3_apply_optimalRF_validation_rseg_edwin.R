@@ -2,14 +2,15 @@ library(dplyr)
 library(hydroGOF)
 
 # Function to process each mapping entry
-process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no, results) {
+process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no, predictions_dir) {
   cell_no_land <- gsub("\\.0$", "", as.character(mapping_entry$cell_no_land))
   grdc_no <- mapping_entry$grdc_no
 
   #prediction_file <- paste0('/scratch-shared/bisik/predictors/pcr_discharge/pcr_discharge_', cell_no_land, '.csv')
   #prediction_file <- paste0('/scratch-shared/bisik/Data/output/reanalysis_discharge/pcr_rf_reanalysis_monthly_30arcmin_', cell_no_land, '.csv')
    
-   prediction_file <- paste0('/scratch/sutan101/glorif1_txt/reanalysis_discharge/pcr_rf_reanalysis_monthly_30arcmin_', cell_no_land, '.csv')
+#~ prediction_file <- paste0('/scratch/sutan101/glorif1_txt/reanalysis_discharge/pcr_rf_reanalysis_monthly_30arcmin_', cell_no_land, '.csv')
+   prediction_file <- paste0(prediction_dir, cell_no_land, '.csv')
   
   #validation_file <- paste0('/scratch-shared/bisik/Data/validation_data/gsim_discharge/gsim_', gsim.no, '.csv')
   
