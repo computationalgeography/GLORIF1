@@ -42,7 +42,7 @@ column_names = c("cell_no_land","grdc_no","KGE","KGE_r","KGE_alpha","KGE_beta","
 results <- data.frame(matrix(ncol = length(column_names), nrow = 0))
 
 # Process all mappings
-results <- lapply(1:nrow(station_to_pixel_mapping), function(i) {
+lapply(1:nrow(station_to_pixel_mapping), function(i) {
   process_mapping(station_to_pixel_mapping[i, ], rseg_discharge_selected, rseg_grdc_no, results)
 })
 
