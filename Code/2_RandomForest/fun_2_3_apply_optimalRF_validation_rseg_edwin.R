@@ -72,6 +72,8 @@ RMSE = NA
 MAE = NA
 nRMSE = NA
 nMAE = NA
+mean_obs = NA
+mean_sim = NA
 
 } else {
 

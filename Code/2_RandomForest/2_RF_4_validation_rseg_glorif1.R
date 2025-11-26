@@ -38,7 +38,7 @@ rseg_discharge_selected <- rseg_discharge[time_idx,]
 rseg_discharge_selected[which(rseg_discharge_selected < 0.0)] <- NaN
 
 # dataframe to store the results
-column_names = c("cell_no_land","grdc_no","KGE","KGE_r","KGE_alpha","KGE_beta","NSE","RMSE","MAE","nRMSE","nMAE","valid_length")
+column_names = c("cell_no_land","grdc_no","KGE","KGE_r","KGE_alpha","KGE_beta","NSE","RMSE","MAE","nRMSE","nMAE","valid_length", "mean_obs", "mean_sim")
 results <- data.frame(matrix(ncol = length(column_names), nrow = 0))
 
 # Process all mappings
