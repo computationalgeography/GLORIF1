@@ -2,7 +2,7 @@ library(dplyr)
 library(hydroGOF)
 
 # Function to process each mapping entry
-process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no) {
+process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no, results) {
   cell_no_land <- gsub("\\.0$", "", as.character(mapping_entry$cell_no_land))
   grdc_no <- mapping_entry$grdc_no
 
@@ -53,10 +53,27 @@ calculate_kge <- function(prediction_data, validation_data, grdc_no, cell_no_lan
 #~ print(prediction_data)
 #~ print(validation_data)
 
-check_cor = cor(prediction_data$pcr_corrected, validation_data$obs, use="pairwise.complete.obs")
+# Count non-NA and non-NaN values in validation data
+valid_length <- sum(!is.na(validation_data$obs) & !is.nan(validation_data$obs))
+# Print the result
+print(valid_length)
+
+check_cor = cor(validation_data$obs, prediction_data$pcr_corrected, use="pairwise.complete.obs")
 print(check_cor)
 
-if (!is.na(check_cor)) {
+if (is.na(check_cor) or is.na(check_cor)) {
+
+KGE = NA 
+KGE_r = NA
+KGE_alpha = NA
+KGE_beta = NA
+NSE = NA
+RMSE = NA
+MAE = NA
+nRMSE = NA
+nMAE = NA
+
+} else {
 
 pcr_corrected = prediction_data$pcr_corrected
 obs = validation_data$obs
@@ -72,11 +89,9 @@ res = obs - pcr_corrected
       nRMSE = sqrt(mean(res^2, na.rm = T)) / mean(obs)
       nMAE = mean(abs(res), na.rm = T) / mean(obs)
 
-print(KGE)
-
-} else {
-	
 }
 
-return(check_cor) 
 }
+
+# update the dataframe
+results <- rbind(results, c(cell_no_land,grdc_no,KGE,KGE_r,KGE_alpha,KGE_beta,NSE,RMSE,MAE,nRMSE,nMAE,valid_length))
