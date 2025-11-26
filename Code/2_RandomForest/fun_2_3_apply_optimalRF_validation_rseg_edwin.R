@@ -93,5 +93,4 @@ res = obs - pcr_corrected
 
 }
 
-# update the dataframe
-results <- rbind(results, c(cell_no_land,grdc_no,KGE,KGE_r,KGE_alpha,KGE_beta,NSE,RMSE,MAE,nRMSE,nMAE,valid_length))
+return c(cell_no_land,grdc_no,KGE,KGE_r,KGE_alpha,KGE_beta,NSE,RMSE,MAE,nRMSE,nMAE,valid_length))
