@@ -61,7 +61,7 @@ print(valid_length)
 check_cor = cor(validation_data$obs, prediction_data$pcr_corrected, use="pairwise.complete.obs")
 print(check_cor)
 
-if (is.na(check_cor) or is.na(check_cor)) {
+if (is.na(check_cor) | is.na(check_cor)) {
 
 KGE = NA 
 KGE_r = NA
