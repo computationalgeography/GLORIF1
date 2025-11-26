@@ -21,6 +21,9 @@ process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no
     print(paste("Processing cell_no_land:", cell_no_land, "grdc_no:", grdc_no))
     prediction_data <- read.csv(prediction_file)
 
+# set the name of prediction value
+names(prediction_data)[2] <- "simulation"
+
 #~ print(names(prediction_data))
 #~ piet
 
@@ -59,7 +62,7 @@ valid_length <- sum(!is.na(validation_data$obs) & !is.nan(validation_data$obs))
 # Print the result
 print(valid_length)
 
-check_cor = cor(validation_data$obs, prediction_data$pcr_corrected, use="pairwise.complete.obs")
+check_cor = cor(validation_data$obs, prediction_data$simulation, use="pairwise.complete.obs")
 print(check_cor)
 
 if (is.na(check_cor) | is.na(check_cor)) {
@@ -78,21 +81,21 @@ mean_sim = NA
 
 } else {
 
-pcr_corrected = prediction_data$pcr_corrected
+simulation = prediction_data$simulation
 obs = validation_data$obs
-res = obs - pcr_corrected
+res = obs - simulation
 
-      KGE = KGE(sim = pcr_corrected, obs = obs, s = c(1, 1, 1), na.rm = T, method = "2009")
-      KGE_r = cor(obs, pcr_corrected, method = 'pearson', use = 'complete.obs')
-      KGE_alpha = sd(pcr_corrected, na.rm = T) / sd(obs, na.rm = T)
-      KGE_beta = mean(pcr_corrected, na.rm = T) / mean(obs, na.rm = T)
-      NSE = NSE(sim = pcr_corrected, obs = obs, na.rm = T)
+      KGE = KGE(sim = simulation, obs = obs, s = c(1, 1, 1), na.rm = T, method = "2009")
+      KGE_r = cor(obs, simulation, method = 'pearson', use = 'complete.obs')
+      KGE_alpha = sd(simulation, na.rm = T) / sd(obs, na.rm = T)
+      KGE_beta = mean(simulation, na.rm = T) / mean(obs, na.rm = T)
+      NSE = NSE(sim = simulation, obs = obs, na.rm = T)
       RMSE = sqrt(mean(res^2, na.rm = T))
       MAE = mean(abs(res), na.rm = T)
       nRMSE = sqrt(mean(res^2, na.rm = T)) / mean(obs, na.rm = T)
       nMAE = mean(abs(res), na.rm = T) / mean(obs, na.rm = T)
       mean_obs = mean(obs, na.rm = T)
-      mean_sim = mean(pcr_corrected, na.rm = T)
+      mean_sim = mean(simulation, na.rm = T)
 
 }
 
