@@ -52,7 +52,6 @@ for (i in 1:nrow(station_to_pixel_mapping)) {
 
 
 # Save results
-#outputDir <- '/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation_NEW_Areafiltered/'
-outputDir  <- '/scratch/sutan101/glorif1_work/rseg_validation/glorif1/'
+outputDir  <- '/scratch/sutan101/glorif1_work/rseg_validation/'
 dir.create(outputDir, showWarnings = F, recursive = T)
 write.csv(results, paste0(outputDir, 'kge_results_pgb_rseg_validation.csv'), row.names = F)
