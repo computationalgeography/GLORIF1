@@ -46,8 +46,7 @@ for (i in 1:nrow(station_to_pixel_mapping)) {
   result_per_station = process_mapping(station_to_pixel_mapping[i, ], rseg_discharge_selected, rseg_grdc_no, results)
   print(result_per_station)
   results = rbind(results, result_per_station)
-})
-
+}
 
 
 # Save results
