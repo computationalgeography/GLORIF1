@@ -10,7 +10,7 @@ process_mapping <- function(mapping_entry, rseg_discharge_selected, rseg_grdc_no
   #prediction_file <- paste0('/scratch-shared/bisik/Data/output/reanalysis_discharge/pcr_rf_reanalysis_monthly_30arcmin_', cell_no_land, '.csv')
    
 #~ prediction_file <- paste0('/scratch/sutan101/glorif1_txt/reanalysis_discharge/pcr_rf_reanalysis_monthly_30arcmin_', cell_no_land, '.csv')
-   prediction_file <- paste0(prediction_dir, cell_no_land, '.csv')
+   prediction_file <- paste0(predictions_dir, cell_no_land, '.csv')
   
   #validation_file <- paste0('/scratch-shared/bisik/Data/validation_data/gsim_discharge/gsim_', gsim.no, '.csv')
   
