@@ -111,7 +111,7 @@ def create_nc(list_of_stations, input_csv_files_folder, input_file_pattern, outp
     
     # use a csv file to get time series of dates (time stamps)
     
-    with open(input_csv_files_folder + "/" + str(input_file_pattern) + str("13.csv")) as file_name:
+    with open(input_csv_files_folder + "/" + str(input_file_pattern) + str("13.csv"), "r") as file_name:
         array = np.loadtxt(file_name, delimiter=",", skiprows = 1, dtype = "str")
     date_string = array[:,0]
 
@@ -150,7 +150,7 @@ def create_nc(list_of_stations, input_csv_files_folder, input_file_pattern, outp
 
         csv_file = input_csv_files_folder + "/" + str(input_file_pattern) + str(int(station_nums[i])) + ".csv"
 
-        with open(csv_file) as file_name:
+        with open(csv_file, "r") as file_name:
             array = np.loadtxt(file_name, delimiter=",", skiprows = 1, dtype = "str")
         values = array[:,1].astype(float)
 
