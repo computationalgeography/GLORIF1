@@ -170,7 +170,7 @@ def main():
     # ~ create_nc(list_of_stations = "/scratch/6574882/reanalysis/stationLatLon.csv", input_csv_files_folder = "/scratch/6574882/reanalysis/reanalysis_discharge/", output_nc_file = "reanalysis_discharge_30arcmin.nc")
 
     list_of_stations       = "/scratch/sutan101/glorif1_work/glorif1_from_snellius/glorif1/original/version_1.0/preprocess/preprocess_grdc/stationLatLon_PCR.csv"
-    input_csv_files_folder = "/scratch/sutan101/glorif1_work/glorif1_from_snellius/Data/output/" 
+    input_csv_files_folder = "/scratch/sutan101/glorif1_work/glorif1_from_snellius/Data/output/reanalysis_flowdepth_quantile/" 
     input_file_pattern     = "pcr_rf_reanalysis_monthly_30arcmin_0p50_"
     output_nc_file         = "/scratch/sutan101/glorif1_work/netcdf/glorif1_discharge_0p50_30min_monthly.nc" 
     
