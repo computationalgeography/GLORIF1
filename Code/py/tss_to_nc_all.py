@@ -151,24 +151,21 @@ def create_nc(list_of_stations, input_csv_files_folder, input_file_pattern, outp
         csv_file = input_csv_files_folder + "/" + str(input_file_pattern) + str(int(station_nums[i])) + ".csv"
 
         try:
-        
             with open(csv_file, "r") as file_name:
                 array = np.loadtxt(file_name, delimiter=",", skiprows = 1, dtype = "str")
             values = array[:,1].astype(float)
-		    
-            lat_ind = int(np.where(latitude  == station_lats[i])[0][0])
-            lon_ind = int(np.where(longitude == station_lons[i])[0][0])
-            
-            rootgrp.variables[shortVarName][:,lat_ind,lon_ind] = values
-		    
-            rootgrp.sync()
-            rootgrp.close()
-            
-            print(csv_file)
-
         except:
+            values = [0] * len(date_string)
 
-            pass
+        lat_ind = int(np.where(latitude  == station_lats[i])[0][0])
+        lon_ind = int(np.where(longitude == station_lons[i])[0][0])
+        
+        rootgrp.variables[shortVarName][:,lat_ind,lon_ind] = values
+        rootgrp.sync()
+        rootgrp.close()
+        
+        print(csv_file)
+
 
     
 def main():
