@@ -174,8 +174,8 @@ def main():
 
     list_of_stations       = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/stationLatLon_PCR.csv"
     input_csv_files_folder = "/scratch-shared/edwin/Data/output/reanalysis_flowdepth_quantile/" 
-    input_file_pattern     = "pcr_rf_reanalysis_monthly_30arcmin_0p05_"
-    output_nc_file         = "/scratch-shared/edwin/Data/output/netcdf/percentile_50/glorif1_discharge_0p05_30min_monthly.nc" 
+    input_file_pattern     = "pcr_rf_reanalysis_monthly_30arcmin_0p95_"
+    output_nc_file         = "/scratch-shared/edwin/Data/output/netcdf/percentile_50/glorif1_discharge_0p95_30min_monthly.nc" 
     
 # ~ sutan101@velocity.geo.uu.nl:/scratch/sutan101/glorif1_work/glorif1_from_snellius/Data/output$ ls -lah reanalysis_flowdepth_quantile/*_9.csv
 # ~ -rw-r--r-- 1 1111 cgred 6.3K Nov 23 19:52 reanalysis_flowdepth_quantile/pcr_rf_reanalysis_monthly_30arcmin_0p05_9.csv
