@@ -173,10 +173,16 @@ def main():
     # ~ create_nc(list_of_stations = "/scratch/6574882/reanalysis/stationLatLon.csv", input_csv_files_folder = "/scratch/6574882/reanalysis/reanalysis_discharge/", output_nc_file = "reanalysis_discharge_30arcmin.nc")
 
     list_of_stations       = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/stationLatLon_PCR.csv"
-    input_csv_files_folder = "/scratch-shared/edwin/Data/output/reanalysis_flowdepth_quantile/" 
-    input_file_pattern     = "pcr_rf_reanalysis_monthly_30arcmin_0p05_"
-    output_nc_file         = "/scratch-shared/edwin/Data/output/netcdf/percentile_05/glorif1_discharge_0p05_30min_monthly.nc" 
+    input_csv_files_folder = "/scratch-shared/edwin/Data/output/reanalysis_flowdepth_quantile_95confint/"
+    input_file_pattern     = "pcr_rf_reanalysis_monthly_30arcmin_0p025_"
+    output_nc_file         = "/scratch-shared/edwin/Data/output/netcdf/percentile_05/glorif1_discharge_0p025_30min_monthly.nc" 
     
+# ~ edwin@tcn586.local.snellius.surf.nl:/scratch-shared/edwin/Data/output$ ls -lah */*_9.csv
+# ~ -r--r--r--. 1 edwin edwin 6.3K Dec  5 18:43 reanalysis_flowdepth_quantile_95confint/pcr_rf_reanalysis_monthly_30arcmin_0p025_9.csv
+# ~ -r--r--r--. 1 edwin edwin 6.3K Dec  5 18:43 reanalysis_flowdepth_quantile_95confint/pcr_rf_reanalysis_monthly_30arcmin_0p500_9.csv
+# ~ -r--r--r--. 1 edwin edwin 6.3K Dec  5 18:43 reanalysis_flowdepth_quantile_95confint/pcr_rf_reanalysis_monthly_30arcmin_0p975_9.csv
+
+
 # ~ sutan101@velocity.geo.uu.nl:/scratch/sutan101/glorif1_work/glorif1_from_snellius/Data/output$ ls -lah reanalysis_flowdepth_quantile/*_9.csv
 # ~ -rw-r--r-- 1 1111 cgred 6.3K Nov 23 19:52 reanalysis_flowdepth_quantile/pcr_rf_reanalysis_monthly_30arcmin_0p05_9.csv
 # ~ -rw-r--r-- 1 1111 cgred 6.3K Nov 23 19:53 reanalysis_flowdepth_quantile/pcr_rf_reanalysis_monthly_30arcmin_0p50_9.csv
