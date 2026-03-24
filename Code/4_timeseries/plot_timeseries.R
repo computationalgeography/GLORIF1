@@ -105,6 +105,7 @@ names(merged_table)[7] <- "percentile_97p5"
 # x and y- axis scales:
 y_min = 0
 y_max = max(merged_table$percentile_97p5)
+y_max = max(merged_table$GSIM)
 if (y_max > 100) {y_max = ceiling((y_max+75)/100)*100} else {y_max = 100}
 #
 #~ x_min = min(merged_table$date,na.rm=T) - 365*5
