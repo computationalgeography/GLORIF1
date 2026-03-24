@@ -73,6 +73,7 @@ pcrglobwb_discharge <- ncvar_get(pcrglobwb_nc, "discharge")
 pcrglobwb_lat <- ncvar_get(pcrglobwb_nc, "lat")
 pcrglobwb_lon <- ncvar_get(pcrglobwb_nc, "lon")
 pcrglobwb_discharge_selected <- pcrglobwb_discharge[which(pcrglobwb_lon == lon), which(pcrglobwb_lat == lat), ]
+merged_table = cbind(merged_table, pcrglobwb_discharge_selected)
 names(merged_table)[5] <- "PCR-GLOBWB"
 
 # load the percentile time series
