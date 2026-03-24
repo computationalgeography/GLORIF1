@@ -124,7 +124,7 @@ outplott <- outplott +
 
  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_02p5, ymax = percentile_97p5), fill = "grey70") +
  geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "red",   linewidth = 1.25)  +  # measurement (gsim)
- geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "yellow", linewidth = 1.00)  +  # measurement (rseg)
+ geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "yellow", linewidth = 0.50)  +  # measurement (rseg)
  geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.25)  +  # original pcrglobwb
  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.35) +  # model results
 
