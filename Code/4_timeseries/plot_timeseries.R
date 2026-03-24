@@ -74,7 +74,7 @@ pcrglobwb_lat <- ncvar_get(pcrglobwb_nc, "lat")
 pcrglobwb_lon <- ncvar_get(pcrglobwb_nc, "lon")
 pcrglobwb_discharge_selected <- pcrglobwb_discharge[which(pcrglobwb_lon == lon), which(pcrglobwb_lat == lat), ]
 merged_table = cbind(merged_table, pcrglobwb_discharge_selected)
-names(merged_table)[5] <- "PCR-GLOBWB"
+names(merged_table)[5] <- "PCRGLOBWB"
 
 # load the percentile time series
 # - 2.5%
@@ -122,7 +122,7 @@ outplott <- outplott +
  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_97p5, ymax = percentile_97p5), fill = "grey70") +
  geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "red")  +  # measurement (gsim)
  geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "green")  +  # measurement (rseg)
- geom_line(data = merged_table, mapping = aes(x = date, y = PCR-GLOBWB ), color = "black")  +  # original pcrglobwb
+ geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black")  +  # original pcrglobwb
  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue") +  # model results
 
 
