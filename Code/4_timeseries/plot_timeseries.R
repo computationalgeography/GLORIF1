@@ -32,7 +32,7 @@ rseg_station_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/dataset
 rseg_station_table = read.csv(rseg_station_table_filename, header = TRUE)
 # - rseg code (if corresponding with gsim)
 rseg_code = rseg_station_table$grdc_no[which(rseg_station_table$lat == lat & rseg_station_table$lon == lon)]
-if (len(rseg_code) > 0) {
+if (length(rseg_code) > 0) {
 rseg_nc_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/rseg/rseg_grdc/RSEG_V01.nc"
 rseg_nc <- nc_open(rseg_nc_filename)
 rseg_grdc_no   <- ncvar_get(rseg_nc, "GRDC_Num")
