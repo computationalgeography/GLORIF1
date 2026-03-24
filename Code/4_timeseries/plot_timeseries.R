@@ -6,6 +6,7 @@ library(ncdf4)
 # gsim station code
 # - chosen by Busra: AU_0000107, BR_0000611, RU_0000141, ZW_0000064, ZA_0000008, CN_0000001
 gsim_code = "AU_0000107"
+gsim_code = "CN_0000001"
 
 # get the coordinates
 gsim_station_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/gsim/preprocess_gsim/station_pixel_mapping_gsim.csv"
