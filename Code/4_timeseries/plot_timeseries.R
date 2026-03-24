@@ -67,7 +67,7 @@ merged_table = cbind(merged_table, glorif1_discharge_selected)
 names(merged_table)[4] <- "GLORIF1"
 
 # load the pcrglobwb time series
-pcrglobwb_nc_filename = "/scratch-shared/edwin/_finalizing_pcrglobwb/datasets_for_plots/pcrglobwb_discharge_30min_monthly.nc"
+pcrglobwb_nc_filename = "/scratch-shared/edwin/_finalizing_pcrglobwb/datasets_for_plots/pcrglobwb_discharge_original_30min_monthly.nc"
 pcrglobwb_nc <- nc_open(pcrglobwb_nc_filename)
 pcrglobwb_discharge <- ncvar_get(pcrglobwb_nc, "discharge") 
 pcrglobwb_lat <- ncvar_get(pcrglobwb_nc, "lat")
