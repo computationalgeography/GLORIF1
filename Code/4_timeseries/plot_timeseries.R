@@ -22,6 +22,7 @@ gsim_time_series = read.csv(gsim_stat_filename, header = TRUE)
 merged_table = gsim_time_series
 names(merged_table)[1] <- "date"
 names(merged_table)[2] <- "GSIM"
+merged_table$date <- as.Date(merged_table$date)
 
 # rseg time series (if exist)
 # - start with an empty table
