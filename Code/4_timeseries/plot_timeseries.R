@@ -104,10 +104,10 @@ y_min = 0
 y_max = max(merged_table$percentile_97p5)
 if (y_max > 100) {y_max = ceiling((y_max+75)/100)*100} else {y_max = 100}
 #
-x_min = min(merged_table$date,na.rm=T) - 365*5
-x_max = max(merged_table$date,na.rm=T)
-#
-x_info_text = x_min + 365*0.5
+#~ x_min = min(merged_table$date,na.rm=T) - 365*5
+#~ x_max = max(merged_table$date,na.rm=T)
+#~ #
+#~ x_info_text = x_min + 365*0.5
 
 #~ https://ggplot2.tidyverse.org/reference/geom_ribbon.html
 
@@ -148,7 +148,7 @@ outplott <- outplott +
 #~  geom_text(aes(x = x_info_text, y = 0.00*y_max, label = paste(" correlation = ",round(correlation,2),sep="")), size = 2.5,hjust = 0) +
 #~ #
  scale_y_continuous("discharge",limits=c(y_min,y_max)) +
- scale_x_date('',limits=c(x_min,x_max)) +
+#~  scale_x_date('',limits=c(x_min,x_max)) +
  theme(legend.position = "none") 
 #ggsave("screen.pdf", plot = outplott,width=30,height=8.25,units='cm')
  outputFile = "test"
