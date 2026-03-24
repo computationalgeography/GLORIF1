@@ -161,4 +161,4 @@ outplott <- outplott +
  outputFile = "test"
  ggsave(paste(outputFile,".pdf",sep=""), plot = outplott,width=27,height=7,units='cm')
 #
-rm(outplott)
+#rm(outplott)
