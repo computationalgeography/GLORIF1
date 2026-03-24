@@ -85,7 +85,7 @@ percentile_02p5_lat <- ncvar_get(percentile_02p5_nc, "lat")
 percentile_02p5_lon <- ncvar_get(percentile_02p5_nc, "lon")
 percentile_02p5_discharge_selected <- percentile_02p5_discharge[which(percentile_02p5_lon == lon), which(percentile_02p5_lat == lat), ]
 merged_table = cbind(merged_table, percentile_02p5_discharge_selected)
-names(merged_table)[5] <- "percentile_02p5"
+names(merged_table)[6] <- "percentile_02p5"
 # - 97.5%
 percentile_97p5_nc_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/glorif1_discharge_0p975_30min_monthly.nc"
 percentile_97p5_nc <- nc_open(percentile_97p5_nc_filename)
@@ -94,7 +94,7 @@ percentile_97p5_lat <- ncvar_get(percentile_97p5_nc, "lat")
 percentile_97p5_lon <- ncvar_get(percentile_97p5_nc, "lon")
 percentile_97p5_discharge_selected <- percentile_97p5_discharge[which(percentile_97p5_lon == lon), which(percentile_97p5_lat == lat), ]
 merged_table = cbind(merged_table, percentile_97p5_discharge_selected)
-names(merged_table)[6] <- "percentile_97p5"
+names(merged_table)[7] <- "percentile_97p5"
 
 # Plotting the monthly chart !
 ####################################################################################################################################
