@@ -123,7 +123,7 @@ outplott <- outplott +
  geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "red")  +  # measurement (gsim)
  geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "green")  +  # measurement (rseg)
  geom_line(data = merged_table, mapping = aes(x = date, y = PCR-GLOBWB ), color = "black")  +  # original pcrglobwb
- geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue" +  # model results
+ geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue") +  # model results
 
 
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = observation), color =  "red") + # measurement
