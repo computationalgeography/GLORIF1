@@ -8,6 +8,7 @@ library(ncdf4)
 gsim_code = "AU_0000107"
 gsim_code = "CN_0000001"
 gsim_code = "ZA_0000008"
+gsim_code = "ZW_0000064"
 
 # get the coordinates
 gsim_station_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/gsim/preprocess_gsim/station_pixel_mapping_gsim.csv"
@@ -105,7 +106,7 @@ names(merged_table)[7] <- "percentile_97p5"
 # x and y- axis scales:
 y_min = 0
 y_max = max(merged_table$percentile_97p5)
-y_max = max(merged_table$GLORIF1)
+#~ y_max = max(merged_table$GLORIF1)
 if (y_max > 100) {y_max = ceiling((y_max+75)/100)*100} else {y_max = 100}
 #
 #~ x_min = min(merged_table$date,na.rm=T) - 365*5
