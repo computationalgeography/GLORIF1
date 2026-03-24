@@ -113,11 +113,18 @@ if (y_max > 100) {y_max = ceiling((y_max+75)/100)*100} else {y_max = 100}
 
 outplott <- ggplot()
 outplott <- outplott +
+#~  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_97p5, ymax = percentile_97p5), fill = "grey70") +
+#~  geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "red",  size = 0.90)  +  # measurement (gsim)
+#~  geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "green", size = 0.90)  +  # measurement (rseg)
+#~  geom_line(data = merged_table, mapping = aes(x = date, y = PCR-GLOBWB ), color = "black", size = 0.25)  +  # original pcrglobwb
+#~  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue",  size = 0.35 ) +  # model results
+
  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_97p5, ymax = percentile_97p5), fill = "grey70") +
- geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "red",  size = 0.90)  +  # measurement (gsim)
- geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "green", size = 0.90)  +  # measurement (rseg)
- geom_line(data = merged_table, mapping = aes(x = date, y = PCR-GLOBWB ), color = "black", size = 0.25)  +  # original pcrglobwb
- geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue",  size = 0.35 ) +  # model results
+ geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "red")  +  # measurement (gsim)
+ geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "green")  +  # measurement (rseg)
+ geom_line(data = merged_table, mapping = aes(x = date, y = PCR-GLOBWB ), color = "black")  +  # original pcrglobwb
+ geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue" +  # model results
+
 
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = observation), color =  "red") + # measurement
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = simulation ), color = "blue") + # model results
