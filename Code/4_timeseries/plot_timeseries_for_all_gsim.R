@@ -118,10 +118,9 @@ names(merged_table)[7] <- "percentile_97p5"
 # x and y- axis scales:
 y_min = 0
 #~ y_max = max(merged_table$GLORIF1)
-y_max = max(merged_table$percentile_97p5)
+#~ y_max = max(merged_table$percentile_97p5)
 y_max = quantile(merged_table$percentile_97p5,  probs = c(0.1, 97.5)/100)[2]
-
-#~ y_max = max(merged_table[,2:5], na.rm=TRUE)
+y_max = max(y_max, merged_table[,2:5], na.rm=TRUE)
 if (y_max > 100) {y_max = ceiling((y_max+75)/100)*100} else {y_max = 100}
 #
 x_min = min(merged_table$date,na.rm=T) - 365*5
