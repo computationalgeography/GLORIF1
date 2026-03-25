@@ -59,6 +59,10 @@ grdc_idx = which(rseg_grdc_no == rseg_code)
 # Extract the time series and add it to the table
 rseg_time_series = rseg_discharge_selected[, grdc_idx]    
 merged_table$RSEG = rseg_time_series
+
+merged_table
+grdc_idx
+
 }
 
 # load the GLORIF1 time series
@@ -135,8 +139,8 @@ outplott <- outplott +
  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_02p5, ymax = percentile_97p5), fill = "grey70") +
  geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "red", linewidth = 1.2)  +  # measurement (rseg)
  geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "yellow",   linewidth = 1.0)  +  # measurement (gsim)
- geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.3)  +  # original pcrglobwb
- geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.4) +  # model results
+#~  geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.3)  +  # original pcrglobwb
+#~  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.4) +  # model results
 
 
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = observation), color =  "red") + # measurement
