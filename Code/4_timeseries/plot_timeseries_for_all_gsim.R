@@ -119,6 +119,7 @@ names(merged_table)[7] <- "percentile_97p5"
 y_min = 0
 #~ y_max = max(merged_table$percentile_97p5)
 y_max = max(merged_table$GLORIF1)
+y_max = max(merged_table[,2:5], na.rm=TRUE)
 if (y_max > 100) {y_max = ceiling((y_max+75)/100)*100} else {y_max = 100}
 #
 x_min = min(merged_table$date,na.rm=T) - 365*5
@@ -130,16 +131,12 @@ x_info_text = x_min + 365*0.5
 #~ https://ggplot2.tidyverse.org/reference/geom_ribbon.html
 #~ https://stackoverflow.com/questions/38777337/ggplot-ribbon-cut-off-at-y-limits
 
+# for plotting purpose, limit percentile_97p5 to ymax
+merged_table$percentile_97p5[which(merged_table$percentile_97p5 > y_max)] = y_max
+
 outplott <- ggplot()
 outplott <- outplott +
- scale_y_continuous("discharge",limits=c(y_min,y_max)) +
- scale_x_date('',limits=c(x_min,x_max)) +
- theme(legend.position = "none") 
-
-
-outplott <- outplott +
-
-#~  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_97p5, ymax = percentile_97p5), fill = "grey70") +
+#~  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_97p5, ymax = ), fill = "grey70") +
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "red",  size = 0.90)  +  # measurement (gsim)
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "green", size = 0.90)  +  # measurement (rseg)
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = PCR-GLOBWB ), color = "black", size = 0.25)  +  # original pcrglobwb
@@ -150,6 +147,7 @@ outplott <- outplott +
  geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "red", linewidth = 0.5, alpha = 0.8)  +  # measurement (rseg)
  geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.1)  +  # original pcrglobwb
  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.3) +  # model results
+
 
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = observation), color =  "red") + # measurement
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = simulation ), color = "blue") + # model results
@@ -179,12 +177,9 @@ outplott <- outplott +
 #~  geom_text(aes(x = x_info_text, y = 0.05*y_max, label = paste(" sd obs/sim = ", round(sd_obs     ,2)," / ",round(sd_sim ,2),sep="")), size = 2.5,hjust = 0) +
 #~  geom_text(aes(x = x_info_text, y = 0.00*y_max, label = paste(" correlation = ",round(correlation,2),sep="")), size = 2.5,hjust = 0) +
 #~ #
-#~  scale_y_continuous("discharge",limits=c(y_min,y_max)) +
-#~  scale_x_date('',limits=c(x_min,x_max)) +
-
-  scale_y_continuous() + 
-  coord_cartesian(xlim = c(x_min, x_max), ylim = c(y_min, y_max)) 
-
+ scale_y_continuous("discharge",limits=c(y_min,y_max)) +
+ scale_x_date('',limits=c(x_min,x_max)) +
+ theme(legend.position = "none") 
 #ggsave("screen.pdf", plot = outplott,width=30,height=8.25,units='cm')
  outputFile = "test"
  ggsave(paste(outputFile,".pdf",sep=""), plot = outplott,width=27,height=7,units='cm')
