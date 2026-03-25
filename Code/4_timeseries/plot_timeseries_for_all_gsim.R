@@ -51,7 +51,7 @@ time_idx   <- which(rseg_time >= start_date & rseg_time <= end_date)
 # - Discharge 1979-2019 only
 rseg_discharge_selected <- rseg_discharge[time_idx,]
 # - Set all negative to NaN
-rseg_discharge_selected[which(rseg_discharge_selected < 0.0)] <- NA
+#~ rseg_discharge_selected[which(rseg_discharge_selected < 0.0)] <- NA
 
 # get the GRDC idx
 grdc_idx = which(rseg_grdc_no == rseg_code)
