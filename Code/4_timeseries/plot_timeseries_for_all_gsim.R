@@ -8,8 +8,8 @@ library(ncdf4)
 #~ gsim_code = "AU_0000107"
 #~ gsim_code = "CN_0000001"
 #~ gsim_code = "ZA_0000008"
-gsim_code = "ZW_0000064"
-#~ gsim_code = "RU_0000141"
+#~ gsim_code = "ZW_0000064"
+gsim_code = "RU_0000141"
 
 # get the coordinates
 gsim_station_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/gsim/preprocess_gsim/station_pixel_mapping_gsim.csv"
@@ -177,7 +177,7 @@ outplott <- outplott +
 #~  geom_text(aes(x = x_info_text, y = 0.05*y_max, label = paste(" sd obs/sim = ", round(sd_obs     ,2)," / ",round(sd_sim ,2),sep="")), size = 2.5,hjust = 0) +
 #~  geom_text(aes(x = x_info_text, y = 0.00*y_max, label = paste(" correlation = ",round(correlation,2),sep="")), size = 2.5,hjust = 0) +
 #~ #
- scale_y_continuous("discharge",limits=c(y_min,y_max)) +
+ scale_y_continuous("discharge (m3/s)",limits=c(y_min,y_max)) +
  scale_x_date('',limits=c(x_min,x_max)) +
  theme(legend.position = "none") 
 #ggsave("screen.pdf", plot = outplott,width=30,height=8.25,units='cm')
