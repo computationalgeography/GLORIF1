@@ -5,11 +5,11 @@ library(ncdf4)
 
 # gsim station code
 # - chosen by Busra: AU_0000107, BR_0000611, RU_0000141, ZW_0000064, ZA_0000008, CN_0000001
-gsim_code = "AU_0000107"
-gsim_code = "CN_0000001"
+#~ gsim_code = "AU_0000107"
+#~ gsim_code = "CN_0000001"
 gsim_code = "ZA_0000008"
-gsim_code = "ZW_0000064"
-gsim_code = "RU_0000141"
+#~ gsim_code = "ZW_0000064"
+#~ gsim_code = "RU_0000141"
 
 # get the coordinates
 gsim_station_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/gsim/preprocess_gsim/station_pixel_mapping_gsim.csv"
@@ -132,8 +132,8 @@ outplott <- outplott +
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue",  size = 0.35 ) +  # model results
 
  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_02p5, ymax = percentile_97p5), fill = "grey70") +
+ geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "red", linewidth = 1.2)  +  # measurement (rseg)
  geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "yellow",   linewidth = 1.0)  +  # measurement (gsim)
- geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "red", linewidth = 0.8)  +  # measurement (rseg)
  geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.3)  +  # original pcrglobwb
  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.4) +  # model results
 
