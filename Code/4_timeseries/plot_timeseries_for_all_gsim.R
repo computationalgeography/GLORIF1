@@ -51,7 +51,7 @@ time_idx   <- which(rseg_time >= start_date & rseg_time <= end_date)
 # - Discharge 1979-2019 only
 rseg_discharge_selected <- rseg_discharge[time_idx,]
 # - Set all negative to NaN
-#~ rseg_discharge_selected[which(rseg_discharge_selected < 0.0)] <- NA
+rseg_discharge_selected[which(rseg_discharge_selected < 0.0)] <- NA
 
 # get the GRDC idx
 grdc_idx = which(rseg_grdc_no == rseg_code)
@@ -139,8 +139,8 @@ outplott <- outplott +
  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_02p5, ymax = percentile_97p5), fill = "grey70") +
  geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "red", linewidth = 1.2)  +  # measurement (rseg)
  geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "yellow",   linewidth = 0.7)  +  # measurement (gsim)
-#~  geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.3)  +  # original pcrglobwb
-#~  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.4) +  # model results
+ geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.3)  +  # original pcrglobwb
+ geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.4) +  # model results
 
 
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = observation), color =  "red") + # measurement
