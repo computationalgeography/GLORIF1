@@ -7,8 +7,8 @@ library(ncdf4)
 # - chosen by Busra: AU_0000107, BR_0000611, RU_0000141, ZW_0000064, ZA_0000008, CN_0000001
 #~ gsim_code = "AU_0000107"
 #~ gsim_code = "CN_0000001"
-gsim_code = "ZA_0000008"
-#~ gsim_code = "ZW_0000064"
+#~ gsim_code = "ZA_0000008"
+gsim_code = "ZW_0000064"
 #~ gsim_code = "RU_0000141"
 
 # get the coordinates
