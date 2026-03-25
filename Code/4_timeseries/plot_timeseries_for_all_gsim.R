@@ -126,7 +126,9 @@ x_max = max(merged_table$date,na.rm=T)
 #
 x_info_text = x_min + 365*0.5
 
+#~ # about geom_ribbon
 #~ https://ggplot2.tidyverse.org/reference/geom_ribbon.html
+#~ https://stackoverflow.com/questions/38777337/ggplot-ribbon-cut-off-at-y-limits
 
 outplott <- ggplot()
 outplott <- outplott +
@@ -137,8 +139,8 @@ outplott <- outplott +
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue",  size = 0.35 ) +  # model results
 
  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_02p5, ymax = percentile_97p5), fill = "grey70") +
- geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "yellow",   linewidth = 1.0)  +  # measurement (gsim)
- geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "red", linewidth = 0.5)  +  # measurement (rseg)
+ geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "yellow",   linewidth = 1.2)  +  # measurement (gsim)
+ geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "red", linewidth = 0.5, alpha = 0.2)  +  # measurement (rseg)
  geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.1)  +  # original pcrglobwb
  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.3) +  # model results
 
