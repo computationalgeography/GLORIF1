@@ -180,7 +180,8 @@ outplott <- outplott +
 #~  geom_text(aes(x = x_info_text, y = 0.05*y_max, label = paste(" sd obs/sim = ", round(sd_obs     ,2)," / ",round(sd_sim ,2),sep="")), size = 2.5,hjust = 0) +
 #~  geom_text(aes(x = x_info_text, y = 0.00*y_max, label = paste(" correlation = ",round(correlation,2),sep="")), size = 2.5,hjust = 0) +
 #~ #
- scale_y_continuous("discharge (m3/s)",limits=c(y_min,y_max)) +
+#~  scale_y_continuous("discharge (m^3/s)",limits=c(y_min,y_max)) +
+ scale_y_continuous(name = expression("discharge (m"^3*"/s)"),limits=c(y_min,y_max)) +
  scale_x_date('',limits=c(x_min,x_max)) +
  theme(legend.position = "none") 
 #ggsave("screen.pdf", plot = outplott,width=30,height=8.25,units='cm')
