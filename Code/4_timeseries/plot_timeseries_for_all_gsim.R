@@ -132,6 +132,13 @@ x_info_text = x_min + 365*0.5
 
 outplott <- ggplot()
 outplott <- outplott +
+ scale_y_continuous("discharge",limits=c(y_min,y_max)) +
+ scale_x_date('',limits=c(x_min,x_max)) +
+ theme(legend.position = "none") 
+
+
+outplott <- outplott +
+
 #~  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_97p5, ymax = percentile_97p5), fill = "grey70") +
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "red",  size = 0.90)  +  # measurement (gsim)
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "green", size = 0.90)  +  # measurement (rseg)
@@ -140,10 +147,9 @@ outplott <- outplott +
 
  geom_ribbon(data = merged_table, mapping = aes(x = date, ymin = percentile_02p5, ymax = percentile_97p5), fill = "grey70") +
  geom_line(data = merged_table, mapping = aes(x = date, y = GSIM), color =  "yellow",   linewidth = 1.2)  +  # measurement (gsim)
- geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "red", linewidth = 0.5, alpha = 0.7)  +  # measurement (rseg)
+ geom_line(data = merged_table, mapping = aes(x = date, y = RSEG), color = "red", linewidth = 0.5, alpha = 0.8)  +  # measurement (rseg)
  geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.1)  +  # original pcrglobwb
  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.3) +  # model results
-
 
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = observation), color =  "red") + # measurement
 #~  geom_line(data = merged_table, mapping = aes(x = date, y = simulation ), color = "blue") + # model results
@@ -173,9 +179,12 @@ outplott <- outplott +
 #~  geom_text(aes(x = x_info_text, y = 0.05*y_max, label = paste(" sd obs/sim = ", round(sd_obs     ,2)," / ",round(sd_sim ,2),sep="")), size = 2.5,hjust = 0) +
 #~  geom_text(aes(x = x_info_text, y = 0.00*y_max, label = paste(" correlation = ",round(correlation,2),sep="")), size = 2.5,hjust = 0) +
 #~ #
- scale_y_continuous("discharge",limits=c(y_min,y_max)) +
- scale_x_date('',limits=c(x_min,x_max)) +
- theme(legend.position = "none") 
+#~  scale_y_continuous("discharge",limits=c(y_min,y_max)) +
+#~  scale_x_date('',limits=c(x_min,x_max)) +
+
+  scale_y_continuous() + 
+  coord_cartesian(xlim = c(x_min, x_max), ylim = c(y_min, y_max)) 
+
 #ggsave("screen.pdf", plot = outplott,width=30,height=8.25,units='cm')
  outputFile = "test"
  ggsave(paste(outputFile,".pdf",sep=""), plot = outplott,width=27,height=7,units='cm')
