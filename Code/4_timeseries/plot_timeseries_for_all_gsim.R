@@ -11,11 +11,43 @@ library(ncdf4)
 #~ gsim_code = "ZW_0000064"
 gsim_code = "RU_0000141"
 
-# get the coordinates
+# Info to be added: Code, river, station, country, lat/lon_original, lat/lon_pgb, KGE and NSE
+
+# Code, river, station, country, lat/lon_original (GSIM)
+gsim_metadata_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/validation_data/validation_data/GSIM_metadata/GSIM_catalog/GSIM_metadata.csv"
+gsim_metadata_table = read.csv(gsim_metadata_table_filename, header = TRUE)
+gsim_river_name   = gsim_metadata_table$river[which(gsim_metadata_table$gsim.no == gsim_code)]
+gsim_station_name = gsim_metadata_table$station[which(gsim_metadata_table$gsim.no == gsim_code)]
+gsim_country_name = gsim_metadata_table$country[which(gsim_metadata_table$gsim.no == gsim_code)]
+gsim_latitude     = gsim_metadata_table$latitude[which(gsim_metadata_table$gsim.no == gsim_code)]
+gsim_longitude    = gsim_metadata_table$longitude[which(gsim_metadata_table$gsim.no == gsim_code)]
+
+#~ > names(gsim_metadata_table)
+#~  [1] "gsim.no"               "reference.db"          "reference.no"
+#~  [4] "grdb.merge"            "grdb.no"               "paired.db"
+#~  [7] "paired.db.no"          "river"                 "station"
+#~ [10] "country"               "latitude"              "longitude"
+#~ [13] "altitude"              "area"                  "unit"
+#~ [16] "river.dist"            "station.dist"          "latlon.dist"
+#~ [19] "bin.latlon.dist"       "mean.dist"             "number.overlap"
+#~ [22] "number.available.days" "number.missing.days"   "frac.missing.days"
+#~ [25] "year.start"            "year.end"              "year.no"
+
+# get the coordinates (based on the PCR-GLOBWB)
 gsim_station_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/gsim/preprocess_gsim/station_pixel_mapping_gsim.csv"
 gsim_station_table = read.csv(gsim_station_table_filename, header = TRUE)
 lat = gsim_station_table$lat[which(gsim_station_table$gsim.no == gsim_code)]
 lon = gsim_station_table$lon[which(gsim_station_table$gsim.no == gsim_code)]
+
+# KGE and NSE based on PCR-GLOBWB validation to GSIM
+performance_pcrglobwb_gsim_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_pcrglobwb_gsim.csv"
+performance_pcrglobwb_gsim_table = read.csv(performance_pcrglobwb_gsim_table_filename, header = TRUE)
+kge_pcrglobwb_gsim = performance_pcrglobwb_gsim_table$KGE[which(performance_pcrglobwb_gsim_table$gsim.no == gsim_code)]
+
+# KGE and NSE based on GLORIF validation to and GSIM
+performance_glorif1_gsim_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_glorif1_gsim.csv"
+performance_glorif1_gsim_table = read.csv(performance_glorif1_gsim_table_filename, header = TRUE)
+kge_glorif1_gsim = performance_glorif1_gsim_table$KGE[which(performance_glorif1_gsim_table$gsim.no == gsim_code)]
 
 # gsim time series
 gsim_folder = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/gsim/gsim_discharge/"
