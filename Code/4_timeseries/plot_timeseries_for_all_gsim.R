@@ -203,7 +203,8 @@ x_min = min(merged_table$date,na.rm=T) - 365*5
 x_max = max(merged_table$date,na.rm=T)
 #
 x_info_text = x_min + 365*0.5
-x_info_text = x_min + 10
+x_info_text = x_min - 365*0.5
+#~ x_info_text = x_min + 10
 
 #~ # about geom_ribbon
 #~ https://ggplot2.tidyverse.org/reference/geom_ribbon.html
