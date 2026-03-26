@@ -172,8 +172,8 @@ outplott <- outplott +
  geom_text(aes(x = x_info_text, y = 0.75*y_max, label = paste("Country: "                , gsim_country_name           , sep="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.70*y_max, label = paste("GSIM latitude: "          , gsim_latitude               , sep="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.65*y_max, label = paste("GSIM longitude: "         , gsim_longitude              , sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.55*y_max, label = paste("Model latitude: "         , lat                         , sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.50*y_max, label = paste("Model longitude: "        , lon                         , sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.60*y_max, label = paste("Model latitude: "         , lat                         , sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.55*y_max, label = paste("Model longitude: "        , lon                         , sep="")), size = 2.5,hjust = 0) +
 
  geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste("KGE PCR-GLOBWB = ", round(kge_pcrglobwb_gsim, 2), sep="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.35*y_max, label = paste("NSE PCR-GLOBWB = ", round(nse_pcrglobwb_gsim, 2), sep="")), size = 2.5,hjust = 0) +
