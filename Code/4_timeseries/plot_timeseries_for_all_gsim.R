@@ -225,15 +225,15 @@ outplott <- outplott +
  geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.2)  +  # original pcrglobwb
  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.3) +  # model results
 
- geom_text(aes(x = x_info_text, y = 1.00*y_max, label = paste("GSIM code: "       , gsim_code        , sep=""), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.95*y_max, label = paste("River: "           , gsim_river_name  , sep=""), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.90*y_max, label = paste("Station: "         , gsim_station_name, sep=""), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.85*y_max, label = paste("Country: "         , gsim_country_name, sep=""), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.80*y_max, label = paste("GSIM latitude: "   , gsim_latitude    , sep=""), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.75*y_max, label = paste("GSIM longitude: "  , gsim_longitude   , sep=""), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.70*y_max, label = paste("RSEG (GRDC) code: ", rseg_code        , sep=""), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.65*y_max, label = paste("RSEG latitude: "   , rseg_lat         , sep=""), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.60*y_max, label = paste("RSEG longitude: "  , rseg_lon         , sep=""), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 1.00*y_max, label = paste("GSIM code: "       , gsim_code        , sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.95*y_max, label = paste("River: "           , gsim_river_name  , sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.90*y_max, label = paste("Station: "         , gsim_station_name, sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.85*y_max, label = paste("Country: "         , gsim_country_name, sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.80*y_max, label = paste("GSIM latitude: "   , gsim_latitude    , sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.75*y_max, label = paste("GSIM longitude: "  , gsim_longitude   , sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.70*y_max, label = paste("RSEG (GRDC) code: ", rseg_code        , sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.65*y_max, label = paste("RSEG latitude: "   , rseg_lat         , sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.60*y_max, label = paste("RSEG longitude: "  , rseg_lon         , sep="")), size = 2.5,hjust = 0) +
 
  geom_text(aes(x = x_info_text, y = 0.45*y_max, label = paste(" KGE_PCR-GLOBWB (GSIM) = ", round(kge_pcrglobwb_gsim, 2),sep="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste(" KGE_GLORIF1    (GSIM) = ", round(kge_glorif1_gsim  , 2),sep="")), size = 2.5,hjust = 0) +
