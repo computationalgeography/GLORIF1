@@ -28,7 +28,22 @@ gsim_codes = gsim_table$gsim.no[which(gsim_table$KGE < 2)]
 # - now looping
 for (gsim_code in gsim_codes) {
 
+# TODO: Double check (based on the Mike's "cell_no_land") that GSIM station used are not in the training data
+grdc_train_table = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/bigTable_allpredictors_filtered_95.csv"
 
+# gsim time series
+gsim_folder = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/gsim/gsim_discharge/"
+gsim_stat_filename = paste(gsim_folder, "/gsim_", gsim_code, ".csv", sep = "")
+gsim_time_series = read.csv(gsim_stat_filename, header = TRUE)
+
+# only process if GSIM time series contain values
+if (length(which(gsim_time_series[,2] > 0.0)) > 0 {
+
+# adopt the gsim time series to a new table/data frame
+merged_table = gsim_time_series
+names(merged_table)[1] <- "date"
+names(merged_table)[2] <- "GSIM"
+merged_table$date <- as.Date(merged_table$date)
 
 # Code, river, station, country, lat/lon_original (GSIM)
 gsim_metadata_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/validation_data/validation_data/GSIM_metadata/GSIM_catalog/GSIM_metadata.csv"
@@ -56,8 +71,6 @@ gsim_station_table = read.csv(gsim_station_table_filename, header = TRUE)
 lat = gsim_station_table$lat[which(gsim_station_table$gsim.no == gsim_code)]
 lon = gsim_station_table$lon[which(gsim_station_table$gsim.no == gsim_code)]
 
-# TODO: Double check (based on the Mike's "cell_no_land") that GSIM station used are not in the training data
-grdc_train_table = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/bigTable_allpredictors_filtered_95.csv"
 
 # KGE and NSE based on PCR-GLOBWB validation to GSIM
 performance_pcrglobwb_gsim_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_pcrglobwb_gsim.csv"
@@ -70,17 +83,6 @@ performance_glorif1_gsim_table_filename = "/projects/0/dfguu/users/edwin/data/gl
 performance_glorif1_gsim_table = read.csv(performance_glorif1_gsim_table_filename, header = TRUE)
 kge_glorif1_gsim = performance_glorif1_gsim_table$KGE[which(performance_glorif1_gsim_table$gsim.no == gsim_code)]
 nse_glorif1_gsim = performance_glorif1_gsim_table$NSE[which(performance_glorif1_gsim_table$gsim.no == gsim_code)]
-
-# gsim time series
-gsim_folder = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/gsim/gsim_discharge/"
-gsim_stat_filename = paste(gsim_folder, "/gsim_", gsim_code, ".csv", sep = "")
-gsim_time_series = read.csv(gsim_stat_filename, header = TRUE)
-
-# adopt the gsim time series to a new table/data frame
-merged_table = gsim_time_series
-names(merged_table)[1] <- "date"
-names(merged_table)[2] <- "GSIM"
-merged_table$date <- as.Date(merged_table$date)
 
 # rseg time series (if exist)
 # - start with an empty table
@@ -290,4 +292,5 @@ outplott <- outplott +
 #
 rm(outplott)
 print(outputFile)
+}
 }
