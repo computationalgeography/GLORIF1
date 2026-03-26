@@ -225,33 +225,6 @@ outplott <- outplott +
  geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.2)  +  # original pcrglobwb
  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.3) +  # model results
 
-
-
-gsim_code
-gsim_river_name  
-gsim_station_name
-gsim_country_name
-gsim_latitude 
-gsim_longitude
-
-rseg_code
-rseg_lat  
-rseg_lon  
-
-lat
-lon
-
-kge_pcrglobwb_gsim
-kge_glorif1_gsim
-
-kge_pcrglobwb_rseg
-kge_glorif1_rseg
-
-nse_pcrglobwb_gsim
-nse_glorif1_gsim
-nse_pcrglobwb_rseg
-nse_glorif1_rseg
-
  geom_text(aes(x = x_info_text, y = 1.00*y_max, label = paste("GSIM code: "       , gsim_code        , sep=""), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.95*y_max, label = paste("River: "           , gsim_river_name  , sep=""), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.90*y_max, label = paste("Station: "         , gsim_station_name, sep=""), size = 2.5,hjust = 0) +
