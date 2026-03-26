@@ -37,7 +37,7 @@ gsim_stat_filename = paste(gsim_folder, "/gsim_", gsim_code, ".csv", sep = "")
 gsim_time_series = read.csv(gsim_stat_filename, header = TRUE)
 
 # only process if GSIM time series contain values
-if (length(which(gsim_time_series[,2] > 0.0)) > 0) {
+if (length(gsim_time_series$obs[which(gsim_time_series$obs > 0.0)]) > 0) {
 
 # adopt the gsim time series to a new table/data frame
 merged_table = gsim_time_series
