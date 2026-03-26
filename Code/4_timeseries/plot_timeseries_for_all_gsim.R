@@ -39,15 +39,20 @@ gsim_station_table = read.csv(gsim_station_table_filename, header = TRUE)
 lat = gsim_station_table$lat[which(gsim_station_table$gsim.no == gsim_code)]
 lon = gsim_station_table$lon[which(gsim_station_table$gsim.no == gsim_code)]
 
+# TODO: Double check (based on the Mike's "cell_no_land") that GSIM station used are not in the training data
+grdc_train_table = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/bigTable_allpredictors_filtered_95.csv"
+
 # KGE and NSE based on PCR-GLOBWB validation to GSIM
 performance_pcrglobwb_gsim_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_pcrglobwb_gsim.csv"
 performance_pcrglobwb_gsim_table = read.csv(performance_pcrglobwb_gsim_table_filename, header = TRUE)
 kge_pcrglobwb_gsim = performance_pcrglobwb_gsim_table$KGE[which(performance_pcrglobwb_gsim_table$gsim.no == gsim_code)]
+nse_pcrglobwb_gsim = performance_pcrglobwb_gsim_table$NSE[which(performance_pcrglobwb_gsim_table$gsim.no == gsim_code)]
 
 # KGE and NSE based on GLORIF validation to and GSIM
 performance_glorif1_gsim_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_glorif1_gsim.csv"
 performance_glorif1_gsim_table = read.csv(performance_glorif1_gsim_table_filename, header = TRUE)
 kge_glorif1_gsim = performance_glorif1_gsim_table$KGE[which(performance_glorif1_gsim_table$gsim.no == gsim_code)]
+nse_glorif1_gsim = performance_glorif1_gsim_table$NSE[which(performance_glorif1_gsim_table$gsim.no == gsim_code)]
 
 # gsim time series
 gsim_folder = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/gsim/gsim_discharge/"
@@ -64,11 +69,12 @@ merged_table$date <- as.Date(merged_table$date)
 # - start with an empty table
 merged_table <- cbind(merged_table, NA)
 names(merged_table)[3] <-"RSEG"
-# - rseg station table/catalogue
+# - rseg station table/catalogue with the lat/lon based on PCR-GLOBWB
 rseg_station_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/rseg/preprocess_rseg/station_pixel_mapping_rseg.csv"
 rseg_station_table = read.csv(rseg_station_table_filename, header = TRUE)
 # - rseg code (if corresponding with gsim)
 rseg_code = rseg_station_table$grdc_no[which(rseg_station_table$lat == lat & rseg_station_table$lon == lon)]
+#
 if (length(rseg_code) > 0) {
 rseg_nc_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/rseg/rseg_grdc/RSEG_V01.nc"
 rseg_nc <- nc_open(rseg_nc_filename)
@@ -92,11 +98,47 @@ grdc_idx = which(rseg_grdc_no == rseg_code)
 rseg_time_series = rseg_discharge_selected[, grdc_idx]    
 merged_table$RSEG = rseg_time_series
 
-merged_table
-grdc_idx
+# lat and lon based on RSEG
+rseg_lats = ncvar_get(rseg_nc, "Lat")
+rseg_lons = ncvar_get(rseg_nc, "Lon")
+rseg_lat = rseg_lats[grdc_idx]
+rseg_lon = rseg_lons[grdc_idx]
 
+
+# get the performances based on the following tables
+
+#~ edwin@tcn679.local.snellius.surf.nl:/scratch-shared/edwin/_finalizing_glorif1/rseg_validation$ ls -lah
+#~ total 1.4M
+#~ drwxr-xr-x+ 2 edwin edwin 4.0K Mar 23 11:39 .
+#~ drwxr-xr-x+ 5 edwin edwin 4.0K Mar 23 20:25 ..
+#~ -rw-r--r--. 1 edwin edwin 697K Nov 26 11:31 kge_results_glorif1_rseg_validation.csv
+#~ -rw-r--r--. 1 edwin edwin 696K Nov 26 11:25 kge_results_pgb_rseg_validation.csv
+#~ -rw-r--r--. 1 edwin edwin   48 Mar 23 11:39 source.txt
+
+# KGE and NSE based on PCR-GLOBWB validation to RSEG
+performance_pcrglobwb_rseg_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/rseg_validation/kge_results_pgb_rseg_validation.csv"
+performance_pcrglobwb_rseg_table = read.csv(performance_pcrglobwb_rseg_table_filename, header = TRUE)
+kge_pcrglobwb_rseg = performance_pcrglobwb_rseg_table$KGE[which(performance_pcrglobwb_rseg_table$grdc_no == rseg_code)]
+nse_pcrglobwb_rseg = performance_pcrglobwb_rseg_table$NSE[which(performance_pcrglobwb_rseg_table$grdc_no == rseg_code)]
+
+# KGE and NSE based on GLORIF validation to and RSEG
+performance_glorif1_rseg_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/rseg_validation/kge_results_glorif1_rseg_validation.csv"
+performance_glorif1_rseg_table = read.csv(performance_glorif1_rseg_table_filename, header = TRUE)
+kge_glorif1_rseg = performance_glorif1_rseg_table$KGE[which(performance_glorif1_rseg_table$grdc_no == rseg_code)]
+nse_glorif1_rseg = performance_glorif1_rseg_table$NSE[which(performance_glorif1_rseg_table$grdc_no == rseg_code)]
+
+
+} else {
+# - empty infos if no rseg_code found
+rseg_code = NA
+rseg_lat  = NA
+rseg_lon  = NA
+kge_pcrglobwb_rseg = NA
+nse_pcrglobwb_rseg = NA
+kge_glorif1_rseg = NA
+nse_glorif1_rseg = NA
+    
 }
-
 # load the GLORIF1 time series
 glorif1_nc_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/glorif1_discharge_30min_monthly.nc"
 glorif1_nc <- nc_open(glorif1_nc_filename)
@@ -184,33 +226,54 @@ outplott <- outplott +
  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth = 0.3) +  # model results
 
 
-#~  geom_line(data = merged_table, mapping = aes(x = date, y = observation), color =  "red") + # measurement
-#~  geom_line(data = merged_table, mapping = aes(x = date, y = simulation ), color = "blue") + # model results
-#
-#~  geom_text(aes(x = x_info_text, y = 1.00*y_max, label = attributeStat[1]), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.95*y_max, label = attributeStat[2]), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.90*y_max, label = attributeStat[3]), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.85*y_max, label = attributeStat[4]), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.80*y_max, label = attributeStat[5]), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.75*y_max, label = attributeStat[6]), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.70*y_max, label = attributeStat[7]), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.65*y_max, label = attributeStat[8]), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.60*y_max, label = attributeStat[9]), size = 2.5,hjust = 0) +
-#
-#~  geom_text(aes(x = x_info_text, y = 0.55*y_max, label = paste(" nPairs = ",     round(nPairs     ,2),sep="")), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.50*y_max, label = paste(" avg obs/sim = ",round(avg_obs    ,2)," / ",round(avg_sim,2),sep="")), size = 2.5,hjust = 0) +
-#
-#~  geom_text(aes(x = x_info_text, y = 0.45*y_max, label = paste(" KGE_2009 = ",   round(KGE_2009   ,2),sep="")), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste(" KGE_2012 = ",   round(KGE_2012   ,2),sep="")), size = 2.5,hjust = 0) +
-#
-#~  geom_text(aes(x = x_info_text, y = 0.35*y_max, label = paste(" NSeff = ",      round(NSeff      ,2),sep="")), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.30*y_max, label = paste(" NSeff_log = ",  round(NSeff_log  ,2),sep="")), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.25*y_max, label = paste(" rmse = ",       round(rmse       ,2),sep="")), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.20*y_max, label = paste(" mae = ",        round(mae        ,2),sep="")), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.15*y_max, label = paste(" bias = ",       round(bias       ,2),sep="")), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.10*y_max, label = paste(" R2 / R2ad = ",  round(R2         ,2)," / ",round(R2ad   ,2),sep="")), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.05*y_max, label = paste(" sd obs/sim = ", round(sd_obs     ,2)," / ",round(sd_sim ,2),sep="")), size = 2.5,hjust = 0) +
-#~  geom_text(aes(x = x_info_text, y = 0.00*y_max, label = paste(" correlation = ",round(correlation,2),sep="")), size = 2.5,hjust = 0) +
+
+gsim_code
+gsim_river_name  
+gsim_station_name
+gsim_country_name
+gsim_latitude 
+gsim_longitude
+
+rseg_code
+rseg_lat  
+rseg_lon  
+
+lat
+lon
+
+kge_pcrglobwb_gsim
+kge_glorif1_gsim
+
+kge_pcrglobwb_rseg
+kge_glorif1_rseg
+
+nse_pcrglobwb_gsim
+nse_glorif1_gsim
+nse_pcrglobwb_rseg
+nse_glorif1_rseg
+
+ geom_text(aes(x = x_info_text, y = 1.00*y_max, label = paste("GSIM code: "       , gsim_code        , sep=""), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.95*y_max, label = paste("River: "           , gsim_river_name  , sep=""), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.90*y_max, label = paste("Station: "         , gsim_station_name, sep=""), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.85*y_max, label = paste("Country: "         , gsim_country_name, sep=""), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.80*y_max, label = paste("GSIM latitude: "   , gsim_latitude    , sep=""), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.75*y_max, label = paste("GSIM longitude: "  , gsim_longitude   , sep=""), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.70*y_max, label = paste("RSEG (GRDC) code: ", rseg_code        , sep=""), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.65*y_max, label = paste("RSEG latitude: "   , rseg_lat         , sep=""), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.60*y_max, label = paste("RSEG longitude: "  , rseg_lon         , sep=""), size = 2.5,hjust = 0) +
+
+ geom_text(aes(x = x_info_text, y = 0.45*y_max, label = paste(" KGE_PCR-GLOBWB (GSIM) = ", round(kge_pcrglobwb_gsim, 2),sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste(" KGE_GLORIF1    (GSIM) = ", round(kge_glorif1_gsim  , 2),sep="")), size = 2.5,hjust = 0) +
+
+ geom_text(aes(x = x_info_text, y = 0.35*y_max, label = paste(" KGE_PCR-GLOBWB (RSEG) = ", round(kge_pcrglobwb_rseg, 2),sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.30*y_max, label = paste(" KGE_GLORIF1    (RSEG) = ", round(kge_glorif1_rseg  , 2),sep="")), size = 2.5,hjust = 0) +
+
+ geom_text(aes(x = x_info_text, y = 0.25*y_max, label = paste(" NSE_PCR-GLOBWB (GSIM) = ", round(nse_pcrglobwb_gsim, 2),sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.20*y_max, label = paste(" NSE_GLORIF1    (GSIM) = ", round(nse_glorif1_gsim  , 2),sep="")), size = 2.5,hjust = 0) +
+
+ geom_text(aes(x = x_info_text, y = 0.15*y_max, label = paste(" NSE_PCR-GLOBWB (RSEG) = ", round(nse_pcrglobwb_rseg, 2),sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.10*y_max, label = paste(" NSE_GLORIF1    (RSEG) = ", round(nse_glorif1_rseg  , 2),sep="")), size = 2.5,hjust = 0) +
+
 #~ #
 #~  scale_y_continuous("discharge (m^3/s)",limits=c(y_min,y_max)) +
  scale_y_continuous(name = expression("discharge (m"^3*"/s)"),limits=c(y_min,y_max)) +
