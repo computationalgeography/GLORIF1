@@ -8,10 +8,27 @@ library(ncdf4)
 #~ gsim_code = "AU_0000107"
 #~ gsim_code = "CN_0000001"
 #~ gsim_code = "ZA_0000008"
-gsim_code = "ZW_0000064"
+#~ gsim_code = "ZW_0000064"
 #~ gsim_code = "RU_0000141"
 
-# Info to be added: Code, river, station, country, lat/lon_original, lat/lon_pgb, KGE and NSE
+# output directory
+outputDir = "/scratch-shared/edwin/_finalizing_glorif1/gsim_timeseries_plots/"
+
+# loop through all gstation 
+#
+# - table containing gsim codes
+gsim_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_pcrglobwb_gsim.csv"
+gsim_table = read.csv(gsim_table_filename, header = TRUE)
+gsim_codes = gsim_table$gsim.no[which(gsim_table$KGE < 2)] 
+#~ > names(gsim_table)
+#~  [1] "cell_no_land" "gsim.no"      "KGE"          "KGE_r"        "KGE_alpha"
+#~  [6] "KGE_beta"     "NSE"          "RMSE"         "MAE"          "nRMSE"
+#~ [11] "nMAE"
+#
+# - now looping
+for (gsim_code in gsim_codes) {
+
+
 
 # Code, river, station, country, lat/lon_original (GSIM)
 gsim_metadata_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/validation_data/validation_data/GSIM_metadata/GSIM_catalog/GSIM_metadata.csv"
@@ -252,8 +269,23 @@ outplott <- outplott +
  scale_y_continuous(name = expression("discharge (m"^3*"/s)"),limits=c(y_min,y_max)) +
  scale_x_date('',limits=c(x_min,x_max)) +
  theme(legend.position = "none") 
+
 #ggsave("screen.pdf", plot = outplott,width=30,height=8.25,units='cm')
- outputFile = "test"
- ggsave(paste(outputFile,".pdf",sep=""), plot = outplott,width=27,height=7,units='cm')
+
+#~outputFile = "test"
+ 
+ # outputFile should contain country, river, station name
+ outputFile <- paste(gsim_country_name, gsim_river_name, gsim_station_name, sep = "_")
+ outputFile <- gsub('[^[:alnum:] ]', '-', outputFile)
+ 
+#~ your_string <- "Hello, World! @2026 #R"
+#~ cleaned_string <- gsub('[^[:alnum:] ]', '', your_string)
+#~ print(cleaned_string)
+#~ [1] "Hello World 2026 R"
+ 
+ outputFile = paste(outputDir, "gsim_validation_tss_", gsim_code, "_", outputFile, ".pdf",sep="")
+
+ ggsave(outputFile, plot = outplott,width=27,height=7,units='cm')
 #
-#rm(outplott)
+rm(outplott)
+}
