@@ -289,4 +289,5 @@ outplott <- outplott +
  ggsave(outputFile, plot = outplott,width=27,height=7,units='cm')
 #
 rm(outplott)
+print(outputFile)
 }
