@@ -3,6 +3,8 @@
 library(ggplot2)
 library(ncdf4)
 
+source(gsub_alnum_edwin)
+
 # output directory
 outputDir = "/scratch-shared/edwin/_finalizing_glorif1/rseg_timeseries_plots/"
 
@@ -206,7 +208,10 @@ outplott <- outplott +
  
  # outputFile should contain country, river, station name
  outputFile <- paste(rseg_country_name, rseg_river_name, rseg_station_name, sep = "_")
- outputFile <- gsub('[^[:alnum:] ]', '-', outputFile)
+
+#~  outputFile <- gsub('[^[:alnum:] ]', '-', outputFile)
+ outputFile <- gsub_alnum(outputFile)
+
  outputFile <- gsub(' ', '-', outputFile)
  
 #~ your_string <- "Hello, World! @2026 #R"
