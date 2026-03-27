@@ -3,7 +3,7 @@
 library(ggplot2)
 library(ncdf4)
 
-source(gsub_alnum_edwin)
+source("gsub_alnum_edwin.R")
 
 # output directory
 outputDir = "/scratch-shared/edwin/_finalizing_glorif1/rseg_timeseries_plots/"
