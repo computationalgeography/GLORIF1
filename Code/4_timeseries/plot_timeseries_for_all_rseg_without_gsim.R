@@ -52,11 +52,6 @@ grdc_idx = which(rseg_grdc_no == rseg_code)
 # Extract the time series and add it to the table
 rseg_time_series = rseg_discharge_selected[, grdc_idx]    
 
-
-rseg_folder = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/rseg/rseg_discharge/"
-rseg_stat_filename = paste(rseg_folder, "/rseg_", rseg_code, ".csv", sep = "")
-rseg_time_series = read.csv(rseg_stat_filename, header = TRUE)
-
 # only process if RSEG time series contain values
 if (length(rseg_time_series[which(rseg_time_series > 0.0)]) > 0) {
 
