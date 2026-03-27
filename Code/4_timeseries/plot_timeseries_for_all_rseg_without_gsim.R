@@ -89,14 +89,14 @@ lon = rseg_station_table$lon[which(rseg_station_table$grdc_no == rseg_code)]
 # KGE and NSE based on PCR-GLOBWB validation to RSEG
 performance_pcrglobwb_rseg_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/rseg_validation/kge_results_pgb_rseg_validation.csv"
 performance_pcrglobwb_rseg_table = read.csv(performance_pcrglobwb_rseg_table_filename, header = TRUE)
-kge_pcrglobwb_rseg = performance_pcrglobwb_rseg_table$KGE[which(performance_pcrglobwb_rseg_table$rseg.no == rseg_code)]
-nse_pcrglobwb_rseg = performance_pcrglobwb_rseg_table$NSE[which(performance_pcrglobwb_rseg_table$rseg.no == rseg_code)]
+kge_pcrglobwb_rseg = performance_pcrglobwb_rseg_table$KGE[which(performance_pcrglobwb_rseg_table$grdc_no == rseg_code)]
+nse_pcrglobwb_rseg = performance_pcrglobwb_rseg_table$NSE[which(performance_pcrglobwb_rseg_table$grdc_no == rseg_code)]
 
 # KGE and NSE based on GLORIF validation to and RSEG
 performance_glorif1_rseg_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/rseg_validation/kge_results_glorif1_rseg_validation.csv"
 performance_glorif1_rseg_table = read.csv(performance_glorif1_rseg_table_filename, header = TRUE)
-kge_glorif1_rseg = performance_glorif1_rseg_table$KGE[which(performance_glorif1_rseg_table$rseg.no == rseg_code)]
-nse_glorif1_rseg = performance_glorif1_rseg_table$NSE[which(performance_glorif1_rseg_table$rseg.no == rseg_code)]
+kge_glorif1_rseg = performance_glorif1_rseg_table$KGE[which(performance_glorif1_rseg_table$grdc_no == rseg_code)]
+nse_glorif1_rseg = performance_glorif1_rseg_table$NSE[which(performance_glorif1_rseg_table$grdc_no == rseg_code)]
 
 
 # load the GLORIF1 time series
