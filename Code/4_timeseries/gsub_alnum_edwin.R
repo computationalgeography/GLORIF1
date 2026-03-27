@@ -10,9 +10,9 @@ gsub_alnum <- function(input_text) {
     return("none")
  },
  warning = function(w) {
-   message("A Warning Occurred")
+   message("A Warning Occurred, text will be replaced with 'none'")
    print(w)
-   return(result)
+    return("none")
   }
  )
 }
