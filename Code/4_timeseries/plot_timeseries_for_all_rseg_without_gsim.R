@@ -56,7 +56,7 @@ rseg_time_series = rseg_discharge_selected[, grdc_idx]
 if (length(rseg_time_series[which(rseg_time_series > 0.0)]) > 0) {
 
 # adopt the rseg time series to a new table/data frame
-date <- seq(as.Date("1979-01-01"), as.Date("2019-01-01"),by = "1 month")
+date <- seq(as.Date("1979-01-01"), as.Date("2019-12-01"),by = "1 month")
 merged_table = data.frame(date, rseg_time_series)
 names(merged_table)[1] <- "date"
 names(merged_table)[2] <- "RSEG"
