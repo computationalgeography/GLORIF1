@@ -21,13 +21,9 @@ rseg_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/rseg_validation
 rseg_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/rseg_validation/kge_results_glorif1_rseg_validation.csv"
 rseg_table = read.csv(rseg_table_filename, header = TRUE)
 rseg_table = rseg_table[which(rseg_table$KGE < 2),]
-#~ > names(rseg_table)
-#~  [1] "cell_no_land" "rseg.no"      "KGE"          "KGE_r"        "KGE_alpha"
-#~  [6] "KGE_beta"     "NSE"          "RMSE"         "MAE"          "nRMSE"
-#~ [11] "nMAE"
 
 # - Using only the ones with valid performance
-rseg_codes = rseg_table$rseg.no[which(rseg_table$KGE < 2)] 
+rseg_codes = rseg_table$grdc_no[which(rseg_table$KGE < 2)] 
 
 # - rseg nc file
 rseg_nc_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/rseg/rseg_grdc/RSEG_V01.nc"
