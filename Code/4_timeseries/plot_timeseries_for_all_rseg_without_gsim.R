@@ -45,7 +45,10 @@ rseg_discharge_selected[which(rseg_discharge_selected < 0.0)] <- NA
 
 
 # - now looping
-for (rseg_code in rseg_codes) {
+#~ for (rseg_code in rseg_codes) {
+#~ for (i_rseg_code in seq(1, length(rseg_codes))) {
+for (i_rseg_code in seq(2660, length(rseg_codes)), 1) {
+rseg_code = rseg_codes[i_rseg_code]
 
 # rseg time series
 # get the GRDC idx
