@@ -28,7 +28,8 @@ cat(
 "obs_lon",
 "mod_lat",
 "mod_lon",
-"obs_area_km2",
+"obs_area_meta_km2",
+"obs_area_est_km2" ,
 "mod_area_km2",
 "length_of_obs_used",
 "obs_avg_m3ps",
@@ -37,8 +38,9 @@ cat(
 "kge_pcrglobwb",
 "nse_pcrglobwb",
 "kge_glorif1",
-"nse_glorif",
-"obs_altitude_m",
+"nse_glorif1",
+"obs_altitude_meta_m",
+"obs_altitude_est_m",
 sep = ";",
 file = output_table_filename,
 append = FALSE)
@@ -86,27 +88,50 @@ names(merged_table)[2] <- "GSIM"
 merged_table$date <- as.Date(merged_table$date)
 
 # Code, river, station, country, lat/lon_original (GSIM)
+# - gsim metadata
 gsim_metadata_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/validation_data/validation_data/GSIM_metadata/GSIM_catalog/GSIM_metadata.csv"
 gsim_metadata_table = read.csv(gsim_metadata_table_filename, header = TRUE)
+# - gsim catchment characteristic
+gsim_catchment_char_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/validation_data/validation_data/GSIM_metadata/GSIM_catalog/GSIM_catchment_characteristics.csv"
+gsim_catchment_char_table = read.csv(gsim_catchment_char_table_filename, header = TRUE)
+
 gsim_river_name   = gsim_metadata_table$river[which(gsim_metadata_table$gsim.no == gsim_code)]
 gsim_station_name = gsim_metadata_table$station[which(gsim_metadata_table$gsim.no == gsim_code)]
 gsim_country_name = gsim_metadata_table$country[which(gsim_metadata_table$gsim.no == gsim_code)]
 gsim_latitude     = gsim_metadata_table$latitude[which(gsim_metadata_table$gsim.no == gsim_code)]
 gsim_longitude    = gsim_metadata_table$longitude[which(gsim_metadata_table$gsim.no == gsim_code)]
 
-gsim_area_km2     = gsim_metadata_table$area[which(gsim_metadata_table$gsim.no == gsim_code)]
-gsim_altitude     = gsim_metadata_table$altitude[which(gsim_metadata_table$gsim.no == gsim_code)]
+#~ gsim_area_km2     = gsim_metadata_table$area[which(gsim_metadata_table$gsim.no == gsim_code)]
+#~ gsim_altitude     = gsim_metadata_table$altitude[which(gsim_metadata_table$gsim.no == gsim_code)]
 
-#~ > names(gsim_metadata_table)
-#~  [1] "gsim.no"               "reference.db"          "reference.no"
-#~  [4] "grdb.merge"            "grdb.no"               "paired.db"
-#~  [7] "paired.db.no"          "river"                 "station"
-#~ [10] "country"               "latitude"              "longitude"
-#~ [13] "altitude"              "area"                  "unit"
-#~ [16] "river.dist"            "station.dist"          "latlon.dist"
-#~ [19] "bin.latlon.dist"       "mean.dist"             "number.overlap"
-#~ [22] "number.available.days" "number.missing.days"   "frac.missing.days"
-#~ [25] "year.start"            "year.end"              "year.no"
+gsim_area_meta_km2   = gsim_catchment_char_table$area.meta[which(gsim_catchment_char_table$gsim.no == gsim_code)]
+gsim_area_est_km2    = gsim_catchment_char_table$area.est[which(gsim_catchment_char_table$gsim.no == gsim_code)]
+gsim_altitude_meta_m = gsim_catchment_char_table$altitude.meta[which(gsim_catchment_char_table$gsim.no == gsim_code)]
+gsim_altitude_est_m  = gsim_catchment_char_table$altitude.est[which(gsim_catchment_char_table$gsim.no == gsim_code)]
+
+#~ > names(gsim_catchment_char_table)
+#~  [1] "gsim.no"        "long.org"       "lat.org"        "long.new"      
+#~  [5] "lat.new"        "dist.km"        "area.meta"      "area.est"      
+#~  [9] "quality"        "altitude.meta"  "altitude.dem"   "climate.type"  
+#~ [13] "no.dams"        "sto.volume"     "dr.mean"        "dr.min"        
+#~ [17] "dr.q1"          "dr.q2"          "dr.q3"          "dr.max"        
+#~ [21] "ele.mean"       "ele.min"        "ele.q1"         "ele.q2"        
+#~ [25] "ele.q3"         "ele.max"        "ir.mean"        "ir.min"        
+#~ [29] "ir.q1"          "ir.q2"          "ir.q3"          "ir.max"        
+#~ [33] "landcover.type" "lithology.type" "nl.mean"        "nl.min"        
+#~ [37] "nl.q1"          "nl.q2"          "nl.q3"          "nl.max"        
+#~ [41] "pop.count"      "pd.mean"        "pd.min"         "pd.q1"         
+#~ [45] "pd.q2"          "pd.q3"          "pd.max"         "slp.mean"      
+#~ [49] "slp.min"        "slp.q1"         "slp.q2"         "slp.q3"        
+#~ [53] "slp.max"        "sb.mean"        "sb.min"         "sb.q1"         
+#~ [57] "sb.q2"          "sb.q3"          "sb.max"         "scl.mean"      
+#~ [61] "scl.min"        "scl.q1"         "scl.q2"         "scl.q3"        
+#~ [65] "scl.max"        "snd.mean"       "snd.min"        "snd.q1"        
+#~ [69] "snd.q2"         "snd.q3"         "snd.max"        "slt.mean"      
+#~ [73] "slt.min"        "slt.q1"         "slt.q2"         "slt.q3"        
+#~ [77] "slt.max"        "soil.type"      "tp.mean"        "tp.min"        
+#~ [81] "tp.q1"          "tp.q2"          "tp.q3"          "tp.max"        
+
 
 # get the coordinates (based on PCR-GLOBWB)
 gsim_station_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots/gsim/preprocess_gsim/station_pixel_mapping_gsim.csv"
@@ -235,16 +260,17 @@ outplott <- outplott +
  geom_text(aes(x = x_info_text, y = 0.70*y_max, label = paste("GSIM longitude: "  , gsim_longitude              , sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.65*y_max, label = paste("Model latitude: "  , lat                         , sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.60*y_max, label = paste("Model longitude: " , lon                         , sep ="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.55*y_max, label = paste("GSIM area (km2): " , round(gsim_area_km2, 2)     , sep ="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.50*y_max, label = paste("Model area (km2): ", round(pgb_area_km2, 2)      , sep ="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.45*y_max, label = paste("Npairs: "          , length_of_obs_used          , sep ="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste("GSIM avg (m3/s) = ", round(avg_observation, 2)   , sep ="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.35*y_max, label = paste("PCR-GLOBWB avg  = ", round(avg_pcrglobwb  , 2)   , sep ="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.30*y_max, label = paste("GLORIF1 avg     = ", round(avg_glorif1,     2)   , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.55*y_max, label = paste("Npairs: "          , length_of_obs_used          , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.50*y_max, label = paste("GSIM avg (m3/s) = ", round(avg_observation, 2)   , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.45*y_max, label = paste("PCR-GLOBWB avg  = ", round(avg_pcrglobwb  , 2)   , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste("GLORIF1 avg     = ", round(avg_glorif1,     2)   , sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.20*y_max, label = paste("KGE PCR-GLOBWB = " , round(kge_pcrglobwb_gsim, 2), sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.15*y_max, label = paste("NSE PCR-GLOBWB = " , round(nse_pcrglobwb_gsim, 2), sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.10*y_max, label = paste("KGE GLORIF1 = "    , round(kge_glorif1_gsim  , 2), sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.05*y_max, label = paste("NSE GLORIF1 = "    , round(nse_glorif1_gsim  , 2), sep ="")), size = 2.5,hjust = 0) +
+
+#~  geom_text(aes(x = x_info_text, y = 0.55*y_max, label = paste("GSIM area (km2): " , round(gsim_area_km2, 2)     , sep ="")), size = 2.5,hjust = 0) +
+#~  geom_text(aes(x = x_info_text, y = 0.50*y_max, label = paste("Model area (km2): ", round(pgb_area_km2, 2)      , sep ="")), size = 2.5,hjust = 0) +
 
 #~ #
 #~  scale_y_continuous("discharge (m^3/s)",limits=c(y_min,y_max)) +
@@ -274,8 +300,6 @@ rm(outplott)
 print(outputFile)
 
 # write to the output table
-
-# preparing the header
 cat(
 gsim_code,                   
 gsim_river_name,             
@@ -285,7 +309,8 @@ gsim_latitude,
 gsim_longitude,              
 lat,                         
 lon,                         
-gsim_area_km2,     
+gsim_area_meta_km2, 
+gsim_area_est_km2, 
 pgb_area_km2,      
 length_of_obs_used,          
 avg_observation,   
@@ -295,7 +320,8 @@ kge_pcrglobwb_gsim,
 nse_pcrglobwb_gsim,
 kge_glorif1_gsim,
 nse_glorif1_gsim,
-gsim_altitude,
+gsim_altitude_meta_m,
+gsim_altitude_est_m,
 sep = ";",
 file = output_table_filename,
 append = TRUE)
