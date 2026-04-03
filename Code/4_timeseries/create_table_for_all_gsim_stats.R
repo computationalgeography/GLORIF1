@@ -16,7 +16,7 @@ outputDir = "/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation/"
 
 # output table file name
 output_table_filename = "gsim_evaluation.txt"
-output_table_filename = paste(outputDir, output_table_filename, ".txt",sep="")
+output_table_filename = paste(outputDir, output_table_filename, sep="")
 
 # preparing the header
 cat(
@@ -298,7 +298,7 @@ nse_glorif1_gsim,
 gsim_altitude,
 sep = ";",
 file = output_table_filename,
-append = FALSE)
+append = TRUE)
 cat("\n", sep = "", file = output_table_filename, append = TRUE)
 
 }
