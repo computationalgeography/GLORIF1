@@ -244,7 +244,7 @@ x_info_text = x_min
 # for plotting purpose, limit percentile_97p5 to ymax
 merged_table$percentile_97p5[which(merged_table$percentile_97p5 > y_max-1)] = y_max-1
 
-with_plot = FALSE
+with_plot = TRUE
 
 if (with_plot == TRUE) {
 
