@@ -120,7 +120,7 @@ pcrglobwb_catchment_area_km2_table = read.table(pcrglobwb_catchment_area_km2_fil
 names(pcrglobwb_catchment_area_km2_table)[1] <- "lon"
 names(pcrglobwb_catchment_area_km2_table)[2] <- "lat"
 names(pcrglobwb_catchment_area_km2_table)[3] <- "catchment_area"
-pgb_area_km2 = pcrglobwb_catchment_area_km2_table$catchment_area[which(pcrglobwb_catchment_area_km2_table$lon == lon & pcrglobwb_catchment_area_km2_table$lat = lat)]
+pgb_area_km2 = pcrglobwb_catchment_area_km2_table$catchment_area[which(pcrglobwb_catchment_area_km2_table$lon == lon & pcrglobwb_catchment_area_km2_table$lat == lat)]
 
 # KGE and NSE based on PCR-GLOBWB validation to GSIM
 performance_pcrglobwb_gsim_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_pcrglobwb_gsim.csv"
@@ -301,6 +301,27 @@ file = output_table_filename,
 append = FALSE)
 cat("\n", sep = "", file = output_table_filename, append = TRUE)
 
+print(
+gsim_code,                   
+gsim_river_name,             
+gsim_station_name,           
+gsim_country_name,           
+gsim_latitude,               
+gsim_longitude,              
+lat,                         
+lon,                         
+gsim_area_km2,     
+pgb_area_km2,      
+length_of_obs_used,          
+avg_observation,   
+avg_pcrglobwb,   
+avg_glorif1,   
+kge_pcrglobwb_gsim,
+nse_pcrglobwb_gsim,
+kge_glorif1_gsim,
+nse_glorif1_gsim,
+altitude
+)
 
 }
 }
