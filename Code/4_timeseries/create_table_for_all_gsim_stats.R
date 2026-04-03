@@ -160,7 +160,7 @@ names(merged_table)[4] <- "PCRGLOBWB"
 
 
 # calculate length of observation used
-length_of_obs_used = length(merged_table$GSIM[which(merged_table$GSIM >= 0.0)]
+length_of_obs_used = length(merged_table$GSIM[which(merged_table$GSIM >= 0.0)])
 
 # calculate average values  
 avg_pcrglobwb   = mean(merged_table$PCRGLOBWB , na.rm = TRUE)
