@@ -320,7 +320,7 @@ kge_pcrglobwb_gsim,
 nse_pcrglobwb_gsim,
 kge_glorif1_gsim,
 nse_glorif1_gsim,
-altitude
+gsim_altitude
 )
 
 }
