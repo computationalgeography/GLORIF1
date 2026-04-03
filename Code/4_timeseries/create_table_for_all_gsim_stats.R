@@ -246,7 +246,7 @@ merged_table$percentile_97p5[which(merged_table$percentile_97p5 > y_max-1)] = y_
 
 with_plot = FALSE
 
-if (with_plot is TRUE) {
+if (with_plot == TRUE) {
 
 outplott <- ggplot()
 outplott <- outplott +
