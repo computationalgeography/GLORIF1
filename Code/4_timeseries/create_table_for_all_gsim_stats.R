@@ -301,27 +301,5 @@ file = output_table_filename,
 append = FALSE)
 cat("\n", sep = "", file = output_table_filename, append = TRUE)
 
-print(
-gsim_code,                   
-gsim_river_name,             
-gsim_station_name,           
-gsim_country_name,           
-gsim_latitude,               
-gsim_longitude,              
-lat,                         
-lon,                         
-gsim_area_km2,     
-pgb_area_km2,      
-length_of_obs_used,          
-avg_observation,   
-avg_pcrglobwb,   
-avg_glorif1,   
-kge_pcrglobwb_gsim,
-nse_pcrglobwb_gsim,
-kge_glorif1_gsim,
-nse_glorif1_gsim,
-gsim_altitude
-)
-
 }
 }
