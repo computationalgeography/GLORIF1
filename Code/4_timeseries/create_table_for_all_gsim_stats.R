@@ -107,7 +107,7 @@ gsim_longitude    = gsim_metadata_table$longitude[which(gsim_metadata_table$gsim
 gsim_area_meta_km2   = gsim_catchment_char_table$area.meta[which(gsim_catchment_char_table$gsim.no == gsim_code)]
 gsim_area_est_km2    = gsim_catchment_char_table$area.est[which(gsim_catchment_char_table$gsim.no == gsim_code)]
 gsim_altitude_meta_m = gsim_catchment_char_table$altitude.meta[which(gsim_catchment_char_table$gsim.no == gsim_code)]
-gsim_altitude_est_m  = gsim_catchment_char_table$altitude.est[which(gsim_catchment_char_table$gsim.no == gsim_code)]
+gsim_altitude_est_m  = gsim_catchment_char_table$altitude.dem[which(gsim_catchment_char_table$gsim.no == gsim_code)]
 
 #~ > names(gsim_catchment_char_table)
 #~  [1] "gsim.no"        "long.org"       "lat.org"        "long.new"      
@@ -244,6 +244,10 @@ x_info_text = x_min
 # for plotting purpose, limit percentile_97p5 to ymax
 merged_table$percentile_97p5[which(merged_table$percentile_97p5 > y_max-1)] = y_max-1
 
+with_plot = FALSE
+
+if (with_plot is TRUE) {
+
 outplott <- ggplot()
 outplott <- outplott +
 
@@ -263,7 +267,7 @@ outplott <- outplott +
  geom_text(aes(x = x_info_text, y = 0.55*y_max, label = paste("Npairs: "          , length_of_obs_used          , sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.50*y_max, label = paste("GSIM avg (m3/s) = ", round(avg_observation, 2)   , sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.45*y_max, label = paste("PCR-GLOBWB avg  = ", round(avg_pcrglobwb  , 2)   , sep ="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste("GLORIF1 avg     = ", round(avg_glorif1,     2)   , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste("GLORIF1 avg = "    , round(avg_glorif1,     2)   , sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.20*y_max, label = paste("KGE PCR-GLOBWB = " , round(kge_pcrglobwb_gsim, 2), sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.15*y_max, label = paste("NSE PCR-GLOBWB = " , round(nse_pcrglobwb_gsim, 2), sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.10*y_max, label = paste("KGE GLORIF1 = "    , round(kge_glorif1_gsim  , 2), sep ="")), size = 2.5,hjust = 0) +
@@ -298,6 +302,10 @@ outplott <- outplott +
 #
 rm(outplott)
 print(outputFile)
+
+}
+
+print(gsim_code)
 
 # write to the output table
 cat(
