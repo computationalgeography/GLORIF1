@@ -265,9 +265,9 @@ outplott <- outplott +
  geom_text(aes(x = x_info_text, y = 0.65*y_max, label = paste("Model latitude: "  , lat                         , sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.60*y_max, label = paste("Model longitude: " , lon                         , sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.55*y_max, label = paste("Npairs: "          , length_of_obs_used          , sep ="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.50*y_max, label = paste("GSIM avg (m3/s) = ", round(avg_observation, 2)   , sep ="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.45*y_max, label = paste("PCR-GLOBWB avg  = ", round(avg_pcrglobwb  , 2)   , sep ="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste("GLORIF1 avg = "    , round(avg_glorif1,     2)   , sep ="")), size = 2.5,hjust = 0) +
+#~  geom_text(aes(x = x_info_text, y = 0.50*y_max, label = paste("GSIM avg (m3/s) = ", round(avg_observation, 2)   , sep ="")), size = 2.5,hjust = 0) +
+#~  geom_text(aes(x = x_info_text, y = 0.45*y_max, label = paste("PCR-GLOBWB avg  = ", round(avg_pcrglobwb  , 2)   , sep ="")), size = 2.5,hjust = 0) +
+#~  geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste("GLORIF1 avg = "    , round(avg_glorif1,     2)   , sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.20*y_max, label = paste("KGE PCR-GLOBWB = " , round(kge_pcrglobwb_gsim, 2), sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.15*y_max, label = paste("NSE PCR-GLOBWB = " , round(nse_pcrglobwb_gsim, 2), sep ="")), size = 2.5,hjust = 0) +
  geom_text(aes(x = x_info_text, y = 0.10*y_max, label = paste("KGE GLORIF1 = "    , round(kge_glorif1_gsim  , 2), sep ="")), size = 2.5,hjust = 0) +
