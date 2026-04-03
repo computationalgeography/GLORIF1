@@ -39,7 +39,7 @@ cat(
 "kge_glorif1",
 "nse_glorif",
 "obs_altitude_m",
-sep = ";"
+sep = ";",
 file = output_table_filename,
 append = FALSE)
 cat("\n", sep = "", file = output_table_filename, append = TRUE)
@@ -296,7 +296,7 @@ nse_pcrglobwb_gsim,
 kge_glorif1_gsim,
 nse_glorif1_gsim,
 altitude,
-sep = ";"
+sep = ";",
 file = output_table_filename,
 append = FALSE)
 cat("\n", sep = "", file = output_table_filename, append = TRUE)
