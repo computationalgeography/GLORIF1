@@ -12,11 +12,42 @@ library(ncdf4)
 #~ gsim_code = "RU_0000141"
 
 # output directory
-outputDir = "/scratch-shared/edwin/_finalizing_glorif1/gsim_timeseries_plots/"
+outputDir = "/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation/"
 
-# loop through all gstation 
+# output table file name
+output_table_filename = "gsim_evaluation.txt"
+output_table_filename = paste(outputDir, output_table_filename, ".txt",sep="")
+
+# preparing the header
+cat(
+"stat_code", 
+"river",
+"station",       
+"country",      
+"obs_lat",
+"obs_lon",
+"mod_lat",
+"mod_lon",
+"obs_area_km2",
+"mod_area_km2",
+"length_of_obs_used",
+"obs_avg_m3ps",
+"pcrglobwb_avg_m3ps",
+"glorif1_avg_m3ps",
+"kge_pcrglobwb",
+"nse_pcrglobwb",
+"kge_glorif1",
+"nse_glorif",
+"obs_altitude_m",
+sep = ";"
+file = output_table_filename,
+append = FALSE)
+cat("\n", sep = "", file = output_table_filename, append = TRUE)
+
+
+# loop through all gsim stations 
 #
-# - table containing gsim codes
+# - table containing all gsim codes
 gsim_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_glorif1_gsim.csv"
 gsim_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_pcrglobwb_gsim.csv"
 gsim_table = read.csv(gsim_table_filename, header = TRUE)
@@ -62,7 +93,9 @@ gsim_station_name = gsim_metadata_table$station[which(gsim_metadata_table$gsim.n
 gsim_country_name = gsim_metadata_table$country[which(gsim_metadata_table$gsim.no == gsim_code)]
 gsim_latitude     = gsim_metadata_table$latitude[which(gsim_metadata_table$gsim.no == gsim_code)]
 gsim_longitude    = gsim_metadata_table$longitude[which(gsim_metadata_table$gsim.no == gsim_code)]
-gsim_area_km2     = gsim_metadata_table$area[which(gsim_metadata_table$gsim.no == gsim_area)]
+
+gsim_area_km2     = gsim_metadata_table$area[which(gsim_metadata_table$gsim.no == gsim_code)]
+gsim_altitude     = gsim_metadata_table$altitude[which(gsim_metadata_table$gsim.no == gsim_code)]
 
 #~ > names(gsim_metadata_table)
 #~  [1] "gsim.no"               "reference.db"          "reference.no"
@@ -88,7 +121,6 @@ names(pcrglobwb_catchment_area_km2_table)[1] <- "lon"
 names(pcrglobwb_catchment_area_km2_table)[2] <- "lat"
 names(pcrglobwb_catchment_area_km2_table)[3] <- "catchment_area"
 pgb_area_km2 = pcrglobwb_catchment_area_km2_table$catchment_area[which(pcrglobwb_catchment_area_km2_table$lon == lon & pcrglobwb_catchment_area_km2_table$lat = lat)]
-
 
 # KGE and NSE based on PCR-GLOBWB validation to GSIM
 performance_pcrglobwb_gsim_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_pcrglobwb_gsim.csv"
@@ -134,7 +166,6 @@ length_of_obs_used = length(merged_table$GSIM[which(merged_table$GSIM >= 0.0)]
 avg_pcrglobwb   = mean(merged_table$PCRGLOBWB , na.rm = TRUE)
 avg_glorif1     = mean(merged_table$GLORIF1   , na.rm = TRUE)
 avg_observation = mean(merged_table$GSIM      , na.rm = TRUE)
-
 
 #~ -rw-r--r--. 1 edwin edwin 487M Mar 25 09:26 percentile_0p025_glorif1_discharge_30min_monthly.nc
 #~ -rw-r--r--. 1 edwin edwin 487M Mar 25 09:27 percentile_0p500_glorif1_discharge_30min_monthly.nc
@@ -196,19 +227,24 @@ outplott <- outplott +
  geom_line(data = merged_table, mapping = aes(x = date, y = GLORIF1 ), color = "blue", linewidth    = 0.3)  +  # model results
  geom_line(data = merged_table, mapping = aes(x = date, y = PCRGLOBWB ), color = "black", linewidth = 0.15) +  # original pcrglobwb
 
- geom_text(aes(x = x_info_text, y = 0.90*y_max, label = paste("GSIM code: "              , gsim_code                   , sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.85*y_max, label = paste("River: "                  , gsim_river_name             , sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.80*y_max, label = paste("Station: "                , gsim_station_name           , sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.75*y_max, label = paste("Country: "                , gsim_country_name           , sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.70*y_max, label = paste("GSIM latitude: "          , gsim_latitude               , sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.65*y_max, label = paste("GSIM longitude: "         , gsim_longitude              , sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.60*y_max, label = paste("Model latitude: "         , lat                         , sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.55*y_max, label = paste("Model longitude: "        , lon                         , sep="")), size = 2.5,hjust = 0) +
-
- geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste("KGE PCR-GLOBWB = ", round(kge_pcrglobwb_gsim, 2), sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.35*y_max, label = paste("NSE PCR-GLOBWB = ", round(nse_pcrglobwb_gsim, 2), sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.20*y_max, label = paste("KGE GLORIF1 = "   , round(kge_glorif1_gsim  , 2), sep="")), size = 2.5,hjust = 0) +
- geom_text(aes(x = x_info_text, y = 0.15*y_max, label = paste("NSE GLORIF1 = "   , round(nse_glorif1_gsim  , 2), sep="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.95*y_max, label = paste("GSIM code: "       , gsim_code                   , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.90*y_max, label = paste("River: "           , gsim_river_name             , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.85*y_max, label = paste("Station: "         , gsim_station_name           , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.80*y_max, label = paste("Country: "         , gsim_country_name           , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.75*y_max, label = paste("GSIM latitude: "   , gsim_latitude               , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.70*y_max, label = paste("GSIM longitude: "  , gsim_longitude              , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.65*y_max, label = paste("Model latitude: "  , lat                         , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.60*y_max, label = paste("Model longitude: " , lon                         , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.55*y_max, label = paste("GSIM area (km2): " , round(gsim_area_km2, 2)     , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.50*y_max, label = paste("Model area (km2): ", round(pgb_area_km2, 2)      , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.45*y_max, label = paste("Npairs: "          , length_of_obs_used          , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.40*y_max, label = paste("GSIM avg (m3/s) = ", round(avg_observation, 2)   , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.35*y_max, label = paste("PCR-GLOBWB avg  = ", round(avg_pcrglobwb  , 2)   , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.30*y_max, label = paste("GLORIF1 avg     = ", round(avg_glorif1,     2)   , sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.20*y_max, label = paste("KGE PCR-GLOBWB = " , round(kge_pcrglobwb_gsim, 2), sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.15*y_max, label = paste("NSE PCR-GLOBWB = " , round(nse_pcrglobwb_gsim, 2), sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.10*y_max, label = paste("KGE GLORIF1 = "    , round(kge_glorif1_gsim  , 2), sep ="")), size = 2.5,hjust = 0) +
+ geom_text(aes(x = x_info_text, y = 0.05*y_max, label = paste("NSE GLORIF1 = "    , round(nse_glorif1_gsim  , 2), sep ="")), size = 2.5,hjust = 0) +
 
 #~ #
 #~  scale_y_continuous("discharge (m^3/s)",limits=c(y_min,y_max)) +
@@ -236,5 +272,35 @@ outplott <- outplott +
 #
 rm(outplott)
 print(outputFile)
+
+# write to the output table
+
+# preparing the header
+cat(
+gsim_code,                   
+gsim_river_name,             
+gsim_station_name,           
+gsim_country_name,           
+gsim_latitude,               
+gsim_longitude,              
+lat,                         
+lon,                         
+gsim_area_km2,     
+pgb_area_km2,      
+length_of_obs_used,          
+avg_observation,   
+avg_pcrglobwb,   
+avg_glorif1,   
+kge_pcrglobwb_gsim,
+nse_pcrglobwb_gsim,
+kge_glorif1_gsim,
+nse_glorif1_gsim,
+altitude,
+sep = ";"
+file = output_table_filename,
+append = FALSE)
+cat("\n", sep = "", file = output_table_filename, append = TRUE)
+
+
 }
 }
