@@ -42,7 +42,7 @@ rseg_discharge_selected <- rseg_discharge[time_idx,]
 rseg_discharge_selected[which(rseg_discharge_selected < 0.0)] <- NA
 
 # using only stations within the indexes given in the arguments 
-if (strt_idx > length(rseg_codes)){
+if (strt_idx <= length(rseg_codes)){
 
 last_idx = min(last_idx, length(rseg_codes))
 
