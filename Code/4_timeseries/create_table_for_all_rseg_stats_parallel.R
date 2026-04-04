@@ -13,7 +13,7 @@ print(strt_idx)
 print(last_idx)
 
 # output directory
-outputDir = "/scratch-shared/edwin/_finalizing_glorif1/rseg_evaluation_parallel/"
+outputDir = "/scratch-shared/edwin/_finalizing_glorif1/rseg_evaluation_with_parallelization/"
 
 
 # - table containing rseg codes
@@ -49,7 +49,7 @@ if (strt_idx <= length(rseg_codes)){
 last_idx = min(last_idx, length(rseg_codes))
 
 # output table file name
-output_table_filename = paste("rseg_evaluation_", sprintf("%07d", as.numeric(strt_idx)), "-", sprintf("%07d", as.numeric(last_idx)),".txt", sep="")
+output_table_filename = paste("_rseg_evaluation_", sprintf("%07d", as.numeric(strt_idx)), "-", sprintf("%07d", as.numeric(last_idx)),".txt", sep="")
 output_table_filename = paste(outputDir, "/", output_table_filename, sep="")
                                          
 rseg_codes = rseg_codes[strt_idx:last_idx]
