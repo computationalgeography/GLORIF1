@@ -13,7 +13,7 @@ print(strt_idx)
 print(last_idx)
 
 # output directory
-outputDir = "/scratch-shared/edwin/_finalizing_glorif1/rseg_evaluation_test_parallel/"
+outputDir = "/scratch-shared/edwin/_finalizing_glorif1/rseg_evaluation_parallel/"
 
 
 # - table containing rseg codes
@@ -40,6 +40,8 @@ time_idx   <- which(rseg_time >= start_date & rseg_time <= end_date)
 rseg_discharge_selected <- rseg_discharge[time_idx,]
 # - Set all negative to NaN
 rseg_discharge_selected[which(rseg_discharge_selected < 0.0)] <- NA
+
+print(length(rseg_codes))
 
 # using only stations within the indexes given in the arguments 
 if (strt_idx <= length(rseg_codes)){
