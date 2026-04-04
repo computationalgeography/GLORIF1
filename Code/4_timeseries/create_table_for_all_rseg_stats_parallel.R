@@ -6,8 +6,8 @@ library(ncdf4)
 source("gsub_alnum_edwin.R")
 
 args <- commandArgs(trailingOnly = TRUE)
-strt_idx <- args[1]
-last_idx <- args[2]
+strt_idx <- as.integer(args[1])
+last_idx <- as.integer(args[2])
 
 # output directory
 outputDir = "/scratch-shared/edwin/_finalizing_glorif1/rseg_evaluation_test_parallel/"
