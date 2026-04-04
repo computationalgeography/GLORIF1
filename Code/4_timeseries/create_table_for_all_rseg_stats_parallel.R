@@ -13,37 +13,6 @@ last_idx <- args[2]
 outputDir = "/scratch-shared/edwin/_finalizing_glorif1/rseg_evaluation_test_parallel/"
 
 
-# preparing the header
-cat(
-"stat_code", 
-"river",
-"station",       
-"country",      
-"obs_lat",
-"obs_lon",
-"mod_lat",
-"mod_lon",
-"obs_area_meta_km2",
-"obs_area_est_km2" ,
-"mod_area_km2",
-"length_of_obs_used",
-"obs_avg_m3ps",
-"pcrglobwb_avg_m3ps",
-"glorif1_avg_m3ps",
-"kge_pcrglobwb",
-"nse_pcrglobwb",
-"kge_glorif1",
-"nse_glorif1",
-"obs_altitude_meta_m",
-"obs_altitude_est_m",
-sep = ";",
-file = output_table_filename,
-append = FALSE)
-cat("\n", sep = "", file = output_table_filename, append = TRUE)
-
-
-# loop through all gstations 
-#
 # - table containing rseg codes
 rseg_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/rseg_validation/kge_results_pgb_rseg_validation.csv"
 rseg_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/rseg_validation/kge_results_glorif1_rseg_validation.csv"
@@ -78,9 +47,36 @@ last_idx = min(last_idx, length(rseg_codes))
 output_table_filename = paste("rseg_evaluation_", sprintf("%07d", as.numeric(strt_idx)), "_", sprintf("%07d", as.numeric(last_idx)),".txt", sep="")
 output_table_filename = paste(outputDir, "/", output_table_filename, sep="")
                                          
-
 rseg_codes = rseg_codes[strt_idx:last_idx]
 rseg_table = rseg_table[strt_idx:last_idx,]
+
+# preparing the header
+cat(
+"stat_code", 
+"river",
+"station",       
+"country",      
+"obs_lat",
+"obs_lon",
+"mod_lat",
+"mod_lon",
+"obs_area_meta_km2",
+"obs_area_est_km2" ,
+"mod_area_km2",
+"length_of_obs_used",
+"obs_avg_m3ps",
+"pcrglobwb_avg_m3ps",
+"glorif1_avg_m3ps",
+"kge_pcrglobwb",
+"nse_pcrglobwb",
+"kge_glorif1",
+"nse_glorif1",
+"obs_altitude_meta_m",
+"obs_altitude_est_m",
+sep = ";",
+file = output_table_filename,
+append = FALSE)
+cat("\n", sep = "", file = output_table_filename, append = TRUE)
 
 
 # - now looping
