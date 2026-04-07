@@ -59,6 +59,13 @@ gsim_table = gsim_table[which(gsim_table$KGE < 2),]
 #~  [6] "KGE_beta"     "NSE"          "RMSE"         "MAE"          "nRMSE"
 #~ [11] "nMAE"
 #
+# - Double check (based on the Mike's "cell_no_land") that GSIM station used are not in the training data
+grdc_train_table_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/bigTable_allpredictors_filtered_95.csv"
+grdc_train_table = read.csv(grdc_train_table_filename, header = TRUE)
+grdc_train_cell_no_land = unique(grdc_train_table$cell_no_land)
+rm(grdc_train_table)
+gsim_table = gsim_table[which(!is.element(gsim_table$cell_no_land, grdc_train_cell_no_land)),]
+
 # - Using only the ones with valid performance
 gsim_codes = gsim_table$gsim.no[which(gsim_table$KGE < 2)] 
 
