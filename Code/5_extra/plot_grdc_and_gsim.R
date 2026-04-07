@@ -43,11 +43,14 @@ gsim_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/gsim_evalua
 
 # using only stations with at least 12 months and upstream area > 10,000 km2 (~4 pixels of PCR-GLOBWB)
 gsim_location <- gsim_location[which((gsim_location$obs_area_meta_km2 > 10000) | (gsim_location$obs_area_est_km2 > 10000)), ]
-#~ gsim_location <- gsim_location[which((gsim_location$mod_area_km2 > 10000)), ]
+gsim_location <- gsim_location[which((gsim_location$mod_area_km2 > 10000)), ]
 gsim_location <- gsim_location[which((gsim_location$length_of_obs_used >= 12)), ]
 
 gsim_valid_station <- gsim_location
 print(dim(gsim_valid_station))
+
+#~ > print(dim(gsim_valid_station))
+#~ [1] 1969   21
 
 # plot the stations
 wg <- map_data("world")
