@@ -34,6 +34,20 @@ grdc_train_station <- grdc_selected
 #~ gsim_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_gsim/station_pixel_mapping_gsim.csv", header = TRUE)
 # - after the revision, excluding pixels/stations used during the training
 gsim_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation/gsim_evaluation.txt", header = TRUE, sep = ";")
+
+#~ > names(gsim_location)
+#~  [1] "stat_code"           "river"               "station"
+#~  [4] "country"             "obs_lat"             "obs_lon"
+#~  [7] "mod_lat"             "mod_lon"             "obs_area_meta_km2"
+#~ [10] "obs_area_est_km2"    "mod_area_km2"        "length_of_obs_used"
+#~ [13] "obs_avg_m3ps"        "pcrglobwb_avg_m3ps"  "glorif1_avg_m3ps"
+#~ [16] "kge_pcrglobwb"       "nse_pcrglobwb"       "kge_glorif1"
+#~ [19] "nse_glorif1"         "obs_altitude_meta_m" "obs_altitude_est_m"
+
+# using only stations with at least 12 months and upstream area > 10,000 km2 (~4 pixels of PCR-GLOBWB)
+gsim_location <- gsim_location[which((gsim_location$obs_area_meta_km2 > 10000) | (gsim_location$obs_area_est_km2 > 10000)), ]
+gsim_location <- gsim_location[which((gsim_location$length_of_obs_used >= 12)), ]
+
 gsim_valid_station <- gsim_location
 
 
@@ -49,7 +63,7 @@ station_map <- ggplot() +
 #~   geom_point(data = gsim_valid_station, mapping = aes(x = mod_lon, y = mod_lat), color = 'blue', fill = "blue", size = 1.5, alpha = 5/10, shape = 21) +
   geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , fill = "red",  size = 1.5, shape = 21) +
   geom_point(data = gsim_valid_station, mapping = aes(x = mod_lon, y = mod_lat), color = 'blue', fill = "blue", size = 1.5, shape = 21) +
-#~   geom_point(alpha = 1/10) +
+  geom_point(alpha = 8/10) +
   scale_fill_brewer(palette = 'RdYlBu', guide = guide_legend(reverse = TRUE), name = '') +
   labs(title = 'GRDC and GSIM stations used\n', x = 'longitude', y = 'latitude') +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
