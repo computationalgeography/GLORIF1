@@ -46,6 +46,7 @@ gsim_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/gsim_evalua
 
 # using only stations with at least 12 months and upstream area > 10,000 km2 (~4 pixels of PCR-GLOBWB)
 gsim_location <- gsim_location[which((gsim_location$obs_area_meta_km2 > 10000) | (gsim_location$obs_area_est_km2 > 10000)), ]
+gsim_location <- gsim_location[which((gsim_location$mod_area_km2 > 10000), ]
 gsim_location <- gsim_location[which((gsim_location$length_of_obs_used >= 12)), ]
 
 gsim_valid_station <- gsim_location
@@ -55,8 +56,9 @@ gsim_valid_station <- gsim_location
 wg <- map_data("world")
 
 station_map <- ggplot() +
-  geom_map(data = wg, map = wg, aes(long, lat, map_id = region), color = "white", fill = "grey") +
-  coord_fixed(1.3) +  # Maintain aspect ratio
+#~   geom_map(data = wg, map = wg, aes(long, lat, map_id = region), color = "white", fill = "grey") +
+  geom_map(data = wg, mapping = aes(long, lat, map_id = region), color = "white", fill = "grey") +
+#~   coord_fixed(1.3) +  # Maintain aspect ratio
   xlim(-180, 180) +
   ylim(-55, 75) +
 #~   geom_point(data = gsim_valid_station, mapping = aes(x = mod_lon, y = mod_lat), color = 'blue', fill = "blue", size = 1.3, alpha = 5/10, shape = 21) +
