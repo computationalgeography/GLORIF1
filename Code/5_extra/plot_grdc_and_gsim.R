@@ -50,7 +50,7 @@ gsim_location <- gsim_location[which((gsim_location$mod_area_km2 > 10000)), ]
 gsim_location <- gsim_location[which((gsim_location$length_of_obs_used >= 12)), ]
 
 gsim_valid_station <- gsim_location
-
+print(dim(gsim_valid_station))
 
 # plot the stations
 wg <- map_data("world")
