@@ -56,8 +56,8 @@ gsim_valid_station <- gsim_location
 wg <- map_data("world")
 
 station_map <- ggplot() +
-#~   geom_map(data = wg, map = wg, aes(long, lat, map_id = region), color = "white", fill = "grey") +
-  geom_map(data = wg, mapping = aes(long, lat, map_id = region), color = "white", fill = "grey") +
+  geom_map(data = wg, map = wg, mapping = aes(long, lat, map_id = region), color = "white", fill = "grey") +
+#~   geom_map(data = wg, mapping = aes(long, lat, map_id = region), color = "white", fill = "grey") +
 #~   coord_fixed(1.3) +  # Maintain aspect ratio
   xlim(-180, 180) +
   ylim(-55, 75) +
