@@ -2,9 +2,17 @@
 library(dplyr)
 library(ggplot2)
 
-# Define the paths to the CSV files
-pcr_file_path <- '/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation/KGE_results_PCR_GSIM_validation.csv'
-rf_file_path <- '/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation/KGE_results_RF_GSIM_validation.csv'
+#~ # Define the paths to the CSV files
+#~ pcr_file_path <- '/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation/KGE_results_PCR_GSIM_validation.csv'
+#~ rf_file_path <- '/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation/KGE_results_RF_GSIM_validation.csv'
+
+#~ edwin@tcn683.local.snellius.surf.nl:/scratch-shared/edwin/_finalizing_glorif1/rseg_validation$ ls -lah
+#~ total 1.4M
+#~ drwxr-xr-x+ 2 edwin edwin 4.0K Mar 27 12:21 .
+#~ drwxr-xr-x+ 9 edwin edwin 4.0K Mar 27 12:21 ..
+#~ -rw-r--r--. 1 edwin edwin 697K Mar 27 12:21 kge_results_glorif1_rseg_validation.csv
+#~ -rw-r--r--. 1 edwin edwin 696K Mar 27 12:21 kge_results_pgb_rseg_validation.csv
+#~ -rw-r--r--. 1 edwin edwin   48 Mar 27 12:21 source.txt
 
 #~ sutan101@velocity.geo.uu.nl:/scratch/sutan101/glorif1_work/rseg_validation$ ls -lah
 #~ total 1.4M
@@ -13,8 +21,11 @@ rf_file_path <- '/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/
 #~ -rw-r--r-- 1 sutan101 users 697K Nov 26 11:31 kge_results_glorif1_rseg_validation.csv
 #~ -rw-r--r-- 1 sutan101 users 696K Nov 26 11:25 kge_results_pgb_rseg_validation.csv
 
-pcr_file_path <- '/scratch/sutan101/glorif1_work/rseg_validation/kge_results_pgb_rseg_validation.csv'
-rf_file_path  <- '/scratch/sutan101/glorif1_work/rseg_validation/kge_results_glorif1_rseg_validation.csv'
+#~ pcr_file_path <- '/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation/KGE_results_PCR_GSIM_validation.csv'
+#~ rf_file_path <- '/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation/KGE_results_RF_GSIM_validation.csv'
+
+pcr_file_path <- '/scratch-shared/edwin/_finalizing_glorif1/rseg_validation/kge_results_pgb_rseg_validation.csv'
+rf_file_path  <- '/scratch-shared/edwin/_finalizing_glorif1/rseg_validation/kge_results_glorif1_rseg_validation.csv'
 
 # Load the CSV files
 kge_results_pcr <- read.csv(pcr_file_path)
@@ -26,11 +37,17 @@ kge_results_rf <- read.csv(rf_file_path)
 #~ kge_results_rf <- kge_results_rf %>%
 #~   filter(KGE >= -1 & KGE <= 1)
 
+# Filter the KGE values to be within the expected range
+kge_results_pcr <- kge_results_pcr %>%
+  filter(KGE <= 1)
+kge_results_rf <- kge_results_rf %>%
+  filter(KGE <= 1)
+
 # Function to classify KGE scores
 classify_kge <- function(kge) {
-  if (kge >= 0.6) {
+  if (kge > 0.6) {
     return("High/Good")
-  } else if (kge >= -0.4) {
+  } else if (kge > -0.41) {
     return("Moderate")
   } else {
     return("Poor")
@@ -67,6 +84,10 @@ g2 <- ggplot(rf_proportions, aes(x = KGE_Class, y = Proportion)) +
 #~ # Save the plots
 #~ ggsave('/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation/kge_classification_pcr.pdf', plot = g1)
 #~ ggsave('/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation/kge_classification_rf.pdf', plot = g2)
+
+ggsave('kge_classification_pcr_rseg.pdf', plot = g1)
+ggsave('kge_classification_rf_rseg.pdf', plot = g2)
+
 
 # Display the plots
 print(g1)
