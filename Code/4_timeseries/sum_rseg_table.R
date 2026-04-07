@@ -24,11 +24,12 @@ table = read.csv("/scratch-shared/edwin/_finalizing_glorif1/rseg_evaluation_with
 full_table <- rbind(full_table, table)
 
 
-#~ # using only stations with at least 12 months and upstream area > 10,000 km2 (~4 pixels of PCR-GLOBWB)
-#~ selected_table = full_table[which(full_table$length_of_obs_used >= 12 & full_table$obs_area_meta_km2 > 10000),]
-
 # using only stations with at least 12 months and upstream area > 10,000 km2 (~4 pixels of PCR-GLOBWB)
-selected_table = full_table[which(full_table$length_of_obs_used >= 12),]
+selected_table = full_table
+selected_table = selected_table[which(selected_table$length_of_obs_used >= 12 & selected_table$obs_area_meta_km2 > 10000),]
+#~ selected_table = selected_table[which(selected_table$mod_area_km2 > 10000),]
 
 write.table(selected_table, file = "selected_table_rseg_final.txt", row.names = FALSE, col.names = TRUE, sep = ";")
+
+dim(selected_table)
 
