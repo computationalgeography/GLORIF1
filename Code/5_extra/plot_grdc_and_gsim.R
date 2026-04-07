@@ -59,10 +59,10 @@ station_map <- ggplot() +
   coord_fixed(1.3) +  # Maintain aspect ratio
   xlim(-180, 180) +
   ylim(-55, 75) +
-  geom_point(data = gsim_valid_station, mapping = aes(x = mod_lon, y = mod_lat), color = 'blue', fill = "blue", size = 1.3, alpha = 5/10, shape = 21) +
-  geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , fill = "red",  size = 1.3, alpha = 5/10, shape = 21) +
-#~   geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , size = 1.4, shape = 20, alpha = 9/10) +
-#~   geom_point(data = gsim_valid_station, mapping = aes(x = mod_lon, y = mod_lat), color = 'blue', size = 1.4, shape = 20, alpha = 9/10) +
+#~   geom_point(data = gsim_valid_station, mapping = aes(x = mod_lon, y = mod_lat), color = 'blue', fill = "blue", size = 1.3, alpha = 5/10, shape = 21) +
+#~   geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , fill = "red",  size = 1.3, alpha = 5/10, shape = 21) +
+  geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , size = 1.4, shape = 20, alpha = 6/10) +
+  geom_point(data = gsim_valid_station, mapping = aes(x = mod_lon, y = mod_lat), color = 'blue', size = 1.4, shape = 20, alpha = 6/10) +
 #~   geom_point(alpha = 8/10) +
   scale_fill_brewer(palette = 'RdYlBu', guide = guide_legend(reverse = TRUE), name = '') +
   labs(title = 'GRDC and GSIM stations used\n', x = 'longitude', y = 'latitude') +
