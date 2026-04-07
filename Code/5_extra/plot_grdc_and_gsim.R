@@ -33,7 +33,7 @@ grdc_train_station <- grdc_selected
 # - original, before the revision, this includes some pixels/stations used during the training
 #~ gsim_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_gsim/station_pixel_mapping_gsim.csv", header = TRUE)
 # - after the revision, excluding pixels/stations used during the training
-gsim_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation/gsim_evaluation.txt", header = TRUE, sep = ";")
+gsim_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation/_gsim_evaluation.txt", header = TRUE, sep = ";")
 
 #~ > names(gsim_location)
 #~  [1] "stat_code"           "river"               "station"
