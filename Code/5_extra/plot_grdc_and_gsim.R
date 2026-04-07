@@ -65,7 +65,7 @@ station_map <- ggplot() +
   geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , size = 2.3, shape = 20, alpha = 6/10) +
 #~   geom_point(alpha = 8/10) +
   scale_fill_brewer(palette = 'RdYlBu', guide = guide_legend(reverse = TRUE), name = '') +
-  labs(title = 'GRDC and GSIM stations used\n', x = 'longitude', y = 'latitude') +
+  labs(title = 'GRDC (red, training) and GSIM (blue, validation) stations used\n', x = 'longitude', y = 'latitude') +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.title.x = element_blank(),
         axis.title.y = element_blank(),
