@@ -15,7 +15,7 @@ library(ncdf4)
 outputDir = "/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation/"
 
 # output table file name
-output_table_filename = "gsim_evaluation.txt"
+output_table_filename = "_gsim_evaluation.txt"
 output_table_filename = paste(outputDir, output_table_filename, sep="")
 
 # preparing the header
