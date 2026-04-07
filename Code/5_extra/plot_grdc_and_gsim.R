@@ -18,10 +18,10 @@ train_data <- vroom(paste0('/projects/0/dfguu/users/edwin/data/glorif1/original/
 grdc_train_station_id <- unique(train_data$grdc_no)
 
 # get their location from 
-#~ # - from actual coordinates
-#~ grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/stationLatLon_filtered_95.csv", header = TRUE)
-# - from pcrglobwb coordinates - I decided to use this.
-grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/station_pixel_mapping_grdc.csv", header = TRUE)
+# - from actual coordinates
+grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/stationLatLon_filtered_95.csv", header = TRUE)
+#~ # - from pcrglobwb coordinates
+#~ grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/station_pixel_mapping_grdc.csv", header = TRUE)
 
 
 # make sure those stations were used in the training table
@@ -63,7 +63,7 @@ station_map <- ggplot() +
   ylim(-55, 75) +
 #~   geom_point(data = gsim_valid_station, mapping = aes(x = mod_lon, y = mod_lat), color = 'blue', fill = "blue", size = 1.3, alpha = 5/10, shape = 21) +
 #~   geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , fill = "red",  size = 1.3, alpha = 5/10, shape = 21) +
-  geom_point(data = gsim_valid_station, mapping = aes(x = mod_lon, y = mod_lat), color = 'blue', size = 2.3, shape = 20, alpha = 6/10) +
+  geom_point(data = gsim_valid_station, mapping = aes(x = obs_lon, y = obs_lat), color = 'blue', size = 2.3, shape = 20, alpha = 6/10) +
   geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , size = 2.3, shape = 20, alpha = 6/10) +
 #~   geom_point(alpha = 8/10) +
   scale_fill_brewer(palette = 'RdYlBu', guide = guide_legend(reverse = TRUE), name = '') +
