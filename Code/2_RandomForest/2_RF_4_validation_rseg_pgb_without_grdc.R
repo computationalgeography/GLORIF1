@@ -68,4 +68,4 @@ for (i in 1:nrow(station_to_pixel_mapping)) {
 #~ outputDir  <- '/scratch/sutan101/glorif1_work/rseg_validation/'
 outputDir     <- '/scratch-shared/edwin/glorif1_work/rseg_validation_without_grdc/'
 dir.create(outputDir, showWarnings = F, recursive = T)
-write.csv(results, paste0(outputDir, 'kge_results_glorif1_rseg_validation_without_grdc.csv'), row.names = F)
+write.csv(results, paste0(outputDir, 'kge_results_pcrglobwb_rseg_validation_without_grdc.csv'), row.names = F)
