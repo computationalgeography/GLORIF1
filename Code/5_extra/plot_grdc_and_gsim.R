@@ -1,4 +1,4 @@
-####-------------------------------####
+#~ ####-------------------------------####
 source('../fun_0_loadLibrary.R')
 #~ ####-------------------------------####
 #~ source('fun_2_2_trainRF.R')
@@ -10,18 +10,16 @@ library('dplyr')
 library('maps')  # Ensure the maps package is loaded
 
 
-#~ outputDir
-
 # get all GRDC stations based on the training data 
 train_data <- vroom(paste0('/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/bigTable_allpredictors_filtered_95.csv'),
                      show_col_types = F)
 grdc_train_station_id <- unique(train_data$grdc_no)
 
-# get their location from 
-# - from actual coordinates
-grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/stationLatLon_filtered_95.csv", header = TRUE)
-#~ # - from pcrglobwb coordinates
-#~ grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/station_pixel_mapping_grdc.csv", header = TRUE)
+# get their location from one of the following alternatives:
+#~ # - from actual coordinates
+#~ grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/stationLatLon_filtered_95.csv", header = TRUE)
+# - from pcrglobwb coordinates
+grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/station_pixel_mapping_grdc.csv", header = TRUE)
 
 
 # make sure those stations were used in the training table
@@ -74,8 +72,10 @@ station_map <- ggplot() +
         axis.ticks = element_blank(),
         panel.grid = element_blank())
 
-ggsave("grdc_gsim_map.pdf", station_map, height = 8, width = 16, units = 'in', dpi = 1200)
+outputDir = "/scratch-shared/edwin/_finalizing_glorif1/maps_stations/"
+map_filename = paste(outputDir, "grdc_gsim_map.pdf", sep = "")
 
+ggsave(map_filename, station_map, height = 8, width = 16, units = 'in', dpi = 1200)
 
 #~ station_map
 
