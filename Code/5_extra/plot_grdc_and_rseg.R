@@ -18,10 +18,10 @@ train_data <- vroom(paste0('/projects/0/dfguu/users/edwin/data/glorif1/original/
 grdc_train_station_id <- unique(train_data$grdc_no)
 
 # get their location from 
-# - from actual coordinates
-grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/stationLatLon_filtered_95.csv", header = TRUE)
-#~ # - from pcrglobwb coordinates
-#~ grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/station_pixel_mapping_grdc.csv", header = TRUE)
+#~ # - from actual coordinates
+#~ grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/stationLatLon_filtered_95.csv", header = TRUE)
+# - from pcrglobwb coordinates
+grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/station_pixel_mapping_grdc.csv", header = TRUE)
 
 
 # make sure those stations were used in the training table
@@ -77,38 +77,3 @@ station_map <- ggplot() +
 ggsave("grdc_gsim_map.pdf", station_map, height = 8, width = 16, units = 'in', dpi = 1200)
 
 
-#~ station_map
-
-#~ station_map_grdc <- ggplot() +
-#~   geom_map(data = wg, map = wg, aes(long, lat, map_id = region), color = "white", fill = "grey") +
-#~   coord_fixed(1.3) +  # Maintain aspect ratio
-#~   xlim(-180, 180) +
-#~   ylim(-55, 75) +
-#~   geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , pch = 21, size = 0.5) +
-#~   scale_fill_brewer(palette = 'RdYlBu', guide = guide_legend(reverse = TRUE), name = '') +
-#~   labs(title = 'GRDC and GSIM stations used\n', x = 'longitude', y = 'latitude') +
-#~   theme(plot.title = element_text(hjust = 0.5, size = 20),
-#~         axis.title.x = element_blank(),
-#~         axis.title.y = element_blank(),
-#~         axis.ticks = element_blank(),
-#~         panel.grid = element_blank())
-
-#~ station_map_gsim <- ggplot() +
-#~   geom_map(data = wg, map = wg, aes(long, lat, map_id = region), color = "white", fill = "grey") +
-#~   coord_fixed(1.3) +  # Maintain aspect ratio
-#~   xlim(-180, 180) +
-#~   ylim(-55, 75) +
-#~   geom_point(data = gsim_valid_station, mapping = aes(x = lon, y = lat), color = 'blue', pch = 21, size = 0.5) +
-#~   scale_fill_brewer(palette = 'RdYlBu', guide = guide_legend(reverse = TRUE), name = '') +
-#~   labs(title = 'GRDC and GSIM stations used\n', x = 'longitude', y = 'latitude') +
-#~   theme(plot.title = element_text(hjust = 0.5, size = 20),
-#~         axis.title.x = element_blank(),
-#~         axis.title.y = element_blank(),
-#~         axis.ticks = element_blank(),
-#~         panel.grid = element_blank())
-
-
-#~ ggsave("test_map.pdf", station_map, height = 8, width = 16, units = 'in', dpi = 1200)
-
-#~ # Save plot with adjusted dimensions
-#~ ggsave(paste0(outputDir, 'map_grdc_and_gsim_stations.pdf'), KGE_map_uncalibrated, height = 8, width = 16, units = 'in', dpi = 1200)
