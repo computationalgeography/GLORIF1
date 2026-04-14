@@ -46,6 +46,12 @@ gsim_location <- gsim_location[which((gsim_location$length_of_obs_used >= 12)), 
 
 # double check (based on the Mike's "cell_no_land") that GSIM station used are not in the training data
 grdc_train_cell_no_land = unique(train_data$cell_no_land)
+gsim_table_with_cell_no_land_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_glorif1_gsim.csv"
+gsim_table_with_cell_no_land = read.csv(gsim_table_with_cell_no_land_filename, header = TRUE)
+gsim_table_with_cell_no_land = data.frame(gsim_table_with_cell_no_land$gsim.no,gsim_table_with_cell_no_land$cell_no_land)
+names(gsim_table_with_cell_no_land)[1] <- "stat_code"
+names(gsim_table_with_cell_no_land)[2] <- "cell_no_land"
+gsim_location = merge(gsim_location, gsim_table_with_cell_no_land, by = "stat_code")
 gsim_location = gsim_location[which(!is.element(gsim_location$cell_no_land, grdc_train_cell_no_land)),]
 
 gsim_valid_station <- gsim_location
