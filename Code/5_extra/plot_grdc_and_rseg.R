@@ -1,4 +1,4 @@
-####-------------------------------####
+#~ ####-------------------------------####
 source('../fun_0_loadLibrary.R')
 #~ ####-------------------------------####
 #~ source('fun_2_2_trainRF.R')
@@ -10,14 +10,12 @@ library('dplyr')
 library('maps')  # Ensure the maps package is loaded
 
 
-#~ outputDir
-
 # get all GRDC stations based on the training data 
 train_data <- vroom(paste0('/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/bigTable_allpredictors_filtered_95.csv'),
                      show_col_types = F)
 grdc_train_station_id <- unique(train_data$grdc_no)
 
-# get their location from 
+# get their location from one of the following alternatives:
 #~ # - from actual coordinates
 #~ grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/stationLatLon_filtered_95.csv", header = TRUE)
 # - from pcrglobwb coordinates
@@ -29,8 +27,8 @@ grdc_selected <- grdc_location[which(is.element(grdc_location$grdc_no, grdc_trai
 grdc_train_station <- grdc_selected
 
 
-# rseg stations
-rseg_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation/_gsim_evaluation.txt", header = TRUE, sep = ";")
+# gsim stations
+gsim_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation/_gsim_evaluation.txt", header = TRUE, sep = ";")
 
 #~ > names(gsim_location)
 #~  [1] "stat_code"           "river"               "station"
@@ -46,11 +44,20 @@ gsim_location <- gsim_location[which((gsim_location$obs_area_meta_km2 > 10000) |
 gsim_location <- gsim_location[which((gsim_location$mod_area_km2 > 10000)), ]
 gsim_location <- gsim_location[which((gsim_location$length_of_obs_used >= 12)), ]
 
+# double check (based on the Mike's "cell_no_land") that GSIM station used are not in the training data
+grdc_train_cell_no_land = unique(train_data$cell_no_land)
+gsim_table_with_cell_no_land_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_glorif1_gsim.csv"
+gsim_table_with_cell_no_land = read.csv(gsim_table_with_cell_no_land_filename, header = TRUE)
+gsim_table_with_cell_no_land = data.frame(gsim_table_with_cell_no_land$gsim.no,gsim_table_with_cell_no_land$cell_no_land)
+names(gsim_table_with_cell_no_land)[1] <- "stat_code"
+names(gsim_table_with_cell_no_land)[2] <- "cell_no_land"
+gsim_location = merge(gsim_location, gsim_table_with_cell_no_land, by = "stat_code")
+gsim_location = gsim_location[which(!is.element(gsim_location$cell_no_land, grdc_train_cell_no_land)),]
+
 gsim_valid_station <- gsim_location
 print(dim(gsim_valid_station))
 
-#~ > print(dim(gsim_valid_station))
-#~ [1] 1779   21
+print(dim(gsim_valid_station))
 
 # plot the stations
 wg <- map_data("world")
@@ -63,8 +70,10 @@ station_map <- ggplot() +
   ylim(-55, 75) +
 #~   geom_point(data = gsim_valid_station, mapping = aes(x = mod_lon, y = mod_lat), color = 'blue', fill = "blue", size = 1.3, alpha = 5/10, shape = 21) +
 #~   geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , fill = "red",  size = 1.3, alpha = 5/10, shape = 21) +
-  geom_point(data = gsim_valid_station, mapping = aes(x = obs_lon, y = obs_lat), color = 'blue', size = 2.3, shape = 20, alpha = 6/10) +
-  geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , size = 2.3, shape = 20, alpha = 6/10) +
+  geom_point(data = gsim_valid_station, mapping = aes(x = mod_lon, y = mod_lat), color = 'blue', size = 2.3, shape = 20, alpha = 5.5/10) +
+  geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , size = 2.3, shape = 20, alpha = 3.5/10) +
+#~   geom_point(data = gsim_valid_station, mapping = aes(x = obs_lon, y = obs_lat), color = 'blue', size = 2.3, shape = 20, alpha = 6/10) +
+#~   geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , size = 2.3, shape = 20, alpha = 3/10) +
 #~   geom_point(alpha = 8/10) +
   scale_fill_brewer(palette = 'RdYlBu', guide = guide_legend(reverse = TRUE), name = '') +
   labs(title = 'GRDC (red, training) and GSIM (blue, validation) stations used\n', x = 'longitude', y = 'latitude') +
@@ -74,6 +83,43 @@ station_map <- ggplot() +
         axis.ticks = element_blank(),
         panel.grid = element_blank())
 
-ggsave("grdc_gsim_map.pdf", station_map, height = 8, width = 16, units = 'in', dpi = 1200)
+outputDir = "/scratch-shared/edwin/_finalizing_glorif1/maps_stations/"
+map_filename = paste(outputDir, "grdc_gsim_map.pdf", sep = "")
+
+ggsave(map_filename, station_map, height = 8, width = 16, units = 'in', dpi = 1200)
+
+#~ station_map
+
+#~ station_map_grdc <- ggplot() +
+#~   geom_map(data = wg, map = wg, aes(long, lat, map_id = region), color = "white", fill = "grey") +
+#~   coord_fixed(1.3) +  # Maintain aspect ratio
+#~   xlim(-180, 180) +
+#~   ylim(-55, 75) +
+#~   geom_point(data = grdc_train_station, mapping = aes(x = lon, y = lat), color = 'red' , pch = 21, size = 0.5) +
+#~   scale_fill_brewer(palette = 'RdYlBu', guide = guide_legend(reverse = TRUE), name = '') +
+#~   labs(title = 'GRDC and GSIM stations used\n', x = 'longitude', y = 'latitude') +
+#~   theme(plot.title = element_text(hjust = 0.5, size = 20),
+#~         axis.title.x = element_blank(),
+#~         axis.title.y = element_blank(),
+#~         axis.ticks = element_blank(),
+#~         panel.grid = element_blank())
+
+#~ station_map_gsim <- ggplot() +
+#~   geom_map(data = wg, map = wg, aes(long, lat, map_id = region), color = "white", fill = "grey") +
+#~   coord_fixed(1.3) +  # Maintain aspect ratio
+#~   xlim(-180, 180) +
+#~   ylim(-55, 75) +
+#~   geom_point(data = gsim_valid_station, mapping = aes(x = lon, y = lat), color = 'blue', pch = 21, size = 0.5) +
+#~   scale_fill_brewer(palette = 'RdYlBu', guide = guide_legend(reverse = TRUE), name = '') +
+#~   labs(title = 'GRDC and GSIM stations used\n', x = 'longitude', y = 'latitude') +
+#~   theme(plot.title = element_text(hjust = 0.5, size = 20),
+#~         axis.title.x = element_blank(),
+#~         axis.title.y = element_blank(),
+#~         axis.ticks = element_blank(),
+#~         panel.grid = element_blank())
 
 
+#~ ggsave("test_map.pdf", station_map, height = 8, width = 16, units = 'in', dpi = 1200)
+
+#~ # Save plot with adjusted dimensions
+#~ ggsave(paste0(outputDir, 'map_grdc_and_gsim_stations.pdf'), KGE_map_uncalibrated, height = 8, width = 16, units = 'in', dpi = 1200)
