@@ -66,7 +66,7 @@ if (strt_idx <= length(rseg_codes)){
 last_idx = min(last_idx, length(rseg_codes))
 
 # output table file name
-output_table_filename = paste("_rseg_evaluation_", sprintf("%07d", as.numeric(strt_idx)), "-", sprintf("%07d", as.numeric(last_idx)),".txt", sep="")
+output_table_filename = paste("_rseg_evaluation_excluding_grdc_", sprintf("%07d", as.numeric(strt_idx)), "-", sprintf("%07d", as.numeric(last_idx)),".txt", sep="")
 output_table_filename = paste(outputDir, "/", output_table_filename, sep="")
                                          
 rseg_codes = rseg_codes[strt_idx:last_idx]
@@ -322,7 +322,7 @@ outplott <- outplott +
 #~ print(cleaned_string)
 #~ [1] "Hello World 2026 R"
  
- outputFile = paste(outputDir, "rseg_validation_tss_", rseg_code, "_", outputFile, ".pdf",sep="")
+ outputFile = paste(outputDir, "rseg_validation_excluding_grdc_tss_", rseg_code, "_", outputFile, ".pdf",sep="")
 
  ggsave(outputFile, plot = outplott,width=27,height=7,units='cm')
 #
