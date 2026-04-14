@@ -44,11 +44,14 @@ gsim_location <- gsim_location[which((gsim_location$obs_area_meta_km2 > 10000) |
 gsim_location <- gsim_location[which((gsim_location$mod_area_km2 > 10000)), ]
 gsim_location <- gsim_location[which((gsim_location$length_of_obs_used >= 12)), ]
 
+# double check (based on the Mike's "cell_no_land") that GSIM station used are not in the training data
+grdc_train_cell_no_land = unique(train_data$cell_no_land)
+gsim_location = gsim_location[which(!is.element(gsim_location$cell_no_land, grdc_train_cell_no_land)),]
+
 gsim_valid_station <- gsim_location
 print(dim(gsim_valid_station))
 
-#~ > print(dim(gsim_valid_station))
-#~ [1] 1969   21
+print(dim(gsim_valid_station))
 
 # plot the stations
 wg <- map_data("world")
