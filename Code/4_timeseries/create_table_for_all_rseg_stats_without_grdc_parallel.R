@@ -163,13 +163,13 @@ pgb_area_km2 = pcrglobwb_catchment_area_km2_table$catchment_area[which(pcrglobwb
 
 
 # KGE and NSE based on PCR-GLOBWB validation to RSEG
-performance_pcrglobwb_rseg_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/rseg_validation/kge_results_pgb_rseg_validation.csv"
+performance_pcrglobwb_rseg_table_filename = "/scratch-shared/edwin/glorif1_work/rseg_validation_without_grdc/kge_results_pcrglobwb_rseg_validation_without_grdc.csv"
 performance_pcrglobwb_rseg_table = read.csv(performance_pcrglobwb_rseg_table_filename, header = TRUE)
 kge_pcrglobwb_rseg = performance_pcrglobwb_rseg_table$KGE[which(performance_pcrglobwb_rseg_table$grdc_no == rseg_code)]
 nse_pcrglobwb_rseg = performance_pcrglobwb_rseg_table$NSE[which(performance_pcrglobwb_rseg_table$grdc_no == rseg_code)]
 
 # KGE and NSE based on GLORIF validation to and RSEG
-performance_glorif1_rseg_table_filename = "/scratch-shared/edwin/_finalizing_glorif1/rseg_validation/kge_results_glorif1_rseg_validation.csv"
+performance_glorif1_rseg_table_filename = "/scratch-shared/edwin/glorif1_work/rseg_validation_without_grdc/kge_results_glorif1_rseg_validation_without_grdc.csv"
 performance_glorif1_rseg_table = read.csv(performance_glorif1_rseg_table_filename, header = TRUE)
 kge_glorif1_rseg = performance_glorif1_rseg_table$KGE[which(performance_glorif1_rseg_table$grdc_no == rseg_code)]
 nse_glorif1_rseg = performance_glorif1_rseg_table$NSE[which(performance_glorif1_rseg_table$grdc_no == rseg_code)]
