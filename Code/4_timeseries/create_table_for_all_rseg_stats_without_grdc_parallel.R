@@ -41,7 +41,7 @@ rseg_nc_filename = "/scratch-shared/edwin/_finalizing_glorif1/datasets_for_plots
 rseg_nc <- nc_open(rseg_nc_filename)
 rseg_grdc_no   <- ncvar_get(rseg_nc, "GRDC_Num")
 rseg_discharge <- ncvar_get(rseg_nc, "Disch")
-rseg_flag      <- ncvar_get(nc_rseg, "Disch_Flag")
+rseg_flag      <- ncvar_get(rseg_nc, "Disch_Flag")
 
 # Filter time range from 1979-01-01 to 2019-12-31
 rseg_time  <- as.Date(ncvar_get(rseg_nc, "Time"), origin = "1806-01-01")
