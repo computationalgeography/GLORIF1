@@ -16,7 +16,7 @@ train_data <- vroom(paste0('/projects/0/dfguu/users/edwin/data/glorif1/original/
 grdc_train_station_id <- unique(train_data$grdc_no)
 
 # get their location from one of the following alternatives:
-g#~ # - from actual coordinates
+#~ # - from actual coordinates
 #~ grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/stationLatLon_filtered_95.csv", header = TRUE)
 # - from pcrglobwb coordinates
 grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/station_pixel_mapping_grdc.csv", header = TRUE)
@@ -28,7 +28,7 @@ grdc_train_station <- grdc_selected
 
 
 # rseg stations
-rseg_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/rseg_evaluation_without_grdc_parallelization/_selected_table_rseg_without_grdc_final.txt, header = TRUE, sep = ";")
+rseg_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/rseg_evaluation_without_grdc_parallelization/_selected_table_rseg_without_grdc_final.txt", header = TRUE, sep = ";")
 
 #~ > names(gsim_location)
 #~  [1] "stat_code"           "river"               "station"
