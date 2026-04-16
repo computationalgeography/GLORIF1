@@ -78,3 +78,14 @@ map_filename = paste(outputDir, "grdc_rseg_map.pdf", sep = "")
 
 ggsave(map_filename, station_map, height = 8, width = 16, units = 'in', dpi = 1200)
 
+# finalizing the performance table
+# - pcrglobwb
+kge_components_filename = '/scratch-shared/edwin/glorif1_work/rseg_validation_without_grdc/kge_results_pcrglobwb_rseg_validation_without_grdc.csv'
+kge_components = read.csv(kge_components_filename, header = TRUE)
+kge_components = kge_components %>% select(grdc_no, KGE_r, KGE_alpha, KGE_beta, RMSE, MAE, nRMSE, nMAE)
+names(kge_components) <- paste0(names(kge_components), "_pcrglobwb")
+
+> names(kge_components)
+[1] "grdc_no_pcrglobwb"   "kge_r_pcrglobwb"     "kge_alpha_pcrglobwb"
+[4] "kge_beta_pcrglobwb"  "rmse_pcrglobwb"      "mae_pcrglobwb"
+[7] "nrmse_pcrglobwb"     "nmae_pcrg
