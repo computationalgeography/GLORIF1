@@ -39,10 +39,23 @@ gsim_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/gsim_evalua
 #~ [16] "kge_pcrglobwb"       "nse_pcrglobwb"       "kge_glorif1"
 #~ [19] "nse_glorif1"         "obs_altitude_meta_m" "obs_altitude_est_m"
 
+# double check (based on the Mike's "cell_no_land") that GSIM station used are not in the training data
+grdc_train_cell_no_land = unique(train_data$cell_no_land)
+gsim_table_with_cell_no_land_filename = "/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_glorif1_gsim.csv"
+gsim_table_with_cell_no_land = read.csv(gsim_table_with_cell_no_land_filename, header = TRUE)
+gsim_table_with_cell_no_land = data.frame(gsim_table_with_cell_no_land$gsim.no,gsim_table_with_cell_no_land$cell_no_land)
+names(gsim_table_with_cell_no_land)[1] <- "stat_code"
+names(gsim_table_with_cell_no_land)[2] <- "cell_no_land"
+gsim_location = merge(gsim_location, gsim_table_with_cell_no_land, by = "stat_code")
+gsim_location = gsim_location[which(!is.element(gsim_location$cell_no_land, grdc_train_cell_no_land)),]
+
 print(dim(gsim_location))
 
-# using only stations with at least 12 months 
+# using only stations with at least 12 months and upstream area > 10,000 km2 (~4 pixels of PCR-GLOBWB)
+gsim_location <- gsim_location[which((gsim_location$obs_area_meta_km2 > 10000) | (gsim_location$obs_area_est_km2 > 10000)), ]
+gsim_location <- gsim_location[which((gsim_location$mod_area_km2 > 10000)), ]
 gsim_location <- gsim_location[which((gsim_location$length_of_obs_used >= 12)), ]
+
 
 gsim_valid_station <- gsim_location
 print(dim(gsim_valid_station))
@@ -73,8 +86,8 @@ station_map <- ggplot() +
         axis.ticks = element_blank(),
         panel.grid = element_blank())
 
-outputDir = "/scratch-shared/edwin/_finalizing_glorif1/maps_stations_final/"
-map_filename = paste(outputDir, "grdc_gsim_map_final_v20260421.pdf", sep = "")
+outputDir = "/scratch-shared/edwin/_finalizing_glorif1/maps_stations/"
+map_filename = paste(outputDir, "grdc_gsim_map.pdf", sep = "")
 
 ggsave(map_filename, station_map, height = 8, width = 16, units = 'in', dpi = 1200)
 
