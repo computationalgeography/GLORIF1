@@ -28,7 +28,7 @@ grdc_train_station <- grdc_selected
 
 
 # rseg stations
-rseg_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/rseg_evaluation_without_grdc_parallelization/_selected_table_rseg_without_grdc_final.txt", header = TRUE, sep = ";")
+rseg_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/rseg_evaluation_without_grdc_parallelization_final_double_check/_selected_table_rseg_without_grdc_final.txt", header = TRUE, sep = ";")
 
 #~ > names(gsim_location)
 #~  [1] "stat_code"           "river"               "station"
@@ -88,7 +88,7 @@ kge_components = read.csv(kge_components_filename, header = TRUE)
 kge_components = kge_components %>% select(grdc_no, KGE_r, KGE_alpha, KGE_beta, RMSE, MAE, nRMSE, nMAE)
 names(kge_components) <- paste0(names(kge_components), "_pcrglobwb")
 #
-#~ > names(kge_components)
+names(kge_components)
 #~ [1] "grdc_no_pcrglobwb"   "kge_r_pcrglobwb"     "kge_alpha_pcrglobwb"
 #~ [4] "kge_beta_pcrglobwb"  "rmse_pcrglobwb"      "mae_pcrglobwb"
 #~ [7] "nrmse_pcrglobwb"     "nmae_pcrg
@@ -106,3 +106,6 @@ names(kge_components) <- paste0(names(kge_components), "_glorif1")
 names(kge_components)[1] <- "stat_code"
 #
 rseg_performance_table = merge(rseg_valid_station, kge_components, by = "stat_code")
+
+table_filename = paste(outputDir, "/performance_table_rseg_map_final_v20260421.csv", sep = "")
+write.table(rseg_performance_table, file = table_filename, row.names = FALSE, col.names = TRUE, sep = ";")
