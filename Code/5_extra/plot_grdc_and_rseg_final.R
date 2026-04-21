@@ -16,10 +16,10 @@ train_data <- vroom(paste0('/projects/0/dfguu/users/edwin/data/glorif1/original/
 grdc_train_station_id <- unique(train_data$grdc_no)
 
 # get their location from one of the following alternatives:
-#~ # - from actual coordinates
-#~ grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/stationLatLon_filtered_95.csv", header = TRUE)
-# - from pcrglobwb coordinates
-grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/station_pixel_mapping_grdc.csv", header = TRUE)
+# - from actual coordinates
+grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/random_forest/train/stationLatLon_filtered_95.csv", header = TRUE)
+#~ # - from pcrglobwb coordinates
+#~ grdc_location <- read.csv("/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/preprocess/preprocess_grdc/station_pixel_mapping_grdc.csv", header = TRUE)
 
 
 # make sure those stations were used in the training table
