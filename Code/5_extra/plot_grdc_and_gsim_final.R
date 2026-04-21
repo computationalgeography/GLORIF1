@@ -83,7 +83,7 @@ ggsave(map_filename, station_map, height = 8, width = 16, units = 'in', dpi = 12
 # finalizing the performance table by adding KGE components and other things
 #
 # - pcrglobwb
-kge_components_filename = '/scratch-shared/edwin/glorif1_work/rseg_validation_without_grdc/kge_results_pcrglobwb_rseg_validation_without_grdc.csv'
+kge_components_filename = '/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_pcrglobwb_gsim.csv'
 kge_components = read.csv(kge_components_filename, header = TRUE)
 kge_components = kge_components %>% select(grdc_no, KGE_r, KGE_alpha, KGE_beta, RMSE, MAE, nRMSE, nMAE)
 names(kge_components) <- paste0(names(kge_components), "_pcrglobwb")
@@ -98,7 +98,7 @@ names(kge_components)[1] <- "stat_code"
 gsim_performance_table = merge(gsim_valid_station, kge_components, by = "stat_code")
 #
 # - glorif1
-kge_components_filename = '/scratch-shared/edwin/glorif1_work/rseg_validation_without_grdc/kge_results_glorif1_rseg_validation_without_grdc.csv'
+kge_components_filename = '/projects/0/dfguu/users/edwin/data/glorif1/original/version_1.0/output/kge_glorif1_gsim.csv'
 kge_components = read.csv(kge_components_filename, header = TRUE)
 kge_components = kge_components %>% select(grdc_no, KGE_r, KGE_alpha, KGE_beta, RMSE, MAE, nRMSE, nMAE)
 names(kge_components) <- paste0(names(kge_components), "_glorif1")
