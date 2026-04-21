@@ -80,6 +80,7 @@ map_filename = paste(outputDir, "grdc_rseg_map_final_v20260421.pdf", sep = "")
 
 ggsave(map_filename, station_map, height = 8, width = 16, units = 'in', dpi = 1200)
 
+
 # finalizing the performance table by adding KGE components and other things
 #
 # - pcrglobwb
@@ -105,7 +106,7 @@ names(kge_components) <- paste0(names(kge_components), "_glorif1")
 #
 names(kge_components)[1] <- "stat_code"
 #
-rseg_performance_table = merge(rseg_valid_station, kge_components, by = "stat_code")
+rseg_performance_table = merge(rseg_performance_table, kge_components, by = "stat_code")
 
 table_filename = paste(outputDir, "/performance_table_rseg_map_final_v20260421.csv", sep = "")
 write.table(rseg_performance_table, file = table_filename, row.names = FALSE, col.names = TRUE, sep = ";")
