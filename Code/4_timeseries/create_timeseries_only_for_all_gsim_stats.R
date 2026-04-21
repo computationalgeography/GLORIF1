@@ -12,7 +12,7 @@ library(ncdf4)
 #~ gsim_code = "RU_0000141"
 
 # output directory
-outputDir = "/scratch-shared/edwin/_finalizing_glorif1/gsim_timeseries_plots/"
+outputDir = "/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation_final_double_check/"
 
 # loop through all gstation 
 #
