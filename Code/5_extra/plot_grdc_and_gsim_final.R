@@ -28,7 +28,8 @@ grdc_train_station <- grdc_selected
 
 
 # gsim stations
-gsim_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation/_gsim_evaluation.txt", header = TRUE, sep = ";")
+#~ gsim_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation/_gsim_evaluation.txt", header = TRUE, sep = ";")
+gsim_location <- read.csv("/scratch-shared/edwin/_finalizing_glorif1/gsim_evaluation_final_double_check/_gsim_evaluation.txt", header = TRUE, sep = ";")
 
 #~ > names(gsim_location)
 #~  [1] "stat_code"           "river"               "station"
