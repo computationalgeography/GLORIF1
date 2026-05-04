@@ -53,8 +53,8 @@ color_palette <- (brewer.pal(11, "RdYlBu"))
 
 # adjust the max and min values
 raster_df_original = raster_df
-max_value = 2000
-min_value = -2000
+max_value = 1000
+min_value = -1000
 raster_df$value[raster_df$value >= max_value] = max_value
 raster_df$value[raster_df$value <= min_value] = min_value
 
