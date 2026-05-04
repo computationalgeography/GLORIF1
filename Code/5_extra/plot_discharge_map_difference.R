@@ -41,9 +41,11 @@ raster_df <- na.omit(raster_df)
 #~ # Get ColorBrewer palette: YlGnBu with 9 colors
 #~ color_palette <- brewer.pal(9, "YlGnBu")
 
-# Get ColorBrewer palette: RdYlBu reversed with 11 colors
-color_palette <- rev(brewer.pal(11, "RdYlBu"))
+#~ # Get ColorBrewer palette: RdYlBu reversed with 11 colors
+#~ color_palette <- rev(brewer.pal(11, "RdYlBu"))
 
+# Get ColorBrewer palette: RdYlBu reversed with 11 colors
+color_palette <- (brewer.pal(11, "RdYlBu"))
 
 #~ wg <- map_data("world")
 
