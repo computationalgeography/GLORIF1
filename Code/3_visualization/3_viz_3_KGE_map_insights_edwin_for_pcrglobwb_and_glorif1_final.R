@@ -26,7 +26,7 @@ stationInfoArea <- read.csv('/scratch-shared/edwin/glorif1/original/version_1.0/
 stationInfo <- read.csv('/scratch-shared/edwin/glorif1/original/version_1.0/preprocess/preprocess_gsim/station_pixel_mapping_gsim.csv') %>% 
   select(gsim.no, lon, lat) %>% inner_join(., stationInfoArea, by = 'gsim.no')
 
-# Load KGE data for uncalibrated setup
+# Load KGE data for the PCR-GLOBWB (uncalibrated setup)
 #~ rf.eval.uncalibrated <- read.csv('/scratch-shared/bisik/Practical_NEW/reanalysis_NEW_95_filtered/validation/KGE_results_PCR_GSIM_validation.csv') %>%
 #~   select(gsim.no, KGE) %>%
 #~   mutate(setup = 'uncalibrated')
@@ -60,39 +60,81 @@ plotData_uncalibrated <- rf.eval.uncalibrated %>%
 # sorting based on KGE
 plotData_uncalibrated <- plotData_uncalibrated[order(plotData_uncalibrated$mean_test_KGE_uncalibrated),]
 
+# copy/rename plotData_uncalibrated to plot_data_pcrglobwb
+plot_data_pcrglobwb <- plotData_uncalibrated
+
+# load glorif1 KGE
+glorif1 <- read.csv('/scratch-shared/edwin/glorif1/original/version_1.0/output/kge_glorif1_gsim.csv') %>%
+  select(gsim.no, KGE) %>%
+  mutate(setup2 = 'glorif1')
+names(glorif1)[2] <- "KGE_glorif1"
+
+# merge pcrglobwb and glorif1
+merged_table <- merge(plot_data_pcrglobwb, glorif1,by="gsim.no")
+
+# sorting based on KGE_glorif1
+merged_table <- merged_table[order(merged_table$KGE_glorif1),]
+
+
 #### Plot KGE Map ####
 wg <- map_data("world")
 
-breaks <- c(-Inf, -0.41, 0.6,1)
+#~ breaks <- c(-Inf, -0.41, 0.6,1)
+breaks <- c(-5e4, -0.41, 0.6,1)
 labels <- c('KGE < -0.41','-0.41 < KGE < 0.6', '0.6 < KGE < 0.1')
             
-#breaks <- c(-Inf, -0.41, 0, 0.2, 0.4, 0.6, 0.8, 0.9, 1)
-#labels <- c('KGE < -0.41','-0.41 < KGE < 0', '0 < KGE < 0.2','0.2 < KGE < 0.4',
-#            '0.4 < KGE < 0.6','0.6 < KGE < 0.8','0.8 < KGE < 0.9','0.9 < KGE < 1')
+#~ breaks <- c(-Inf, -0.41, 0, 0.2, 0.4, 0.6, 0.8, 0.9, 1)
+#~ breaks <- c(-1e5, -0.41, 0, 0.2, 0.4, 0.6, 0.8, 0.9, 1)
+#~ labels <- c('KGE < -0.41','-0.41 < KGE < 0', '0 < KGE < 0.2','0.2 < KGE < 0.4',
+#~             '0.4 < KGE < 0.6','0.6 < KGE < 0.8','0.8 < KGE < 0.9','0.9 < KGE < 1')
   
 
+# PCR-GLOBWB KGE
 KGE_map_uncalibrated <- ggplot() +
   geom_map(data = wg, map = wg, aes(long, lat, map_id = region), color = "white", fill = "grey") +
   coord_fixed(1.3) +  # Maintain aspect ratio
   xlim(-180, 180) +
   ylim(-55, 75) +
-  geom_point(data = plotData_uncalibrated, mapping = aes(x = lon, y = lat,
+  geom_point(data = merged_table, mapping = aes(x = lon, y = lat,
                                                         fill = cut(mean_test_KGE_uncalibrated, breaks = breaks, labels = labels)),
              color = 'black', pch = 21, size = 2.5) +
   scale_fill_brewer(palette = 'RdYlBu', guide = guide_legend(reverse = TRUE), name = '') +
-  labs(title = 'Uncalibrated PCR−GLOBWB\n', x = 'longitude', y = 'latitude') +
+  labs(title = 'PCR-GLOBWB (original)\n', x = 'longitude', y = 'latitude') +
   theme(plot.title = element_text(hjust = 0.5, size = 20),
         axis.title.x = element_blank(),
         axis.title.y = element_blank(),
         axis.ticks = element_blank(),
         panel.grid = element_blank())
-        
 
 # Save plot with adjusted dimensions
-ggsave(paste0(outputDir, 'map_KGE_results_PCR_GSIM_validation_3Classes.pdf'), KGE_map_uncalibrated, height = 8, width = 16, units = 'in', dpi = 1200)
+ggsave(paste0(outputDir, 'map_kge_pcrglobwb.pdf'), KGE_map_uncalibrated, height = 8, width = 16, units = 'in', dpi = 1200)
+
+
+# GLORIF1
+KGE_map_glorif1 <- ggplot() +
+  geom_map(data = wg, map = wg, aes(long, lat, map_id = region), color = "white", fill = "grey") +
+  coord_fixed(1.3) +  # Maintain aspect ratio
+  xlim(-180, 180) +
+  ylim(-55, 75) +
+  geom_point(data = merged_table, mapping = aes(x = lon, y = lat,
+                                                        fill = cut(KGE_glorif1, breaks = breaks, labels = labels)),
+             color = 'black', pch = 21, size = 2.5) +
+  scale_fill_brewer(palette = 'RdYlBu', guide = guide_legend(reverse = TRUE), name = '') +
+  labs(title = 'GLORIF1 \n', x = 'longitude', y = 'latitude') +
+  theme(plot.title = element_text(hjust = 0.5, size = 20),
+        axis.title.x = element_blank(),
+        axis.title.y = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid = element_blank())
+
+# Save plot with adjusted dimensions
+ggsave(paste0(outputDir, 'map_kge_glorif1.pdf'), KGE_map_glorif1, height = 8, width = 16, units = 'in', dpi = 1200)
+
 
 # Summary of the data
-summary(plotData_uncalibrated$mean_test_KGE_uncalibrated)
+summary(merged_table$mean_test_KGE_uncalibrated)
+summary(merged_table$KGE_glorif1)
+
 summary(plotData_uncalibrated$miss)
 
 # End of the script
