@@ -35,8 +35,8 @@ table_performance = read.csv("/scratch-shared/edwin/__updating_glorif1/research-
 
 
 #~ # fixing a station coordinate for plotting
-> min(table_performance$obs_lon)
-[1] -178.9
+#~ > min(table_performance$obs_lon)
+#~ [1] -178.9
 #~ table_performance$obs_lon[which(table_performance$obs_lon==-178.9)] = 180 + (180-178.9)
 
 # sorting based on KGE
