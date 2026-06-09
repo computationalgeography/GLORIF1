@@ -101,10 +101,10 @@ KGE_map_glorif1 <- ggplot() +
 ggsave(paste0(outputDir, 'rseg_map_kge_glorif1.pdf'), KGE_map_glorif1, height = 8, width = 16, units = 'in', dpi = 1200)
 
 
-# Summary of the data
-summary(merged_table$mean_test_KGE_uncalibrated)
-summary(merged_table$KGE_glorif1)
+#~ # Summary of the data
+#~ summary(merged_table$mean_test_KGE_uncalibrated)
+#~ summary(merged_table$KGE_glorif1)
 
-summary(plotData_uncalibrated$miss)
+#~ summary(plotData_uncalibrated$miss)
 
 # End of the script
